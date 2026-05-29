@@ -1717,8 +1717,8 @@ tbody tr:hover{background:#f0fdf4;}
 <div class="toast" id="toast"><span id="t-ico">✅</span>&nbsp;<span id="t-txt"></span></div>
 
 <script>
-// ── Fix: funciones necesarias desde el inicio ──
-function safeRun(fn,label){try{return fn();}catch(e){console.error('[QFC]'+(label||'err'),e);return null;}}
+// ── Fix: funciones necesarias desde el inicio del documento ──
+function safeRun(fn,label){try{return fn();}catch(e){console.error('[QFC]'+(label||''),e);return null;}}
 var _fbConnected=false,_fbDB=null,_fbApp=null,_fbUnsubscribe=null;
 async function initFirebase(apiKey,projectId,appId){
   return new Promise(function(resolve){
@@ -5774,7 +5774,7 @@ setTimeout(function(){
 
 <!-- ═══ v26 SCRIPT ═══ -->
 <script>
-// safeRun, initFirebase, fbListenGroup, fbSaveGroup y _fb* declarados al inicio del documento.
+// safeRun, initFirebase, fbListenGroup, fbSaveGroup y _fb* ya declarados al inicio.
 
 function fbSaveResult(groupCode,matchId,rh,ra){
   if(!_fbDB||!_fbConnected)return;
@@ -6142,8 +6142,34 @@ function _renderMGAjustes(){
 
 // ── Redirigir a Apostar tras crear/unirse ──
 (function(){
-  var _oc=window.apCrear;window.apCrear=function(){try{_oc&&_oc();}catch(e){}setTimeout(function(){nav('apostar',null);},600);};
-  var _ou=window.apUnirse;window.apUnirse=async function(){try{await _ou&&_ou();}catch(e){}setTimeout(function(){nav('apostar',null);},600);};
+  function _irApostar(){
+    document.querySelectorAll('.view').forEach(function(v){v.classList.remove('active');});
+    var va=document.getElementById('view-apostar');
+    if(va) va.classList.add('active');
+    document.querySelectorAll('.mb,.nb').forEach(function(b){b.classList.remove('active');});
+    var ba=document.querySelector('.mb[data-v="apostar"]');
+    if(ba) ba.classList.add('active');
+    var mt=document.getElementById('mhdr-t');
+    if(mt) mt.textContent='APOSTAR';
+    var ng=document.getElementById('apostar-nogroup');
+    var cg=document.getElementById('apostar-con-grupo');
+    if(ng) ng.style.display='none';
+    if(cg) cg.style.display='block';
+    setTimeout(function(){
+      try{_renderApostarView();}catch(e){}
+      try{_renderMiGrupoView();}catch(e){}
+    },50);
+  }
+  var _oc=window.apCrear;
+  window.apCrear=function(){
+    if(typeof _oc==='function') _oc();
+    if(apSt&&apSt.group&&apSt.user) setTimeout(_irApostar,50);
+  };
+  var _ou=window.apUnirse;
+  window.apUnirse=function(){
+    if(typeof _ou==='function') _ou();
+    if(apSt&&apSt.group&&apSt.user) setTimeout(_irApostar,50);
+  };
 })();
 
 // ── Init: si hay grupo pre-renderizar ──
