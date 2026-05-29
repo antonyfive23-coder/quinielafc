@@ -16,6 +16,12 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
 <!-- QRCode: loaded lazily via JS when needed -->
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+<script>
+function initFirebase(k,p,a){try{if(firebase.apps.length)firebase.app();else firebase.initializeApp({apiKey:k,authDomain:p+".firebaseapp.com",databaseURL:"https://"+p+"-default-rtdb.firebaseio.com",projectId:p,appId:a});return firebase.database();}catch(e){console.error(e);return null;}}
+</script>
 <!-- Supabase loaded lazily -->
 <!-- Confetti loaded lazily -->
 <style>
