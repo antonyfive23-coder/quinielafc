@@ -1716,7 +1716,59 @@ tbody tr:hover{background:#f0fdf4;}
 
 <div class="toast" id="toast"><span id="t-ico">✅</span>&nbsp;<span id="t-txt"></span></div>
 
+<!-- DEBUG PANEL -->
+<div id="debug-panel" style="display:none;position:fixed;bottom:70px;left:10px;right:10px;background:#000;color:#0f0;font-family:monospace;font-size:11px;padding:12px;border-radius:10px;z-index:9999;max-height:50vh;overflow-y:auto;border:1px solid #0f0;">
+  <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+    <span style="color:#ff0;font-weight:bold;">🔍 DIAGNÓSTICO</span>
+    <button onclick="document.getElementById('debug-panel').style.display='none'" style="background:none;border:1px solid #f00;color:#f00;padding:2px 8px;border-radius:4px;cursor:pointer;font-size:11px;">✕ Cerrar</button>
+  </div>
+  <div id="debug-output">Cargando...</div>
+  <button onclick="runDiag()" style="margin-top:8px;background:#0f0;color:#000;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:11px;font-weight:bold;">🔄 Actualizar</button>
+</div>
+<button onclick="showDebug()" style="position:fixed;bottom:70px;right:10px;z-index:9998;background:#000;color:#0f0;border:1px solid #0f0;border-radius:8px;padding:6px 10px;font-size:11px;font-family:monospace;cursor:pointer;">🔍 Debug</button>
+
 <script>
+function runDiag(){
+  var out=[];
+  out.push('=== ESTADO ===');
+  out.push('apSt.group: '+(window.apSt&&apSt.group?apSt.group.name+' ('+apSt.group.code+')':'NULL ❌'));
+  out.push('apSt.user: '+(window.apSt&&apSt.user?apSt.user.name:'NULL ❌'));
+  out.push('');
+  out.push('=== FUNCIONES ===');
+  ['safeRun','initFirebase','fbListenGroup','fbSaveGroup','_renderApostarView','_renderApostarList','_renderMiGrupoView','nav','apCrear','apUnirse','apBanner','PARTIDOS_AP','KNOCKOUT_AP'].forEach(function(f){
+    var ok=typeof window[f]!=='undefined'||typeof eval('typeof '+f)!=='undefined';
+    try{ok=typeof eval(f)!=='undefined';}catch(e){ok=false;}
+    out.push(f+': '+(ok?'✓':'❌ NO EXISTE'));
+  });
+  out.push('');
+  out.push('=== DOM ===');
+  ['view-apostar','view-apuestas','view-migrupo','apostar-nogroup','apostar-con-grupo','apostar-list','ap-welcome-screen','ap-main-screen'].forEach(function(id){
+    var el=document.getElementById(id);
+    out.push('#'+id+': '+(el?'✓ display='+getComputedStyle(el).display:'❌ NO EXISTE'));
+  });
+  out.push('');
+  out.push('=== PARTIDOS ===');
+  try{out.push('PARTIDOS_AP: '+PARTIDOS_AP.length+' partidos');}catch(e){out.push('PARTIDOS_AP: ❌ '+e.message);}
+  try{out.push('KNOCKOUT_AP: '+(KNOCKOUT_AP?KNOCKOUT_AP.length:0)+' partidos');}catch(e){out.push('KNOCKOUT_AP: ❌');}
+  out.push('');
+  out.push('=== LOCALSTORAGE ===');
+  try{
+    var s=localStorage.getItem('wc26_ap');
+    out.push('wc26_ap: '+(s?s:'null'));
+    if(s){var p=JSON.parse(s);out.push('  code:'+p.code+' uid:'+p.uid);}
+  }catch(e){out.push('Error: '+e.message);}
+  document.getElementById('debug-output').innerHTML=out.join('<br>');
+}
+function showDebug(){
+  document.getElementById('debug-panel').style.display='block';
+  runDiag();
+}
+// Capturar errores JS
+window.addEventListener('error',function(e){
+  var d=document.getElementById('debug-output');
+  if(d) d.innerHTML='<span style="color:red">ERROR: '+e.message+' (línea '+e.lineno+')</span><br>'+d.innerHTML;
+});
+</script>
 // ── Fix mínimo: mover al inicio para que estén disponibles desde el principio ──
 function safeRun(fn,label){try{return fn();}catch(e){console.error('[QFC]'+(label||''),e);return null;}}
 var _fbConnected=false,_fbDB=null,_fbApp=null,_fbUnsubscribe=null;
