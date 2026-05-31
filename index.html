@@ -145,6 +145,8 @@ window.addEventListener('load',function(){
                           if(typeof apBanner==='function') apBanner();
                           if(typeof apRenderAP==='function') apRenderAP();
                           console.log('[QFC] Grupo restaurado:', g.code);
+                          // Iniciar chat en tiempo real inmediatamente
+                          if(typeof window._initRealtimeChat==='function') window._initRealtimeChat(g.code);
                           // Recargar bets desde Firebase
                           if(window._fbDB){
                             window._fbDB.collection('groups').doc(g.code).get().then(function(doc){
