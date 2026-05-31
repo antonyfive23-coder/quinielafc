@@ -2933,6 +2933,7 @@ if(_fbConnected && _fbDB){
       _fbDB.collection('groups').doc(code).set({members:group.members,feed:(group.feed||[]).slice(-50),updatedAt:Date.now()},{merge:true}).catch(function(){});
     });
     if(typeof fbListenGroup==='function') fbListenGroup(code);
+    if(typeof window._initRealtimeChat==='function') window._initRealtimeChat(code);
     _fbMarkOnline(code, uid);
     // Auto-guardar codigo de grupo para reconectar
     try{
@@ -8058,6 +8059,7 @@ console.log('[v27] Liga + Idiomas + Chat reacciones + Standings + Acumulada + Av
       var code=window.apSt.group.code;if(!code)return;
       if(window._fbConnected&&window._fbDB){
         if(typeof fbListenGroup==='function') fbListenGroup(code);
+        if(typeof window._initRealtimeChat==='function') window._initRealtimeChat(code);
         if(typeof _fbMarkOnline==='function') _fbMarkOnline(code, window.apSt.user&&window.apSt.user.id);
         console.log('[QFC] Firebase reconectado');
       } else {
