@@ -7824,11 +7824,13 @@ console.log('[v27] Liga + Idiomas + Chat reacciones + Standings + Acumulada + Av
       if(!window._fbConnected||!window._fbDB)return;
       if(!window.apSt||!window.apSt.group)return;
       var code=window.apSt.group.code;if(!code)return;
+      console.log('[QFC Poll] consultando Firebase para grupo:', code);
       window._fbDB.collection('groups').doc(code).get().then(function(doc){
         if(!doc||!doc.exists)return;
         var data=doc.data();if(!data)return;
         var remoteAt=data.updatedAt||0;
-        if(remoteAt<=_lastAt)return;
+        console.log('[QFC Poll] remoteAt:', remoteAt, 'lastAt:', _lastAt, 'miembros Firebase:', (data.members||[]).length);
+        if(remoteAt<=_lastAt){console.log('[QFC Poll] sin cambios');return;}
         _lastAt=remoteAt;
         var g=window.apSt.group;if(!g||g.code!==code)return;
         var changed=false;
