@@ -7962,11 +7962,17 @@ console.log('[v27] Liga + Idiomas + Chat reacciones + Standings + Acumulada + Av
           '<div style="background:'+(mine?'var(--g)':'var(--panel)')+';color:'+(mine?'#fff':'var(--text)')+';padding:7px 10px;border-radius:12px;font-size:.78rem;">'+m.text+'</div>'+
         '</div></div>';
     }).join('');
-    if(cwP.innerHTML!==newHtml){
+    // Comparar por numero de mensajes renderizados
+    var currentMsgs=cwP.querySelectorAll('div[style*="flex-direction"]').length;
+    var remoteMsgs=data.chat.slice(-50).length;
+    if(currentMsgs!==remoteMsgs){
       cwP.innerHTML=newHtml;
       cwP.scrollTop=cwP.scrollHeight;
       changed=true;
       if(typeof toast==='function') toast('💬','Nuevo mensaje en el chat','#dcfce7');
+    } else {
+      cwP.innerHTML=newHtml;
+      cwP.scrollTop=cwP.scrollHeight;
     }
   }
 }
