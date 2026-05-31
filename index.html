@@ -8224,7 +8224,7 @@ console.log('[v27] Liga + Idiomas + Chat reacciones + Standings + Acumulada + Av
 
   function initRealtimeChat(code){
     if(!code || !_fbDB) return;
-    if(_chatCode === code && _chatUnsub) return;
+    // No cachear - reiniciar listener siempre para garantizar actualizaciones
     _chatCode = code;
     if(_chatUnsub) _chatUnsub();
     
@@ -8240,24 +8240,26 @@ console.log('[v27] Liga + Idiomas + Chat reacciones + Standings + Acumulada + Av
       if(typeof apSaveChats==='function') apSaveChats(chat);
       window._latestChat = chat;
       
-      // Renderizar si el chat esta abierto
-      var cw = document.getElementById('mg-chat-w');
-      if(!cw) return;
-      
-      var u = window.apSt && window.apSt.user;
-      var newHtml = chat.slice(-50).map(function(m){
-        var mine = u && m.uid === u.id;
-        return '<div style="display:flex;flex-direction:'+(mine?'row-reverse':'row')+';gap:6px;margin-bottom:7px;">'+
-          '<span style="font-size:1.1rem;">'+(m.emoji||'?')+'</span>'+
-          '<div style="max-width:75%;">'+
-            (mine?'':'<div style="font-size:.6rem;font-weight:700;color:var(--muted);margin-bottom:2px;">'+m.name+'</div>')+
-            '<div style="background:'+(mine?'var(--g)':'var(--panel)')+';color:'+(mine?'#fff':'var(--text)')+';padding:7px 10px;border-radius:12px;font-size:.78rem;">'+m.text+'</div>'+
-          '</div></div>';
-      }).join('');
-      // Actualizar siempre - el onSnapshot solo dispara cuando hay cambios reales
-      cw.innerHTML = newHtml;
-      cw.scrollTop = cw.scrollHeight;
-      console.log('[CHAT] Actualizado:', chat.length, 'mensajes');
+      // Renderizar SIEMPRE en mg-chat-w si existe
+      function renderChat(){
+        var cw = document.getElementById('mg-chat-w');
+        if(!cw) return;
+        var u = window.apSt && window.apSt.user;
+        cw.innerHTML = chat.slice(-50).map(function(m){
+          var mine = u && m.uid === u.id;
+          return '<div style="display:flex;flex-direction:'+(mine?'row-reverse':'row')+';gap:6px;margin-bottom:7px;">'+
+            '<span style="font-size:1.1rem;">'+(m.emoji||'?')+'</span>'+
+            '<div style="max-width:75%;">'+
+              (mine?'':'<div style="font-size:.6rem;font-weight:700;color:var(--muted);margin-bottom:2px;">'+m.name+'</div>')+
+              '<div style="background:'+(mine?'var(--g)':'var(--panel)')+';color:'+(mine?'#fff':'var(--text)')+';padding:7px 10px;border-radius:12px;font-size:.78rem;">'+m.text+'</div>'+
+            '</div></div>';
+        }).join('');
+        cw.scrollTop = cw.scrollHeight;
+      }
+      renderChat();
+      // Reintentar despues de 300ms por si el DOM no estaba listo
+      setTimeout(renderChat, 300);
+      console.log('[CHAT] onSnapshot:', chat.length, 'mensajes');
     }, function(err){ console.warn('[CHAT] Error:', err.message); });
   }
 
