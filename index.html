@@ -2477,7 +2477,7 @@ if(coinsWager>0){
 apSaveGrp(g); apSt.group=g;
 if(typeof apBanner==='function') apBanner();
 if(typeof _fbConnected!=='undefined'&&_fbConnected&&_fbDB&&g.code){
-  try{_fbDB.collection('groups').doc(g.code).set({members:g.members,bets:g.bets,updatedAt:Date.now()},{merge:true});}catch(e){}
+  try{_fbDB.collection('groups').doc(g.code).set({members:g.members,bets:g.bets,updatedAt:Date.now()},{merge:true}).then(function(){console.log('[QFC] apuesta+coins guardados en Firebase');});}catch(e){}
 }
 var mem=g.members.find(function(m){return m.id===u.id;});
 if(mem){
