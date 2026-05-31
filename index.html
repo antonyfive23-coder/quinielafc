@@ -7917,3 +7917,94 @@ console.log('[v27] Liga + Idiomas + Chat reacciones + Standings + Acumulada + Av
   });
 })();
 </script>
+
+<script>
+// POLLING SIMPLE INDEPENDIENTE
+(function(){
+  var lastAt = 0;
+  var indicator = null;
+
+  function showIndicator(txt, color){
+    if(!indicator){
+      indicator = document.createElement('div');
+      indicator.style.cssText = 'position:fixed;bottom:65px;right:8px;padding:3px 7px;border-radius:6px;font-size:9px;font-weight:700;z-index:99999;color:white;';
+      document.body.appendChild(indicator);
+    }
+    indicator.style.background = color||'#16a34a';
+    indicator.textContent = txt;
+  }
+
+  function poll(){
+    try{
+      // Buscar Firebase DB de cualquier manera posible
+      var db = window._fbDB || (window.firebase && window.firebase.firestore && window.firebase.firestore());
+      if(!db){ showIndicator('FB sin DB','#dc2626'); return; }
+
+      var grpSession = null;
+      try{ grpSession = JSON.parse(localStorage.getItem('wc26_ap')||'{}'); }catch(e){}
+      var code = grpSession && grpSession.code;
+      if(!code){
+        // Intentar obtener codigo de apSt
+        code = window.apSt && window.apSt.group && window.apSt.group.code;
+      }
+      if(!code){ showIndicator('sin grupo','#f59e0b'); return; }
+
+      showIndicator('polling...','#3b82f6');
+
+      db.collection('groups').doc(code).get().then(function(doc){
+        if(!doc||!doc.exists){ showIndicator('no doc','#dc2626'); return; }
+        var data = doc.data();
+        var remoteAt = data.updatedAt || 0;
+        showIndicator(new Date().toLocaleTimeString(),'#16a34a');
+
+        if(remoteAt <= lastAt) return;
+        lastAt = remoteAt;
+
+        // Hay cambios - aplicar
+        var g = window.apSt && window.apSt.group;
+        if(!g || g.code !== code) return;
+
+        var changed = false;
+        if(data.members && data.members.length !== g.members.length){
+          g.members = data.members; changed = true;
+        }
+        if(data.bets) g.bets = data.bets;
+        if(data.feed && data.feed.length !== (g.feed||[]).length){ g.feed = data.feed; changed = true; }
+
+        if(!changed) return;
+
+        g.members.forEach(function(m){ if(!m.coins) m.coins = 5000; });
+        if(typeof apSaveGrp==='function') apSaveGrp(g);
+        window.apSt.group = g;
+        if(window.apSt.user){
+          var me = g.members.find(function(m){ return m.id===window.apSt.user.id; });
+          if(me) window.apSt.user = me;
+        }
+        try{ if(typeof apBanner==='function') apBanner(); }catch(e){}
+        try{ if(typeof renderFeed==='function') renderFeed(); }catch(e){}
+        try{ if(typeof apRenderMembers==='function') apRenderMembers(); }catch(e){}
+        try{
+          var ap = document.querySelector('.tab-pane.active');
+          if(ap){
+            var aid = ap.id.replace('ap-','');
+            if(aid==='partidos') apRenderAP&&apRenderAP();
+            if(aid==='ranking') apRenderRanking&&apRenderRanking();
+            if(aid==='miembros') apRenderMembers&&apRenderMembers();
+          }
+        }catch(e){}
+        if(typeof toast==='function') toast('👥', g.members.length+' jugadores en el grupo','#dcfce7');
+
+      }).catch(function(e){ showIndicator('error','#dc2626'); });
+
+    }catch(e){ showIndicator('excepcion','#dc2626'); }
+  }
+
+  // Esperar a que todo cargue
+  window.addEventListener('load', function(){
+    setTimeout(function(){
+      setInterval(poll, 5000);
+      poll();
+    }, 3000);
+  });
+})();
+</script>
