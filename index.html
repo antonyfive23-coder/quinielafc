@@ -2711,7 +2711,13 @@ var inp=document.getElementById('chat-inp');var text=(inp?inp.value:'').trim();i
 var msgs=apGetChats();var now=new Date();var t=now.getHours()+':'+(now.getMinutes()<10?'0':'')+now.getMinutes();
 msgs.push({uid:u.id,name:u.name,emoji:u.emoji,text:text,t:t,ts:Date.now()});
 apSaveChats(msgs);
-if(typeof _fbConnected!=='undefined'&&_fbConnected&&_fbDB&&g.code){try{_fbDB.collection('groups').doc(g.code).update({chat:msgs.slice(-100),updatedAt:Date.now()}).catch(function(){});}catch(e){}}
+if(typeof _fbConnected!=='undefined'&&_fbConnected&&_fbDB&&g.code){
+  try{
+    _fbDB.collection('groups').doc(g.code).set({chat:msgs.slice(-100),updatedAt:Date.now()},{merge:true})
+    .then(function(){console.log('[QFC] chat guardado en Firebase');})
+    .catch(function(e){console.warn('[QFC] chat error:',e);});
+  }catch(e){console.warn('[QFC] chat excepcion:',e);}
+}
 if(inp)inp.value='';apRenderChat();
 };
 function apRenderHistorial(){
@@ -5735,7 +5741,13 @@ window.sendMGChat=function(){
   var msgs=typeof apGetChats==='function'?apGetChats():[];
   msgs.push({uid:u.id,name:u.name,emoji:u.emoji,text:txt,t:t,ts:Date.now()});
   if(typeof apSaveChats==='function') apSaveChats(msgs);
-  if(typeof _fbConnected!=='undefined'&&_fbConnected&&_fbDB&&g.code){try{_fbDB.collection('groups').doc(g.code).update({chat:msgs.slice(-100),updatedAt:Date.now()}).catch(function(){});}catch(e){}}
+  if(typeof _fbConnected!=='undefined'&&_fbConnected&&_fbDB&&g.code){
+  try{
+    _fbDB.collection('groups').doc(g.code).set({chat:msgs.slice(-100),updatedAt:Date.now()},{merge:true})
+    .then(function(){console.log('[QFC] chat guardado en Firebase');})
+    .catch(function(e){console.warn('[QFC] chat error:',e);});
+  }catch(e){console.warn('[QFC] chat excepcion:',e);}
+}
   inp.value='';
   _renderMGChat();
 };
