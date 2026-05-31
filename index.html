@@ -5638,7 +5638,24 @@ window.showMGTab = function(tab, btn){
     if(b2) b2.classList.toggle('active',t===tab);
   });
   if(tab==='miembros') _renderMGMembers();
-  if(tab==='chat') _renderMGChat();
+  if(tab==='chat'){
+    _renderMGChat();
+    // Activar listener en tiempo real y cargar mensajes frescos de Firebase
+    var code=apSt.group&&apSt.group.code;
+    if(code){
+      if(typeof window._initRealtimeChat==='function') window._initRealtimeChat(code);
+      // Cargar mensajes frescos inmediatamente
+      if(typeof _fbConnected!=='undefined'&&_fbConnected&&_fbDB){
+        _fbDB.collection('groups').doc(code).get().then(function(doc){
+          if(doc&&doc.exists&&doc.data().chat&&doc.data().chat.length){
+            window._latestChat=doc.data().chat;
+            if(typeof apSaveChats==='function') apSaveChats(window._latestChat);
+            _renderMGChat();
+          }
+        }).catch(function(){});
+      }
+    }
+  }
   if(tab==='ajustes') _renderMGAjustes();
   if(tab==='quiniela') _renderMGQuiniela();
 };
