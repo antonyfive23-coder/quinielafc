@@ -2713,22 +2713,15 @@ msgs.push({uid:u.id,name:u.name,emoji:u.emoji,text:text,t:t,ts:Date.now()});
 apSaveChats(msgs);
 if(typeof _fbConnected!=='undefined'&&_fbConnected&&_fbDB&&g.code){
   try{
-    // Leer chat actual de Firebase, hacer merge y guardar
-    _fbDB.collection('groups').doc(g.code).get().then(function(doc){
-      var fbChat=[];
-      if(doc&&doc.exists&&doc.data().chat) fbChat=doc.data().chat;
-      // Merge: combinar mensajes por ts, eliminar duplicados
-      var merged=fbChat.slice();
-      msgs.forEach(function(m){
-        if(!merged.find(function(x){return x.ts===m.ts&&x.name===m.name;})){
-          merged.push(m);
-        }
-      });
-      merged.sort(function(a,b){return (a.ts||0)-(b.ts||0);});
-      merged=merged.slice(-100);
-      if(typeof apSaveChats==='function') apSaveChats(merged);
-      return _fbDB.collection('groups').doc(g.code).set({chat:merged,updatedAt:Date.now()},{merge:true});
-    }).catch(function(e){console.warn('[QFC] chat merge error:',e);});
+    // Usar arrayUnion para añadir mensaje sin sobreescribir otros
+    var newMsg=msgs[msgs.length-1];
+    if(newMsg){
+      var FieldValue=firebase.firestore.FieldValue;
+      _fbDB.collection('groups').doc(g.code).set({
+        chat:FieldValue.arrayUnion(newMsg),
+        updatedAt:Date.now()
+      },{merge:true}).catch(function(e){console.warn('[QFC] chat error:',e);});
+    }
   }catch(e){console.warn('[QFC] chat excepcion:',e);}
 }
 if(inp)inp.value='';apRenderChat();
@@ -5756,22 +5749,15 @@ window.sendMGChat=function(){
   if(typeof apSaveChats==='function') apSaveChats(msgs);
   if(typeof _fbConnected!=='undefined'&&_fbConnected&&_fbDB&&g.code){
   try{
-    // Leer chat actual de Firebase, hacer merge y guardar
-    _fbDB.collection('groups').doc(g.code).get().then(function(doc){
-      var fbChat=[];
-      if(doc&&doc.exists&&doc.data().chat) fbChat=doc.data().chat;
-      // Merge: combinar mensajes por ts, eliminar duplicados
-      var merged=fbChat.slice();
-      msgs.forEach(function(m){
-        if(!merged.find(function(x){return x.ts===m.ts&&x.name===m.name;})){
-          merged.push(m);
-        }
-      });
-      merged.sort(function(a,b){return (a.ts||0)-(b.ts||0);});
-      merged=merged.slice(-100);
-      if(typeof apSaveChats==='function') apSaveChats(merged);
-      return _fbDB.collection('groups').doc(g.code).set({chat:merged,updatedAt:Date.now()},{merge:true});
-    }).catch(function(e){console.warn('[QFC] chat merge error:',e);});
+    // Usar arrayUnion para añadir mensaje sin sobreescribir otros
+    var newMsg=msgs[msgs.length-1];
+    if(newMsg){
+      var FieldValue=firebase.firestore.FieldValue;
+      _fbDB.collection('groups').doc(g.code).set({
+        chat:FieldValue.arrayUnion(newMsg),
+        updatedAt:Date.now()
+      },{merge:true}).catch(function(e){console.warn('[QFC] chat error:',e);});
+    }
   }catch(e){console.warn('[QFC] chat excepcion:',e);}
 }
   inp.value='';
