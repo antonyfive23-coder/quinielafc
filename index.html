@@ -5338,7 +5338,19 @@ function fbListenGroup(code){
       if(data.coinPot!==undefined)g.coinPot=data.coinPot;
       if(data.coinContrib)g.coinContrib=data.coinContrib;
       if(data.feed && data.feed.length) g.feed=data.feed;
-      if(data.chat && Array.isArray(data.chat) && data.chat.length){if(typeof apSaveChats==='function')apSaveChats(data.chat);try{apRenderChat&&apRenderChat();}catch(ex){}try{_renderMGChat&&_renderMGChat();}catch(ex){}}
+      if(data.chat && Array.isArray(data.chat) && data.chat.length){
+  if(typeof apSaveChats==='function') apSaveChats(data.chat);
+  // Forzar re-render inmediato del chat
+  setTimeout(function(){
+    try{if(typeof apRenderChat==='function')apRenderChat();}catch(ex){}
+    try{if(typeof _renderMGChat==='function')_renderMGChat();}catch(ex){}
+    // Scroll al ultimo mensaje
+    var cw=document.getElementById('chat-w');
+    if(cw) cw.scrollTop=cw.scrollHeight;
+    var cw2=document.getElementById('mg-chat-w');
+    if(cw2) cw2.scrollTop=cw2.scrollHeight;
+  },100);
+}
       // Re-init coins for any member that doesn't have them
       g.members.forEach(function(m){ if(!m.coins) m.coins=COINS_START; });
       apSaveGrp&&apSaveGrp(g);
