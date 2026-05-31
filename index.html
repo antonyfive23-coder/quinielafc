@@ -3186,7 +3186,9 @@ var p = PARTIDOS_AP.concat(KNOCKOUT_AP).find(function(x){return x.id===pid;});
 if(!p) return;
 var g = apSt.group;
 var usedDouble = g && g.bets && apSt.user && Object.values(g.bets[apSt.user.id]||{}).some(function(b){return b.isDouble;});
-_pendingBetData = {pid:pid, result:result, hg:hg, ag:ag, amt:amt};
+var _cwEl=document.getElementById('cw-'+pid);
+var _cwVal=_cwEl?parseInt(_cwEl.value)||0:0;
+_pendingBetData = {pid:pid, result:result, hg:hg, ag:ag, amt:amt, coins:_cwVal};
 _doubleActive = false;
 var rl = result==='1'?'Local gana':result==='X'?'Empate':'Visitante gana';
 document.getElementById('cm-match').textContent = p.home.name + ' vs ' + p.away.name;
@@ -3230,22 +3232,45 @@ if(!_pendingBetData) return;
 var d = _pendingBetData;
 var g = apSt.group; var u = apSt.user;
 if(!g||!u){toast('❗','Sin grupo activo');return;}
-// Get coins from input
-var cwEl=document.getElementById('cw-'+d.pid);
-var coinsWager=cwEl?parseInt(cwEl.value)||0:0;
-d.coins=coinsWager;
-if(!g.bets[u.id]) g.bets[u.id] = {};
-g.bets[u.id][d.pid] = {result:d.result, homeGoals:d.hg, awayGoals:d.ag, amount:d.amt, ts:Date.now(), pts:null, isDouble:_doubleActive};
-var mem = g.members.find(function(m){return m.id===u.id;});
-if(mem) mem.lastSeen = Date.now();
+// Obtener monedas apostadas (guardadas cuando se abrio el modal)
+var coinsWager=d.coins||0;
+// Validar monedas disponibles
+var available=getAvailableCoins(g,u.id);
+if(coinsWager>available){toast('🪙','Sin monedas suficientes: '+available+' disponibles','#fca5a5');return;}
+if(!g.bets[u.id]) g.bets[u.id]={};
+// Guardar apuesta CON coins
+g.bets[u.id][d.pid]={result:d.result,homeGoals:d.hg,awayGoals:d.ag,amount:d.amt,coins:coinsWager,coinSettled:false,coinDelta:null,ts:Date.now(),pts:null,isDouble:_doubleActive};
+// Descontar monedas del jugador
+if(coinsWager>0){
+  var mem2=g.members.find(function(m){return m.id===u.id;});
+  if(mem2){
+    if(mem2.coins===undefined||mem2.coins===null) mem2.coins=COINS_START;
+    mem2.coins=Math.max(0,mem2.coins-coinsWager);
+    apSt.user=mem2;
+  }
+}
+var mem=g.members.find(function(m){return m.id===u.id;});
+if(mem) mem.lastSeen=Date.now();
 updateDailyStreak(u.id);
-var p = PARTIDOS_AP.concat(KNOCKOUT_AP).find(function(x){return x.id===d.pid;});
-addFeed('bet', u.name, 'apostó en '+(p?p.home.name+' vs '+p.away.name:d.pid)+(_doubleActive?' ⚡ (doble)':''), u.emoji);
-addNotif('⚽','Apuesta: '+d.result+' ('+d.hg+'-'+d.ag+')'+(_doubleActive?' ⚡ DOBLE':''));
-apSaveGrp(g); apSt.group = g;
-document.getElementById('confirm-modal').style.display = 'none';
-_pendingBetData = null; _doubleActive = false;
-toast('🎯', (_doubleActive?'⚡ Apuesta DOBLE: ':'')+d.result+' '+d.hg+'-'+d.ag+(d.coins>0?' · 🪙'+d.coins:''));
+var p=PARTIDOS_AP.concat(KNOCKOUT_AP).find(function(x){return x.id===d.pid;});
+var coinMsg=coinsWager>0?' · 🪙'+coinsWager:'';
+addFeed('bet',u.name,'apostó en '+(p?p.home.name+' vs '+p.away.name:d.pid)+coinMsg+(_doubleActive?' ⚡ (doble)':''),u.emoji);
+addNotif('⚽','Apuesta: '+d.result+' ('+d.hg+'-'+d.ag+')'+coinMsg+(_doubleActive?' ⚡ DOBLE':''));
+apSaveGrp(g); apSt.group=g;
+// Guardar en Firebase inmediatamente
+if(typeof _fbConnected!=='undefined'&&_fbConnected&&_fbDB&&g.code){
+  try{
+    _fbDB.collection('groups').doc(g.code).set({
+      members:g.members,
+      bets:g.bets,
+      feed:(g.feed||[]).slice(-50),
+      updatedAt:Date.now()
+    },{merge:true});
+  }catch(e){console.warn('FB bet save:',e);}
+}
+document.getElementById('confirm-modal').style.display='none';
+_pendingBetData=null; _doubleActive=false;
+toast('🎯',(_doubleActive?'⚡ Apuesta DOBLE: ':'')+d.result+' '+d.hg+'-'+d.ag+coinMsg);
 apRenderAP(); apBanner(); renderToday();
 };
 function renderToday(){
