@@ -7911,7 +7911,18 @@ console.log('[v27] Liga + Idiomas + Chat reacciones + Standings + Acumulada + Av
         if(data.bets){var rb=Object.values(data.bets).reduce(function(s,v){return s+Object.keys(v||{}).length;},0);var lb=Object.values(g.bets||{}).reduce(function(s,v){return s+Object.keys(v||{}).length;},0);if(rb!==lb){g.bets=data.bets;changed=true;}}
         if(data.results&&Object.keys(data.results).length!==Object.keys(g.results||{}).length){g.results=data.results;changed=true;}
         if(data.feed&&data.feed.length!==(g.feed||[]).length){g.feed=data.feed;changed=true;}
-        if(data.chat&&Array.isArray(data.chat)){var lc=typeof apGetChats==='function'?apGetChats():[];if(data.chat.length!==lc.length){if(typeof apSaveChats==='function')apSaveChats(data.chat);try{apRenderChat&&apRenderChat();}catch(ex){}try{_renderMGChat&&_renderMGChat();}catch(ex){}changed=true;}}
+        if(data.chat&&Array.isArray(data.chat)&&data.chat.length>0){
+  var lc=typeof apGetChats==='function'?apGetChats():[];
+  var lastRemote=(data.chat[data.chat.length-1]||{}).ts||0;
+  var lastLocal=(lc[lc.length-1]||{}).ts||0;
+  if(data.chat.length!==lc.length||lastRemote!==lastLocal){
+    if(typeof apSaveChats==='function')apSaveChats(data.chat);
+    try{apRenderChat&&apRenderChat();}catch(ex){}
+    try{_renderMGChat&&_renderMGChat();}catch(ex){}
+    changed=true;
+    console.log('[QFC Poll] chat sincronizado:',data.chat.length,'mensajes');
+  }
+}
         if(data.coinPot!==undefined&&data.coinPot!==g.coinPot){g.coinPot=data.coinPot;changed=true;}
         if(!changed)return;
         g.members.forEach(function(m){if(!m.coins)m.coins=window.COINS_START||5000;});
