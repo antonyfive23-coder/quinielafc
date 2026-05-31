@@ -133,6 +133,21 @@ window.addEventListener('load',function(){
                   if(g&&g.code&&typeof fbListenGroup==='function'){
                     fbListenGroup(g.code);
                     console.log('[QFC] Listener re-iniciado para grupo',g.code);
+                    // Restaurar el grupo en apSt para que la UI lo muestre
+                    if(typeof apSt!=='undefined' && !apSt.group){
+                      var grpData=localStorage.getItem('wc26_grp_'+g.code);
+                      if(grpData){
+                        try{
+                          var grpObj=JSON.parse(grpData);
+                          apSt.group=grpObj;
+                          var uid=g.uid||g.id;
+                          if(uid) apSt.user=grpObj.members.find(function(m){return m.id===uid;})||grpObj.members[0];
+                          if(typeof apBanner==='function') apBanner();
+                          if(typeof apRenderAP==='function') apRenderAP();
+                          console.log('[QFC] Grupo restaurado:', g.code);
+                        }catch(e){}
+                      }
+                    }
                   }
                 }
               }catch(e){}
@@ -2844,7 +2859,11 @@ if(_fbConnected && _fbDB){
     if(typeof fbListenGroup==='function') fbListenGroup(code);
     _fbMarkOnline(code, uid);
     // Auto-guardar codigo de grupo para reconectar
-    try{ localStorage.setItem('qfc_last_group', code); }catch(e){}
+    try{
+      localStorage.setItem('qfc_last_group', code);
+      if(typeof apSt!=='undefined'&&apSt.user)
+        localStorage.setItem('wc26_ap', JSON.stringify({code:code,uid:apSt.user.id,name:apSt.user.name,emoji:apSt.user.emoji}));
+    }catch(e){}
   }catch(e){ console.warn('[QFC] join FB write:', e); }
 }
 if(!sessionStorage.getItem('qfc_grp_notif_'+code)){
