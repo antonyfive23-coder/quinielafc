@@ -2794,7 +2794,7 @@ var inscr=parseFloat((document.getElementById('gn-inscr')||{}).value)||0;
 if(!gname||!uname){toast('❗','Rellena todos los campos','#fca5a5');return;}
 var code=apGenCode();var uid='u_'+Date.now();
 /* FIX v2: presence field 'online:true' added to creator from the start */
-var user={id:uid,name:uname,emoji:emoji,pts:0,coins:COINS_START,isCreator:true,lastSeen:Date.now(),online:true};
+var user={id:uid,name:uname,emoji:emoji,pts:0,coins:COINS_START,isCreator:true,lastSeen:Date.now(),online:true,coinsInit:COINS_START};
 var group={code:code,name:gname,inscripcion:inscr,members:[user],bets:{},specialBets:{},results:{},feed:[],created:Date.now()};
 apSaveGrp(group);apSt.group=group;apSt.user=user;
 /* FIX v2: persist session with both code AND uid so reconnection works after clearing cache */
@@ -2866,7 +2866,7 @@ if(existingMember){
 }
 var uid='u_'+Date.now();
 /* FIX v2: include online:true from the start */
-var user={id:uid,name:uname,emoji:emoji,pts:0,coins:COINS_START,isCreator:false,lastSeen:Date.now(),online:true};
+var user={id:uid,name:uname,emoji:emoji,pts:0,coins:COINS_START,isCreator:false,lastSeen:Date.now(),online:true,coinsInit:COINS_START};
 group.members.push(user);addFeed('join',uname,'se unió al grupo',emoji);
 apSaveGrp(group);apSt.group=group;apSt.user=user;
 /* FIX v2: save name and emoji too for reconnection after cache clear */
@@ -7858,7 +7858,7 @@ console.log('[v27] Liga + Idiomas + Chat reacciones + Standings + Acumulada + Av
         var changed=false;
         if(data.members&&Array.isArray(data.members)){
           if(data.members.length!==g.members.length){g.members=data.members;changed=true;}
-          else{data.members.forEach(function(fm){var loc=g.members.find(function(m){return m.id===fm.id;});if(!loc){g.members.push(fm);changed=true;}else if(fm.pts!==loc.pts||fm.coins!==loc.coins){loc.pts=fm.pts;loc.coins=fm.coins;loc.online=fm.online;loc.lastSeen=fm.lastSeen;changed=true;}});}
+          else{data.members.forEach(function(fm){var loc=g.members.find(function(m){return m.id===fm.id;});if(!loc){g.members.push(fm);changed=true;}else if(fm.pts!==loc.pts||fm.coins!==loc.coins){loc.pts=fm.pts;if(fm.coins===undefined||loc.coins===undefined||fm.coins<loc.coins)loc.coins=fm.coins;else if(loc.coins<fm.coins){}else loc.coins=fm.coins;loc.online=fm.online;loc.lastSeen=fm.lastSeen;changed=true;}});}
         }
         if(data.bets){var rb=Object.values(data.bets).reduce(function(s,v){return s+Object.keys(v||{}).length;},0);var lb=Object.values(g.bets||{}).reduce(function(s,v){return s+Object.keys(v||{}).length;},0);if(rb!==lb){g.bets=data.bets;changed=true;}}
         if(data.results&&Object.keys(data.results).length!==Object.keys(g.results||{}).length){g.results=data.results;changed=true;}
