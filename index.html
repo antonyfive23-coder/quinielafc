@@ -135,7 +135,7 @@ window.addEventListener('load',function(){
                     console.log('[QFC] Listener re-iniciado para grupo',g.code);
                     // Restaurar el grupo en apSt para que la UI lo muestre
                     if(typeof apSt!=='undefined' && !apSt.group){
-                      var grpData=localStorage.getItem('wc26_grp_'+g.code);
+                      var grpData=localStorage.getItem('wc26_g_'+g.code);
                       if(grpData){
                         try{
                           var grpObj=JSON.parse(grpData);
