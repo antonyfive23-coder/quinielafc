@@ -111,6 +111,21 @@ window.addEventListener('load', function(){
   }, 1500);
 });
 
+window.addEventListener('load',function(){
+  setTimeout(function(){
+    try{
+      var saved=localStorage.getItem('qfc_fb_config');
+      if(saved){
+        var cfg=JSON.parse(saved);
+        if(cfg.apiKey&&cfg.projectId&&cfg.appId&&typeof initFirebase==='function'){
+          initFirebase(cfg);
+          console.log('[QFC] Firebase auto-reconectado');
+        }
+      }
+    }catch(e){}
+  },1500);
+});
+
 if('serviceWorker' in navigator){
   window.addEventListener('load', function(){
     navigator.serviceWorker.register('sw.js')
