@@ -2479,7 +2479,12 @@ if(typeof apBanner==='function') apBanner();
 if(typeof _fbConnected!=='undefined'&&_fbConnected&&_fbDB&&g.code){
   try{_fbDB.collection('groups').doc(g.code).set({members:g.members,bets:g.bets,updatedAt:Date.now()},{merge:true});}catch(e){}
 }
-var mem=g.members.find(function(m){return m.id===u.id;});if(mem)mem.lastSeen=Date.now();
+var mem=g.members.find(function(m){return m.id===u.id;});
+if(mem){
+  mem.lastSeen=Date.now();
+  // Asegurar coins inicializado
+  if(mem.coins===undefined||mem.coins===null) mem.coins=COINS_START;
+}
 addFeed('bet',u.name,'apostó en '+(p?p.home.name+' vs '+p.away.name:pid),u.emoji);
 apSaveGrp(g);apSt.group=g;delete apSt.pending[pid];
 if(typeof fbSaveGroup==='function') safeRun(function(){fbSaveGroup(g);},'fbSaveBet');
