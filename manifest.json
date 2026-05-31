@@ -2,7 +2,7 @@
   "name": "QuinielaFC — Mundial 2026",
   "short_name": "QuinielaFC",
   "description": "Quiniela privada del Mundial 2026 con tus amigos",
-  "start_url": "./index_v2.html",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#f0fdf4",
   "theme_color": "#16a34a",
