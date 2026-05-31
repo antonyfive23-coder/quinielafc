@@ -2855,7 +2855,31 @@ apSaveGrp(group);apSt.group=group;apSt.user=user;
 apLSW('wc26_ap',{code:code,uid:uid,name:uname,emoji:emoji});
 if(_fbConnected && _fbDB){
   try{
-    _fbDB.collection('groups').doc(code).set({members:group.members,feed:(group.feed||[]).slice(-50),updatedAt:Date.now()},{merge:true}).catch(function(e){console.warn('[QFC] join write:',e);});
+    // FIX: leer Firebase primero, hacer merge, luego escribir
+    _fbDB.collection('groups').doc(code).get().then(function(doc){
+      var finalMembers = group.members.slice();
+      if(doc && doc.exists){
+        var fb = doc.data();
+        if(fb.members && fb.members.length > 0){
+          fb.members.forEach(function(fm){
+            var exists = finalMembers.find(function(m){return m.id===fm.id;});
+            if(!exists) finalMembers.push(fm);
+          });
+          group.members = finalMembers;
+          if(fb.bets) group.bets = Object.assign({},fb.bets);
+          if(fb.results) group.results = Object.assign({},fb.results);
+          if(fb.feed && fb.feed.length) group.feed = fb.feed;
+          apSaveGrp(group); apSt.group = group;
+        }
+      }
+      _fbDB.collection('groups').doc(code).set({
+        members:finalMembers,
+        feed:(group.feed||[]).slice(-50),
+        updatedAt:Date.now()
+      },{merge:true}).catch(function(e){console.warn('[QFC] join write:',e);});
+    }).catch(function(e){
+      _fbDB.collection('groups').doc(code).set({members:group.members,feed:(group.feed||[]).slice(-50),updatedAt:Date.now()},{merge:true}).catch(function(){});
+    });
     if(typeof fbListenGroup==='function') fbListenGroup(code);
     _fbMarkOnline(code, uid);
     // Auto-guardar codigo de grupo para reconectar
