@@ -5744,14 +5744,26 @@ function _renderMGMembers(){
 }
 
 function _renderMGChat(){
-  // Reutilizar apRenderChat si existe, apuntando al nuevo container
   var cw=document.getElementById('mg-chat-w');if(!cw)return;
   var g=apSt.group;if(!g){cw.innerHTML='<div class="nores">Sin grupo.</div>';return;}
-  var msgs=typeof apGetChats==='function'?apGetChats():[];
-  // Usar latestChat de Firebase si local esta vacio
-  if(!msgs.length&&window._latestChat&&window._latestChat.length){
+  // Usar siempre latestChat de Firebase si disponible (mas actualizado)
+  var msgs=[];
+  if(window._latestChat&&window._latestChat.length){
     msgs=window._latestChat;
     if(typeof apSaveChats==='function') apSaveChats(msgs);
+  } else {
+    msgs=typeof apGetChats==='function'?apGetChats():[];
+  }
+  // Si aun no hay mensajes, cargar de Firebase
+  if(!msgs.length&&typeof _fbConnected!=='undefined'&&_fbConnected&&_fbDB&&g.code){
+    _fbDB.collection('groups').doc(g.code).get().then(function(doc){
+      if(doc&&doc.exists&&doc.data().chat){
+        window._latestChat=doc.data().chat;
+        if(typeof apSaveChats==='function') apSaveChats(window._latestChat);
+        _renderMGChat();
+      }
+    }).catch(function(){});
+    return;
   }
   if(!msgs.length){cw.innerHTML='<div class="nores" style="padding:10px;font-size:.78rem;">Sin mensajes aún. ¡Di algo! 👋</div>';return;}
   var u=apSt.user;
@@ -7972,8 +7984,13 @@ console.log('[v27] Liga + Idiomas + Chat reacciones + Standings + Acumulada + Av
   if(typeof apSaveChats==='function')apSaveChats(data.chat);
   // Guardar en variable global para acceso rapido
   window._latestChat=data.chat;
-  // Render directo siempre
+  // Notificar siempre aunque el chat no este abierto
   var cwP=document.getElementById('mg-chat-w');
+  if(!cwP){
+    // Chat no esta abierto - mostrar toast
+    if(typeof toast==='function') toast('💬','Nuevo mensaje de '+(data.chat[data.chat.length-1]||{}).name,'#dcfce7');
+  }
+  cwP=document.getElementById('mg-chat-w');
   if(cwP){
     var uP=window.apSt&&window.apSt.user;
     var newHtml=data.chat.slice(-50).map(function(m){
