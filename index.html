@@ -531,7 +531,7 @@ window.installPWA = function(){
         <div style="font-size:0.55rem;color:#b45309;font-weight:700;text-transform:uppercase;letter-spacing:1px;">Mi aporte al bote</div>
         <div style="font-family:Bebas Neue,sans-serif;font-size:.9rem;color:#d97706;line-height:1.3;" id="inscr-val">🪙 0</div>
         <div style="font-size:.55rem;color:#b45309;margin-top:2px;" id="my-coins-label">Saldo: 🪙5000</div>
-        <button onclick="apTab('monedas',document.querySelector('.tab-btn[onclick*=monedas]'));setTimeout(function(){var el=document.getElementById('bote-contrib-input');if(el)el.scrollIntoView({behavior:'smooth',block:'center'});},300);" style="margin-top:5px;padding:4px 10px;background:linear-gradient(135deg,#f59e0b,#d97706);border:none;border-radius:6px;color:#fff;font-size:.65rem;font-weight:700;cursor:pointer;white-space:nowrap;">+ Aportar</button>
+        
       </div>
     </div>
     <!-- PWA Install Banner -->
@@ -3245,7 +3245,7 @@ addNotif('⚽','Apuesta: '+d.result+' ('+d.hg+'-'+d.ag+')'+(_doubleActive?' ⚡ 
 apSaveGrp(g); apSt.group = g;
 document.getElementById('confirm-modal').style.display = 'none';
 _pendingBetData = null; _doubleActive = false;
-toast('🎯', (_doubleActive?'⚡ Apuesta DOBLE: ':'')+''+d.result+' '+d.hg+'-'+d.ag+' · €'+parseFloat(d.amt).toFixed(2));
+toast('🎯', (_doubleActive?'⚡ Apuesta DOBLE: ':'')+d.result+' '+d.hg+'-'+d.ag+(d.coins>0?' · 🪙'+d.coins:''));
 apRenderAP(); apBanner(); renderToday();
 };
 function renderToday(){
