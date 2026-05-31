@@ -8237,12 +8237,10 @@ console.log('[v27] Liga + Idiomas + Chat reacciones + Standings + Acumulada + Av
             '<div style="background:'+(mine?'var(--g)':'var(--panel)')+';color:'+(mine?'#fff':'var(--text)')+';padding:7px 10px;border-radius:12px;font-size:.78rem;">'+m.text+'</div>'+
           '</div></div>';
       }).join('');
-      // Solo actualizar si hay cambios
-      if(cw.innerHTML !== newHtml){
-        cw.innerHTML = newHtml;
-        cw.scrollTop = cw.scrollHeight;
-        console.log('[CHAT] Actualizado:', chat.length, 'mensajes');
-      }
+      // Actualizar siempre - el onSnapshot solo dispara cuando hay cambios reales
+      cw.innerHTML = newHtml;
+      cw.scrollTop = cw.scrollHeight;
+      console.log('[CHAT] Actualizado:', chat.length, 'mensajes');
     }, function(err){ console.warn('[CHAT] Error:', err.message); });
   }
 
