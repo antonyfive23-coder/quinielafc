@@ -8018,10 +8018,21 @@ console.log('[v27] Liga + Idiomas + Chat reacciones + Standings + Acumulada + Av
 }
         if(data.coinPot!==undefined&&data.coinPot!==g.coinPot){g.coinPot=data.coinPot;changed=true;}
         if(!changed)return;
-        g.members.forEach(function(m){if(!m.coins)m.coins=window.COINS_START||5000;});
+        g.members.forEach(function(m){
+          if(!m.coins) m.coins=window.COINS_START||5000;
+          // Marcar usuario actual como siempre online
+          if(window.apSt&&window.apSt.user&&m.id===window.apSt.user.id){
+            m.online=true;
+            m.lastSeen=Date.now();
+          }
+        });
         if(typeof apSaveGrp==='function')apSaveGrp(g);
         window.apSt.group=g;
         if(window.apSt.user){var me=g.members.find(function(m){return m.id===window.apSt.user.id;});if(me)window.apSt.user=me;}
+        // Re-marcar online en Firebase
+        if(typeof _fbMarkOnline==='function'&&window.apSt&&window.apSt.user){
+          _fbMarkOnline(code, window.apSt.user.id);
+        }
         console.log('[QFC Poll] sync - miembros:', g.members.length);
         // Forzar notificacion visual
         if(typeof toast==='function') toast('🔄','Grupo actualizado: '+g.members.length+' jugadores','#dcfce7');
