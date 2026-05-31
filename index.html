@@ -5785,7 +5785,23 @@ window.sendMGChat=function(){
   }catch(e){console.warn('[QFC] chat excepcion:',e);}
 }
   inp.value='';
-  _renderMGChat();
+  // Render directo con los mensajes actuales
+  var cwDirect=document.getElementById('mg-chat-w');
+  if(cwDirect&&msgs.length){
+    var uDirect=apSt.user;
+    cwDirect.innerHTML=msgs.slice(-50).map(function(m){
+      var mine=uDirect&&m.uid===uDirect.id;
+      return '<div style="display:flex;flex-direction:'+(mine?'row-reverse':'row')+';gap:6px;margin-bottom:7px;">'+
+        '<span style="font-size:1.1rem;flex-shrink:0;">'+(m.emoji||'?')+'</span>'+
+        '<div style="max-width:75%;">'+
+          (mine?'':'<div style="font-size:.6rem;font-weight:700;color:var(--muted);margin-bottom:2px;">'+m.name+'</div>')+
+          '<div style="background:'+(mine?'var(--g)':'var(--panel)')+';color:'+(mine?'#fff':'var(--text)')+';padding:7px 10px;border-radius:12px;font-size:.78rem;">'+m.text+'</div>'+
+        '</div></div>';
+    }).join('');
+    cwDirect.scrollTop=cwDirect.scrollHeight;
+  } else {
+    _renderMGChat();
+  }
 };
 
 function _renderMGAjustes(){
