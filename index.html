@@ -8186,14 +8186,14 @@ console.log('[v27] Liga + Idiomas + Chat reacciones + Standings + Acumulada + Av
   var _chatCode = null;
 
   function initRealtimeChat(code){
-    if(!code || !window._fbDB) return;
-    if(_chatCode === code) return; // ya inicializado
+    if(!code || !_fbDB) return;
+    if(_chatCode === code && _chatUnsub) return;
     _chatCode = code;
     if(_chatUnsub) _chatUnsub();
     
     console.log('[CHAT] Iniciando listener para grupo:', code);
     
-    _chatUnsub = window._fbDB.collection('groups').doc(code).onSnapshot(function(doc){
+    _chatUnsub = _fbDB.collection('groups').doc(code).onSnapshot(function(doc){
       if(!doc.exists) return;
       var data = doc.data();
       var chat = data.chat || [];
@@ -8225,7 +8225,7 @@ console.log('[v27] Liga + Idiomas + Chat reacciones + Standings + Acumulada + Av
   // Iniciar cuando Firebase y grupo esten listos
   function tryInit(){
     var code = window.apSt && window.apSt.group && window.apSt.group.code;
-    if(code && window._fbDB && window._fbConnected){
+    if(code && typeof _fbDB!=='undefined' && _fbDB && _fbConnected){
       initRealtimeChat(code);
     }
   }
