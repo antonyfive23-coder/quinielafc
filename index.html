@@ -7955,8 +7955,23 @@ console.log('[v27] Liga + Idiomas + Chat reacciones + Standings + Acumulada + Av
     if(typeof apSaveChats==='function')apSaveChats(data.chat);
     try{apRenderChat&&apRenderChat();}catch(ex){}
     try{_renderMGChat&&_renderMGChat();}catch(ex){}
+    // Render directo en el contenedor
+    var cwP=document.getElementById('mg-chat-w');
+    if(cwP){
+      var uP=window.apSt&&window.apSt.user;
+      cwP.innerHTML=data.chat.slice(-50).map(function(m){
+        var mine=uP&&m.uid===uP.id;
+        return '<div style="display:flex;flex-direction:'+(mine?'row-reverse':'row')+';gap:6px;margin-bottom:7px;">'+
+          '<span style="font-size:1.1rem;flex-shrink:0;">'+(m.emoji||'?')+'</span>'+
+          '<div style="max-width:75%;">'+
+            (mine?'':'<div style="font-size:.6rem;font-weight:700;color:var(--muted);margin-bottom:2px;">'+m.name+'</div>')+
+            '<div style="background:'+(mine?'var(--g)':'var(--panel)')+';color:'+(mine?'#fff':'var(--text)')+';padding:7px 10px;border-radius:12px;font-size:.78rem;">'+m.text+'</div>'+
+          '</div></div>';
+      }).join('');
+      cwP.scrollTop=cwP.scrollHeight;
+    }
     changed=true;
-    console.log('[QFC Poll] chat sincronizado:',data.chat.length,'mensajes');
+    console.log('[QFC Poll] chat:',data.chat.length,'msgs');
   }
 }
         if(data.coinPot!==undefined&&data.coinPot!==g.coinPot){g.coinPot=data.coinPot;changed=true;}
