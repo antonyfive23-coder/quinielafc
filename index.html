@@ -93,6 +93,24 @@ window.renderLigaView = window.renderLigaView || function(){};
 <meta name="apple-mobile-web-app-title" content="QuinielaFC">
 <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚽</text></svg>">
 <script>
+// AUTO-CONECTAR FIREBASE AL ARRANCAR
+window.addEventListener('load', function(){
+  setTimeout(function(){
+    try{
+      var saved = localStorage.getItem('qfc_fb_config');
+      if(saved){
+        var cfg = JSON.parse(saved);
+        if(cfg.apiKey && cfg.projectId && cfg.appId){
+          if(typeof initFirebase==='function'){
+            initFirebase(cfg);
+            console.log('[QFC] Firebase auto-reconectado desde localStorage');
+          }
+        }
+      }
+    }catch(e){ console.warn('[QFC] Auto-connect error:',e); }
+  }, 1500);
+});
+
 if('serviceWorker' in navigator){
   window.addEventListener('load', function(){
     navigator.serviceWorker.register('sw.js')
@@ -2777,6 +2795,8 @@ if(_fbConnected && _fbDB){
     _fbDB.collection('groups').doc(code).set({members:group.members,feed:(group.feed||[]).slice(-50),updatedAt:Date.now()},{merge:true}).catch(function(e){console.warn('[QFC] join write:',e);});
     if(typeof fbListenGroup==='function') fbListenGroup(code);
     _fbMarkOnline(code, uid);
+    // Auto-guardar codigo de grupo para reconectar
+    try{ localStorage.setItem('qfc_last_group', code); }catch(e){}
   }catch(e){ console.warn('[QFC] join FB write:', e); }
 }
 if(!sessionStorage.getItem('qfc_grp_notif_'+code)){
@@ -4328,6 +4348,7 @@ localStorage.setItem('wc26_fb_cfg',JSON.stringify({apiKey:ak,projectId:pi,appId:
 fbSt('conn','Firebase conectado - sync en tiempo real activo');
 fbMsg('ok','Conectado con '+pi+'. Los grupos se sincronizan en todos los dispositivos.');
 if(typeof toast==='function')toast('🔥','Firebase conectado!');
+try{ localStorage.setItem('qfc_fb_config', JSON.stringify({apiKey:apiKey,projectId:projectId,appId:appId})); }catch(e){};
 if(apSt.group&&typeof fbListenGroup==='function')fbListenGroup(apSt.group.code);
 }else{
 fbSt('err','Error al conectar');
