@@ -114,6 +114,39 @@ window.addEventListener('load', function(){
 window.addEventListener('load',function(){
   setTimeout(function(){
     try{
+      // Credenciales hardcodeadas - siempre conecta automaticamente
+      var cfg={
+        apiKey:'AIzaSyBdBtQ1CEMkuq14T66RXCJaoBQDzQYdVtU',
+        projectId:'quinielafc-50209',
+        appId:'1:130848995431:web:452d3d2a857342540f7cc2'
+      };
+      if(typeof initFirebase==='function'){
+        initFirebase(cfg.apiKey, cfg.projectId, cfg.appId).then(function(ok){
+          if(ok){
+            console.log('[QFC] Firebase auto-conectado al arrancar');
+            // Reconectar grupo si habia uno activo
+            setTimeout(function(){
+              try{
+                var grp=localStorage.getItem('wc26_ap');
+                if(grp){
+                  var g=JSON.parse(grp);
+                  if(g&&g.code&&typeof fbListenGroup==='function'){
+                    fbListenGroup(g.code);
+                    console.log('[QFC] Listener re-iniciado para grupo',g.code);
+                  }
+                }
+              }catch(e){}
+            },2000);
+          }
+        });
+      }
+    }catch(e){ console.warn('[QFC] Auto-connect error:',e); }
+  },1500);
+});
+
+window.addEventListener('load',function(){
+  setTimeout(function(){
+    try{
       var saved=localStorage.getItem('qfc_fb_config');
       if(saved){
         var cfg=JSON.parse(saved);
