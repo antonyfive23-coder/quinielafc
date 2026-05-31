@@ -145,6 +145,22 @@ window.addEventListener('load',function(){
                           if(typeof apBanner==='function') apBanner();
                           if(typeof apRenderAP==='function') apRenderAP();
                           console.log('[QFC] Grupo restaurado:', g.code);
+                          // Recargar bets desde Firebase
+                          if(window._fbDB){
+                            window._fbDB.collection('groups').doc(g.code).get().then(function(doc){
+                              if(doc&&doc.exists){
+                                var fbData=doc.data();
+                                if(fbData.bets) grpObj.bets=fbData.bets;
+                                if(fbData.members) grpObj.members=fbData.members;
+                                if(fbData.feed) grpObj.feed=fbData.feed;
+                                apSt.group=grpObj;
+                                apSaveGrp&&apSaveGrp(grpObj);
+                                apBanner&&apBanner();
+                                apRenderAP&&apRenderAP();
+                                console.log('[QFC] Bets recargados desde Firebase');
+                              }
+                            }).catch(function(){});
+                          }
                         }catch(e){}
                       }
                     }
