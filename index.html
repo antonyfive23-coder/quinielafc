@@ -124,6 +124,11 @@ window.addEventListener('load',function(){
         initFirebase(cfg.apiKey, cfg.projectId, cfg.appId).then(function(ok){
           if(ok){
             console.log('[QFC] Firebase auto-conectado al arrancar');
+            // Activar chat listener
+            setTimeout(function(){
+              var code=window.apSt&&window.apSt.group&&window.apSt.group.code;
+              if(code&&typeof window._initRealtimeChat==='function') window._initRealtimeChat(code);
+            },2000);
             // Reconectar grupo si habia uno activo
             setTimeout(function(){
               try{
