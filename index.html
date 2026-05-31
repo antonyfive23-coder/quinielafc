@@ -2466,6 +2466,11 @@ var coinsWager = parseInt((av?av.querySelector('#cw-'+pid):document.getElementBy
 var available = getAvailableCoins(g, u.id);
 if(coinsWager > available){ toast('🪙','No tienes suficientes monedas (disponibles: '+available+')','#fca5a5'); return; }
 g.bets[u.id][pid]={result:pb.result,homeGoals:h,awayGoals:a,amount:amt,coins:coinsWager,coinSettled:false,coinDelta:null,ts:Date.now(),pts:null};
+// FIX: descontar monedas del jugador
+if(coinsWager>0){
+  var mem=g.members.find(function(m){return m.id===u.id;});
+  if(mem) mem.coins=Math.max(0,(mem.coins||COINS_START)-coinsWager);
+}
 var mem=g.members.find(function(m){return m.id===u.id;});if(mem)mem.lastSeen=Date.now();
 addFeed('bet',u.name,'apostó en '+(p?p.home.name+' vs '+p.away.name:pid),u.emoji);
 apSaveGrp(g);apSt.group=g;delete apSt.pending[pid];
