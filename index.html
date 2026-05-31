@@ -7846,7 +7846,9 @@ console.log('[v27] Liga + Idiomas + Chat reacciones + Standings + Acumulada + Av
         if(typeof apSaveGrp==='function')apSaveGrp(g);
         window.apSt.group=g;
         if(window.apSt.user){var me=g.members.find(function(m){return m.id===window.apSt.user.id;});if(me)window.apSt.user=me;}
-        console.log('[QFC Poll] sync');
+        console.log('[QFC Poll] sync - miembros:', g.members.length);
+        // Forzar notificacion visual
+        if(typeof toast==='function') toast('🔄','Grupo actualizado: '+g.members.length+' jugadores','#dcfce7');
         try{apBanner&&apBanner();}catch(e){}
         try{renderFeed&&renderFeed();}catch(e){}
         try{apRenderMembers&&apRenderMembers();}catch(e){}
@@ -7884,7 +7886,7 @@ console.log('[v27] Liga + Idiomas + Chat reacciones + Standings + Acumulada + Av
   }
   window.addEventListener('load',function(){
     setTimeout(function(){
-      setInterval(_poll,10000);
+      setInterval(_poll,5000);
       // Reconectar Firebase cada 30s si es necesario
       setInterval(function(){
         if(window.apSt&&window.apSt.group&&window._fbConnected){
