@@ -4267,29 +4267,8 @@ confetti({particleCount:pts>=5?120:60,spread:pts>=5?80:50,origin:{y:.6},colors:c
 if(pts>=5)setTimeout(function(){confetti({particleCount:60,angle:60,spread:55,origin:{x:0},colors:colors});confetti({particleCount:60,angle:120,spread:55,origin:{x:1},colors:colors});},300);
 }
 }
-var _baseFinalSubmit = window.finalSubmitBet;
-window.finalSubmitBet = function(){
-haptic('bet');
-if(!_pendingBetData) return;
-var d = _pendingBetData;
-var g = apSt.group; var u = apSt.user;
-if(!g||!u){toast('❗','Sin grupo activo');return;}
-if(!g.bets[u.id]) g.bets[u.id] = {};
-g.bets[u.id][d.pid] = {result:d.result, homeGoals:d.hg, awayGoals:d.ag, amount:d.amt, ts:Date.now(), pts:null, isDouble:_doubleActive};
-var mem = g.members.find(function(m){return m.id===u.id;});
-if(mem) mem.lastSeen = Date.now();
-updateDailyStreak(u.id);
-var allP2 = PARTIDOS_AP.concat(KNOCKOUT_AP);
-var p2 = allP2.find(function(x){return x.id===d.pid;});
-addFeed('bet', u.name, 'apostó en '+(p2?p2.home.name+' vs '+p2.away.name:d.pid)+(_doubleActive?' ⚡ (doble)':''), u.emoji);
-addNotif('⚽','Apuesta: '+d.result+' ('+d.hg+'-'+d.ag+')'+(_doubleActive?' ⚡ DOBLE':''));
-apSaveGrp(g); apSt.group = g;
-document.getElementById('confirm-modal').style.display = 'none';
-_pendingBetData = null; _doubleActive = false;
-toast('🎯',(_doubleActive?'⚡ Apuesta DOBLE: ':'')+d.result+' '+d.hg+'-'+d.ag+' · €'+parseFloat(d.amt).toFixed(2));
-apRenderAP(); apBanner(); renderToday();
-setTimeout(scheduleMatchNotifs, 500);
-};
+// v4: finalSubmitBet con coins - version consolidada arriba
+// Esta version sobreescritora eliminada para evitar conflicto
 function injectSettingsPanel(){
 var adj = document.getElementById('ap-ajustes');
 if(!adj || document.getElementById('settings-panel')) return;
