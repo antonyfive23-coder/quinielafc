@@ -8228,7 +8228,7 @@ console.log('[v27] Liga + Idiomas + Chat reacciones + Standings + Acumulada + Av
       if(!cw) return;
       
       var u = window.apSt && window.apSt.user;
-      cw.innerHTML = chat.slice(-50).map(function(m){
+      var newHtml = chat.slice(-50).map(function(m){
         var mine = u && m.uid === u.id;
         return '<div style="display:flex;flex-direction:'+(mine?'row-reverse':'row')+';gap:6px;margin-bottom:7px;">'+
           '<span style="font-size:1.1rem;">'+(m.emoji||'?')+'</span>'+
@@ -8237,8 +8237,12 @@ console.log('[v27] Liga + Idiomas + Chat reacciones + Standings + Acumulada + Av
             '<div style="background:'+(mine?'var(--g)':'var(--panel)')+';color:'+(mine?'#fff':'var(--text)')+';padding:7px 10px;border-radius:12px;font-size:.78rem;">'+m.text+'</div>'+
           '</div></div>';
       }).join('');
-      cw.scrollTop = cw.scrollHeight;
-      console.log('[CHAT] Renderizado:', chat.length, 'mensajes');
+      // Solo actualizar si hay cambios
+      if(cw.innerHTML !== newHtml){
+        cw.innerHTML = newHtml;
+        cw.scrollTop = cw.scrollHeight;
+        console.log('[CHAT] Actualizado:', chat.length, 'mensajes');
+      }
     }, function(err){ console.warn('[CHAT] Error:', err.message); });
   }
 
