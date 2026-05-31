@@ -8178,3 +8178,64 @@ console.log('[v27] Liga + Idiomas + Chat reacciones + Standings + Acumulada + Av
   });
 })();
 </script>
+
+<script>
+// CHAT EN TIEMPO REAL - independiente del sistema principal
+(function(){
+  var _chatUnsub = null;
+  var _chatCode = null;
+
+  function initRealtimeChat(code){
+    if(!code || !window._fbDB) return;
+    if(_chatCode === code) return; // ya inicializado
+    _chatCode = code;
+    if(_chatUnsub) _chatUnsub();
+    
+    console.log('[CHAT] Iniciando listener para grupo:', code);
+    
+    _chatUnsub = window._fbDB.collection('groups').doc(code).onSnapshot(function(doc){
+      if(!doc.exists) return;
+      var data = doc.data();
+      var chat = data.chat || [];
+      if(!chat.length) return;
+      
+      // Guardar localmente
+      if(typeof apSaveChats==='function') apSaveChats(chat);
+      window._latestChat = chat;
+      
+      // Renderizar si el chat esta abierto
+      var cw = document.getElementById('mg-chat-w');
+      if(!cw) return;
+      
+      var u = window.apSt && window.apSt.user;
+      cw.innerHTML = chat.slice(-50).map(function(m){
+        var mine = u && m.uid === u.id;
+        return '<div style="display:flex;flex-direction:'+(mine?'row-reverse':'row')+';gap:6px;margin-bottom:7px;">'+
+          '<span style="font-size:1.1rem;">'+(m.emoji||'?')+'</span>'+
+          '<div style="max-width:75%;">'+
+            (mine?'':'<div style="font-size:.6rem;font-weight:700;color:var(--muted);margin-bottom:2px;">'+m.name+'</div>')+
+            '<div style="background:'+(mine?'var(--g)':'var(--panel)')+';color:'+(mine?'#fff':'var(--text)')+';padding:7px 10px;border-radius:12px;font-size:.78rem;">'+m.text+'</div>'+
+          '</div></div>';
+      }).join('');
+      cw.scrollTop = cw.scrollHeight;
+      console.log('[CHAT] Renderizado:', chat.length, 'mensajes');
+    }, function(err){ console.warn('[CHAT] Error:', err.message); });
+  }
+
+  // Iniciar cuando Firebase y grupo esten listos
+  function tryInit(){
+    var code = window.apSt && window.apSt.group && window.apSt.group.code;
+    if(code && window._fbDB && window._fbConnected){
+      initRealtimeChat(code);
+    }
+  }
+
+  // Intentar cada 2 segundos
+  setInterval(tryInit, 2000);
+  window.addEventListener('focus', tryInit);
+
+  // Exponer para uso externo
+  window._initRealtimeChat = initRealtimeChat;
+  console.log('[CHAT] Sistema de chat en tiempo real cargado');
+})();
+</script>
