@@ -153,11 +153,17 @@ window.addEventListener('load',function(){
                                 if(fbData.bets) grpObj.bets=fbData.bets;
                                 if(fbData.members) grpObj.members=fbData.members;
                                 if(fbData.feed) grpObj.feed=fbData.feed;
+                                // Cargar chat desde Firebase
+                                if(fbData.chat&&Array.isArray(fbData.chat)&&fbData.chat.length){
+                                  if(typeof apSaveChats==='function') apSaveChats(fbData.chat);
+                                }
                                 apSt.group=grpObj;
                                 apSaveGrp&&apSaveGrp(grpObj);
                                 apBanner&&apBanner();
                                 apRenderAP&&apRenderAP();
-                                console.log('[QFC] Bets recargados desde Firebase');
+                                try{apRenderChat&&apRenderChat();}catch(e){}
+                                try{_renderMGChat&&_renderMGChat();}catch(e){}
+                                console.log('[QFC] Bets+chat recargados desde Firebase');
                               }
                             }).catch(function(){});
                           }
