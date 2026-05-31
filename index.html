@@ -2462,7 +2462,7 @@ if(!pb.result){toast('❗','Elige 1 / X / 2 primero','#fca5a5');return;}
 if(isNaN(h)||isNaN(a)){toast('❗','Introduce el marcador (ej: 2-1)','#fca5a5');return;}
 /* amt validation removed */
 if(!g.bets[u.id])g.bets[u.id]={};
-var coinsWager = parseInt((av?av.querySelector('#cw-'+pid):document.getElementById('cw-'+pid)||{}).value)||0;
+var coinsWager = parseInt((av?av.querySelector('#cw-'+pid):(document.getElementById('cw-'+pid)||{})).value)||0;
 var available = getAvailableCoins(g, u.id);
 if(coinsWager > available){ toast('🪙','No tienes suficientes monedas (disponibles: '+available+')','#fca5a5'); return; }
 g.bets[u.id][pid]={result:pb.result,homeGoals:h,awayGoals:a,amount:amt,coins:coinsWager,coinSettled:false,coinDelta:null,ts:Date.now(),pts:null};
