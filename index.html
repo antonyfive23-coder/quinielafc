@@ -8284,7 +8284,7 @@ console.log('[v27] Liga + Idiomas + Chat reacciones + Standings + Acumulada + Av
     // Comprobar si el elemento es visible
     // Comprobar si la pestaña chat esta activa
     var chatTab = document.getElementById('mg-tab-chat');
-    if(!window._chatTabOpen) return;
+    // siempre refrescar
     if(!window._latestChat || !window._latestChat.length) return;
     var u = window.apSt && window.apSt.user;
     var newHtml = window._latestChat.slice(-50).map(function(m){
