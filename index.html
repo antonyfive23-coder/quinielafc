@@ -8280,8 +8280,9 @@ console.log('[v27] Liga + Idiomas + Chat reacciones + Standings + Acumulada + Av
     var cw = document.getElementById('mg-chat-w');
     if(!cw) return;
     // Comprobar si el elemento es visible
-    var rect = cw.getBoundingClientRect();
-    if(rect.height === 0) return; // no visible
+    // Comprobar si la pestaña chat esta activa
+    var chatTab = document.getElementById('mg-tab-chat');
+    if(!chatTab || chatTab.style.display === 'none') return;
     if(!window._latestChat || !window._latestChat.length) return;
     var u = window.apSt && window.apSt.user;
     var newHtml = window._latestChat.slice(-50).map(function(m){
