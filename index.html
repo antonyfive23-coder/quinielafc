@@ -7839,7 +7839,7 @@ console.log('[v27] Liga + Idiomas + Chat reacciones + Standings + Acumulada + Av
         var changed=false;
         if(data.members&&Array.isArray(data.members)){
           if(data.members.length!==g.members.length){g.members=data.members;changed=true;}
-          else{data.members.forEach(function(fm){var loc=g.members.find(function(m){return m.id===fm.id;});if(!loc){g.members.push(fm);changed=true;}else if(fm.pts!==loc.pts||fm.coins!==loc.coins){loc.pts=fm.pts;loc.coins=fm.coins;loc.online=fm.online;loc.lastSeen=fm.lastSeen;changed=true;}});}
+          else{data.members.forEach(function(fm){var loc=g.members.find(function(m){return m.id===fm.id;});if(!loc){g.members.push(fm);changed=true;}else{if(fm.pts!==loc.pts||fm.coins!==loc.coins){loc.pts=fm.pts;loc.coins=fm.coins;changed=true;}if(fm.online!==loc.online||fm.lastSeen!==loc.lastSeen){loc.online=fm.online;loc.lastSeen=fm.lastSeen;changed=true;}}});}
         }
         if(data.bets){var rb=Object.values(data.bets).reduce(function(s,v){return s+Object.keys(v||{}).length;},0);var lb=Object.values(g.bets||{}).reduce(function(s,v){return s+Object.keys(v||{}).length;},0);if(rb!==lb){g.bets=data.bets;changed=true;}}
         if(data.results&&Object.keys(data.results).length!==Object.keys(g.results||{}).length){g.results=data.results;changed=true;}
