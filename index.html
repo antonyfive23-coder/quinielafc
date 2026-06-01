@@ -8275,6 +8275,30 @@ console.log('[v27] Liga + Idiomas + Chat reacciones + Standings + Acumulada + Av
   setInterval(tryInit, 1000);
   window.addEventListener('focus', tryInit);
 
+  // Refrescar chat cada 2s si esta visible
+  setInterval(function(){
+    var cw = document.getElementById('mg-chat-w');
+    if(!cw) return;
+    // Comprobar si el elemento es visible
+    var rect = cw.getBoundingClientRect();
+    if(rect.height === 0) return; // no visible
+    if(!window._latestChat || !window._latestChat.length) return;
+    var u = window.apSt && window.apSt.user;
+    var newHtml = window._latestChat.slice(-50).map(function(m){
+      var mine = u && m.uid === u.id;
+      return '<div style="display:flex;flex-direction:'+(mine?'row-reverse':'row')+';gap:6px;margin-bottom:7px;">'+
+        '<span style="font-size:1.1rem;">'+(m.emoji||'?')+'</span>'+
+        '<div style="max-width:75%;">'+
+          (mine?'':'<div style="font-size:.6rem;font-weight:700;color:var(--muted);margin-bottom:2px;">'+m.name+'</div>')+
+          '<div style="background:'+(mine?'var(--g)':'var(--panel)')+';color:'+(mine?'#fff':'var(--text)')+';padding:7px 10px;border-radius:12px;font-size:.78rem;">'+m.text+'</div>'+
+        '</div></div>';
+    }).join('');
+    if(cw.innerHTML !== newHtml){
+      cw.innerHTML = newHtml;
+      cw.scrollTop = cw.scrollHeight;
+    }
+  }, 2000);
+
   // Exponer para uso externo
   window._initRealtimeChat = initRealtimeChat;
   console.log('[CHAT] Sistema de chat en tiempo real cargado');
