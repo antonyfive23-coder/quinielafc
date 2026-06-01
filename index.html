@@ -1,7 +1,7 @@
 <!--
 ╔══════════════════════════════════════════════════════════════╗
 ║           QUINIELAFC — Mundial 2026                         ║
-║  © 2026 Anthony / JefaturaDia. Todos los derechos reservados.    ║
+║  © 2026 Anthony / AnthonyFC. Todos los derechos reservados.    ║
 ║                                                              ║
 ║  LICENCIA PRIVADA — PROHIBIDO:                              ║
 ║  · Copiar, redistribuir o vender este software              ║
@@ -13,7 +13,7 @@
 ╚══════════════════════════════════════════════════════════════╝
 -->
 <!DOCTYPE html>
-<script>/* QFC:QFC-2026-AJD-64005C © 2026 Anthony / JefaturaDia */window._qfcId='QFC-2026-AJD-64005C';</script>
+<script>/* QFC:QFC-2026-AJD-64005C © 2026 Anthony / AnthonyFC */window._qfcId='QFC-2026-AJD-64005C';</script>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -93,116 +93,6 @@ window.renderLigaView = window.renderLigaView || function(){};
 <meta name="apple-mobile-web-app-title" content="QuinielaFC">
 <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚽</text></svg>">
 <script>
-// AUTO-CONECTAR FIREBASE AL ARRANCAR
-window.addEventListener('load', function(){
-  setTimeout(function(){
-    try{
-      var saved = localStorage.getItem('qfc_fb_config');
-      if(saved){
-        var cfg = JSON.parse(saved);
-        if(cfg.apiKey && cfg.projectId && cfg.appId){
-          if(typeof initFirebase==='function'){
-            initFirebase(cfg);
-            console.log('[QFC] Firebase auto-reconectado desde localStorage');
-          }
-        }
-      }
-    }catch(e){ console.warn('[QFC] Auto-connect error:',e); }
-  }, 1500);
-});
-
-window.addEventListener('load',function(){
-  setTimeout(function(){
-    try{
-      // Credenciales hardcodeadas - siempre conecta automaticamente
-      var cfg={
-        apiKey:'AIzaSyBdBtQ1CEMkuq14T66RXCJaoBQDzQYdVtU',
-        projectId:'quinielafc-50209',
-        appId:'1:130848995431:web:452d3d2a857342540f7cc2'
-      };
-      if(typeof initFirebase==='function'){
-        initFirebase(cfg.apiKey, cfg.projectId, cfg.appId).then(function(ok){
-          if(ok){
-            console.log('[QFC] Firebase auto-conectado al arrancar');
-            // Activar chat listener
-            setTimeout(function(){
-              var code=window.apSt&&window.apSt.group&&window.apSt.group.code;
-              if(code&&typeof window._initRealtimeChat==='function') window._initRealtimeChat(code);
-            },2000);
-            // Reconectar grupo si habia uno activo
-            setTimeout(function(){
-              try{
-                var grp=localStorage.getItem('wc26_ap');
-                if(grp){
-                  var g=JSON.parse(grp);
-                  if(g&&g.code&&typeof fbListenGroup==='function'){
-                    fbListenGroup(g.code);
-                    console.log('[QFC] Listener re-iniciado para grupo',g.code);
-                    // Restaurar el grupo en apSt para que la UI lo muestre
-                    if(typeof apSt!=='undefined' && !apSt.group){
-                      var grpData=localStorage.getItem('wc26_g_'+g.code);
-                      if(grpData){
-                        try{
-                          var grpObj=JSON.parse(grpData);
-                          apSt.group=grpObj;
-                          var uid=g.uid||g.id;
-                          if(uid) apSt.user=grpObj.members.find(function(m){return m.id===uid;})||grpObj.members[0];
-                          if(typeof apBanner==='function') apBanner();
-                          if(typeof apRenderAP==='function') apRenderAP();
-                          console.log('[QFC] Grupo restaurado:', g.code);
-                          // Iniciar chat en tiempo real inmediatamente
-                          if(typeof window._initRealtimeChat==='function') window._initRealtimeChat(g.code);
-                          // Recargar bets desde Firebase
-                          if(window._fbDB){
-                            window._fbDB.collection('groups').doc(g.code).get().then(function(doc){
-                              if(doc&&doc.exists){
-                                var fbData=doc.data();
-                                if(fbData.bets) grpObj.bets=fbData.bets;
-                                if(fbData.members) grpObj.members=fbData.members;
-                                if(fbData.feed) grpObj.feed=fbData.feed;
-                                // Cargar chat desde Firebase
-                                if(fbData.chat&&Array.isArray(fbData.chat)&&fbData.chat.length){
-                                  if(typeof apSaveChats==='function') apSaveChats(fbData.chat);
-                                }
-                                apSt.group=grpObj;
-                                apSaveGrp&&apSaveGrp(grpObj);
-                                apBanner&&apBanner();
-                                apRenderAP&&apRenderAP();
-                                try{apRenderChat&&apRenderChat();}catch(e){}
-                                try{_renderMGChat&&_renderMGChat();}catch(e){}
-                                console.log('[QFC] Bets+chat recargados desde Firebase');
-                              }
-                            }).catch(function(){});
-                          }
-                        }catch(e){}
-                      }
-                    }
-                  }
-                }
-              }catch(e){}
-            },2000);
-          }
-        });
-      }
-    }catch(e){ console.warn('[QFC] Auto-connect error:',e); }
-  },1500);
-});
-
-window.addEventListener('load',function(){
-  setTimeout(function(){
-    try{
-      var saved=localStorage.getItem('qfc_fb_config');
-      if(saved){
-        var cfg=JSON.parse(saved);
-        if(cfg.apiKey&&cfg.projectId&&cfg.appId&&typeof initFirebase==='function'){
-          initFirebase(cfg);
-          console.log('[QFC] Firebase auto-reconectado');
-        }
-      }
-    }catch(e){}
-  },1500);
-});
-
 if('serviceWorker' in navigator){
   window.addEventListener('load', function(){
     navigator.serviceWorker.register('sw.js')
@@ -559,8 +449,8 @@ window.installPWA = function(){
       <div style="text-align:right;min-width:90px;">
         <div style="font-size:0.55rem;color:#b45309;font-weight:700;text-transform:uppercase;letter-spacing:1px;">Mi aporte al bote</div>
         <div style="font-family:Bebas Neue,sans-serif;font-size:.9rem;color:#d97706;line-height:1.3;" id="inscr-val">🪙 0</div>
-        <div style="font-size:.55rem;color:#b45309;margin-top:2px;" id="my-coins-label">Saldo: 🪙5000</div>
-        
+        <div style="font-size:.55rem;color:#b45309;margin-top:2px;" id="my-coins-label">Saldo: 🪙1000</div>
+        <button onclick="apTab('monedas',document.querySelector('.tab-btn[onclick*=monedas]'));setTimeout(function(){var el=document.getElementById('bote-contrib-input');if(el)el.scrollIntoView({behavior:'smooth',block:'center'});},300);" style="margin-top:5px;padding:4px 10px;background:linear-gradient(135deg,#f59e0b,#d97706);border:none;border-radius:6px;color:#fff;font-size:.65rem;font-weight:700;cursor:pointer;white-space:nowrap;">+ Aportar</button>
       </div>
     </div>
     <!-- PWA Install Banner -->
@@ -679,7 +569,27 @@ window.installPWA = function(){
     </div>
 
     <!-- QUINIELA -->
-    <div id="ap-quiniela" class="tab-pane">
+    <div id="ap-quiniela"
+<!-- ESTADISTICAS PERSONALES -->
+<div id="personal-stats-panel" style="display:none;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:12px;">
+  <div style="font-family:Bebas Neue,sans-serif;font-size:1.1rem;letter-spacing:2px;color:var(--g);margin-bottom:12px;">📊 MIS ESTADÍSTICAS</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px;" id="stats-grid">
+    <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center;">
+      <div style="font-family:Bebas Neue,sans-serif;font-size:1.8rem;color:var(--g);" id="stat-pct">0%</div>
+      <div style="font-size:.62rem;color:var(--muted);font-weight:700;text-transform:uppercase;">Aciertos</div>
+    </div>
+    <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center;">
+      <div style="font-family:Bebas Neue,sans-serif;font-size:1.8rem;color:var(--gold);" id="stat-exact">0</div>
+      <div style="font-size:.62rem;color:var(--muted);font-weight:700;text-transform:uppercase;">Exactos</div>
+    </div>
+    <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center;">
+      <div style="font-family:Bebas Neue,sans-serif;font-size:1.8rem;color:var(--blue);" id="stat-streak">0</div>
+      <div style="font-size:.62rem;color:var(--muted);font-weight:700;text-transform:uppercase;">Racha</div>
+    </div>
+  </div>
+  <div style="font-size:.72rem;font-weight:700;color:var(--muted);margin-bottom:6px;">ÚLTIMAS APUESTAS</div>
+  <div id="stat-recent" style="display:flex;gap:4px;flex-wrap:wrap;"></div>
+</div> class="tab-pane">
       <div class="panel"><div class="ptitle"><span class="ico">📊</span> Quiniela colectiva — todos vs todos</div>
         <p style="font-size:0.76rem;color:var(--muted);margin-bottom:11px;font-weight:500;">🟡 Exacto · 🟢 Correcto · 🔴 Fallo · — Sin apuesta</p>
         <div class="mx-wrap" id="quiniela-mx"><div class="nores">Sin apuestas aún.</div></div>
@@ -1934,6 +1844,11 @@ var g=apSt.group;if(!g)return;
 if(!g.feed)g.feed=[];
 g.feed.push({type:type,who:who,detail:detail,emoji:emoji||'',ts:Date.now()});
 g.feed=g.feed.slice(-50);apSaveGrp(g);
+// Notificacion push si no es el usuario actual
+if(apSt.user && who !== apSt.user.name && typeof window._pushNotif==='function'){
+  var title = type==='bet'?'⚽ Nueva apuesta':type==='result'?'🎯 Resultado acertado':'👥 '+who;
+  window._pushNotif(title, (emoji||'')+' '+who+' '+detail, null);
+}
 if(typeof _fbConnected!=='undefined'&&_fbConnected&&_fbDB&&g.code){
   try{_fbDB.collection('groups').doc(g.code).update({feed:g.feed,updatedAt:Date.now()}).catch(function(){if(typeof fbSaveGroup==='function')fbSaveGroup(g);});}catch(e){}
 }
@@ -2491,29 +2406,11 @@ if(!pb.result){toast('❗','Elige 1 / X / 2 primero','#fca5a5');return;}
 if(isNaN(h)||isNaN(a)){toast('❗','Introduce el marcador (ej: 2-1)','#fca5a5');return;}
 /* amt validation removed */
 if(!g.bets[u.id])g.bets[u.id]={};
-var coinsWager = parseInt((av?av.querySelector('#cw-'+pid):(document.getElementById('cw-'+pid)||{})).value)||0;
+var coinsWager = parseInt((av?av.querySelector('#cw-'+pid):document.getElementById('cw-'+pid)||{}).value)||0;
 var available = getAvailableCoins(g, u.id);
 if(coinsWager > available){ toast('🪙','No tienes suficientes monedas (disponibles: '+available+')','#fca5a5'); return; }
 g.bets[u.id][pid]={result:pb.result,homeGoals:h,awayGoals:a,amount:amt,coins:coinsWager,coinSettled:false,coinDelta:null,ts:Date.now(),pts:null};
-// FIX: descontar monedas del jugador
-if(coinsWager>0){
-  var mem=g.members.find(function(m){return m.id===u.id;});
-  if(mem){
-    mem.coins=Math.max(0,(mem.coins||COINS_START)-coinsWager);
-    apSt.user=mem;
-  }
-}
-apSaveGrp(g); apSt.group=g;
-if(typeof apBanner==='function') apBanner();
-if(typeof _fbConnected!=='undefined'&&_fbConnected&&_fbDB&&g.code){
-  try{_fbDB.collection('groups').doc(g.code).set({members:g.members,bets:g.bets,updatedAt:Date.now()},{merge:true}).then(function(){console.log('[QFC] apuesta+coins guardados en Firebase');});}catch(e){}
-}
-var mem=g.members.find(function(m){return m.id===u.id;});
-if(mem){
-  mem.lastSeen=Date.now();
-  // Asegurar coins inicializado
-  if(mem.coins===undefined||mem.coins===null) mem.coins=COINS_START;
-}
+var mem=g.members.find(function(m){return m.id===u.id;});if(mem)mem.lastSeen=Date.now();
 addFeed('bet',u.name,'apostó en '+(p?p.home.name+' vs '+p.away.name:pid),u.emoji);
 apSaveGrp(g);apSt.group=g;delete apSt.pending[pid];
 if(typeof fbSaveGroup==='function') safeRun(function(){fbSaveGroup(g);},'fbSaveBet');
@@ -2718,19 +2615,7 @@ var inp=document.getElementById('chat-inp');var text=(inp?inp.value:'').trim();i
 var msgs=apGetChats();var now=new Date();var t=now.getHours()+':'+(now.getMinutes()<10?'0':'')+now.getMinutes();
 msgs.push({uid:u.id,name:u.name,emoji:u.emoji,text:text,t:t,ts:Date.now()});
 apSaveChats(msgs);
-if(typeof _fbConnected!=='undefined'&&_fbConnected&&_fbDB&&g.code){
-  try{
-    // Usar arrayUnion para añadir mensaje sin sobreescribir otros
-    var newMsg=msgs[msgs.length-1];
-    if(newMsg){
-      var FieldValue=firebase.firestore.FieldValue;
-      _fbDB.collection('groups').doc(g.code).set({
-        chat:FieldValue.arrayUnion(newMsg),
-        updatedAt:Date.now()
-      },{merge:true}).catch(function(e){console.warn('[QFC] chat error:',e);});
-    }
-  }catch(e){console.warn('[QFC] chat excepcion:',e);}
-}
+if(typeof _fbConnected!=='undefined'&&_fbConnected&&_fbDB&&g.code){try{_fbDB.collection('groups').doc(g.code).update({chat:msgs.slice(-100),updatedAt:Date.now()}).catch(function(){});}catch(e){}}
 if(inp)inp.value='';apRenderChat();
 };
 function apRenderHistorial(){
@@ -2835,7 +2720,7 @@ var inscr=parseFloat((document.getElementById('gn-inscr')||{}).value)||0;
 if(!gname||!uname){toast('❗','Rellena todos los campos','#fca5a5');return;}
 var code=apGenCode();var uid='u_'+Date.now();
 /* FIX v2: presence field 'online:true' added to creator from the start */
-var user={id:uid,name:uname,emoji:emoji,pts:0,coins:COINS_START,isCreator:true,lastSeen:Date.now(),online:true,coinsInit:COINS_START};
+var user={id:uid,name:uname,emoji:emoji,pts:0,coins:COINS_START,isCreator:true,lastSeen:Date.now(),online:true};
 var group={code:code,name:gname,inscripcion:inscr,members:[user],bets:{},specialBets:{},results:{},feed:[],created:Date.now()};
 apSaveGrp(group);apSt.group=group;apSt.user=user;
 /* FIX v2: persist session with both code AND uid so reconnection works after clearing cache */
@@ -2907,47 +2792,16 @@ if(existingMember){
 }
 var uid='u_'+Date.now();
 /* FIX v2: include online:true from the start */
-var user={id:uid,name:uname,emoji:emoji,pts:0,coins:COINS_START,isCreator:false,lastSeen:Date.now(),online:true,coinsInit:COINS_START};
+var user={id:uid,name:uname,emoji:emoji,pts:0,coins:COINS_START,isCreator:false,lastSeen:Date.now(),online:true};
 group.members.push(user);addFeed('join',uname,'se unió al grupo',emoji);
 apSaveGrp(group);apSt.group=group;apSt.user=user;
 /* FIX v2: save name and emoji too for reconnection after cache clear */
 apLSW('wc26_ap',{code:code,uid:uid,name:uname,emoji:emoji});
 if(_fbConnected && _fbDB){
   try{
-    // FIX: leer Firebase primero, hacer merge, luego escribir
-    _fbDB.collection('groups').doc(code).get().then(function(doc){
-      var finalMembers = group.members.slice();
-      if(doc && doc.exists){
-        var fb = doc.data();
-        if(fb.members && fb.members.length > 0){
-          fb.members.forEach(function(fm){
-            var exists = finalMembers.find(function(m){return m.id===fm.id;});
-            if(!exists) finalMembers.push(fm);
-          });
-          group.members = finalMembers;
-          if(fb.bets) group.bets = Object.assign({},fb.bets);
-          if(fb.results) group.results = Object.assign({},fb.results);
-          if(fb.feed && fb.feed.length) group.feed = fb.feed;
-          apSaveGrp(group); apSt.group = group;
-        }
-      }
-      _fbDB.collection('groups').doc(code).set({
-        members:finalMembers,
-        feed:(group.feed||[]).slice(-50),
-        updatedAt:Date.now()
-      },{merge:true}).catch(function(e){console.warn('[QFC] join write:',e);});
-    }).catch(function(e){
-      _fbDB.collection('groups').doc(code).set({members:group.members,feed:(group.feed||[]).slice(-50),updatedAt:Date.now()},{merge:true}).catch(function(){});
-    });
+    _fbDB.collection('groups').doc(code).set({members:group.members,feed:(group.feed||[]).slice(-50),updatedAt:Date.now()},{merge:true}).catch(function(e){console.warn('[QFC] join write:',e);});
     if(typeof fbListenGroup==='function') fbListenGroup(code);
-    if(typeof window._initRealtimeChat==='function') window._initRealtimeChat(code);
     _fbMarkOnline(code, uid);
-    // Auto-guardar codigo de grupo para reconectar
-    try{
-      localStorage.setItem('qfc_last_group', code);
-      if(typeof apSt!=='undefined'&&apSt.user)
-        localStorage.setItem('wc26_ap', JSON.stringify({code:code,uid:apSt.user.id,name:apSt.user.name,emoji:apSt.user.emoji}));
-    }catch(e){}
   }catch(e){ console.warn('[QFC] join FB write:', e); }
 }
 if(!sessionStorage.getItem('qfc_grp_notif_'+code)){
@@ -3228,9 +3082,7 @@ var p = PARTIDOS_AP.concat(KNOCKOUT_AP).find(function(x){return x.id===pid;});
 if(!p) return;
 var g = apSt.group;
 var usedDouble = g && g.bets && apSt.user && Object.values(g.bets[apSt.user.id]||{}).some(function(b){return b.isDouble;});
-var _cwEl=document.getElementById('cw-'+pid);
-var _cwVal=_cwEl?parseInt(_cwEl.value)||0:0;
-_pendingBetData = {pid:pid, result:result, hg:hg, ag:ag, amt:amt, coins:_cwVal};
+_pendingBetData = {pid:pid, result:result, hg:hg, ag:ag, amt:amt};
 _doubleActive = false;
 var rl = result==='1'?'Local gana':result==='X'?'Empate':'Visitante gana';
 document.getElementById('cm-match').textContent = p.home.name + ' vs ' + p.away.name;
@@ -3274,45 +3126,22 @@ if(!_pendingBetData) return;
 var d = _pendingBetData;
 var g = apSt.group; var u = apSt.user;
 if(!g||!u){toast('❗','Sin grupo activo');return;}
-// Obtener monedas apostadas (guardadas cuando se abrio el modal)
-var coinsWager=d.coins||0;
-// Validar monedas disponibles
-var available=getAvailableCoins(g,u.id);
-if(coinsWager>available){toast('🪙','Sin monedas suficientes: '+available+' disponibles','#fca5a5');return;}
-if(!g.bets[u.id]) g.bets[u.id]={};
-// Guardar apuesta CON coins
-g.bets[u.id][d.pid]={result:d.result,homeGoals:d.hg,awayGoals:d.ag,amount:d.amt,coins:coinsWager,coinSettled:false,coinDelta:null,ts:Date.now(),pts:null,isDouble:_doubleActive};
-// Descontar monedas del jugador
-if(coinsWager>0){
-  var mem2=g.members.find(function(m){return m.id===u.id;});
-  if(mem2){
-    if(mem2.coins===undefined||mem2.coins===null) mem2.coins=COINS_START;
-    mem2.coins=Math.max(0,mem2.coins-coinsWager);
-    apSt.user=mem2;
-  }
-}
-var mem=g.members.find(function(m){return m.id===u.id;});
-if(mem) mem.lastSeen=Date.now();
+// Get coins from input
+var cwEl=document.getElementById('cw-'+d.pid);
+var coinsWager=cwEl?parseInt(cwEl.value)||0:0;
+d.coins=coinsWager;
+if(!g.bets[u.id]) g.bets[u.id] = {};
+g.bets[u.id][d.pid] = {result:d.result, homeGoals:d.hg, awayGoals:d.ag, amount:d.amt, ts:Date.now(), pts:null, isDouble:_doubleActive};
+var mem = g.members.find(function(m){return m.id===u.id;});
+if(mem) mem.lastSeen = Date.now();
 updateDailyStreak(u.id);
-var p=PARTIDOS_AP.concat(KNOCKOUT_AP).find(function(x){return x.id===d.pid;});
-var coinMsg=coinsWager>0?' · 🪙'+coinsWager:'';
-addFeed('bet',u.name,'apostó en '+(p?p.home.name+' vs '+p.away.name:d.pid)+coinMsg+(_doubleActive?' ⚡ (doble)':''),u.emoji);
-addNotif('⚽','Apuesta: '+d.result+' ('+d.hg+'-'+d.ag+')'+coinMsg+(_doubleActive?' ⚡ DOBLE':''));
-apSaveGrp(g); apSt.group=g;
-// Guardar en Firebase inmediatamente
-if(typeof _fbConnected!=='undefined'&&_fbConnected&&_fbDB&&g.code){
-  try{
-    _fbDB.collection('groups').doc(g.code).set({
-      members:g.members,
-      bets:g.bets,
-      feed:(g.feed||[]).slice(-50),
-      updatedAt:Date.now()
-    },{merge:true});
-  }catch(e){console.warn('FB bet save:',e);}
-}
-document.getElementById('confirm-modal').style.display='none';
-_pendingBetData=null; _doubleActive=false;
-toast('🎯',(_doubleActive?'⚡ Apuesta DOBLE: ':'')+d.result+' '+d.hg+'-'+d.ag+coinMsg);
+var p = PARTIDOS_AP.concat(KNOCKOUT_AP).find(function(x){return x.id===d.pid;});
+addFeed('bet', u.name, 'apostó en '+(p?p.home.name+' vs '+p.away.name:d.pid)+(_doubleActive?' ⚡ (doble)':''), u.emoji);
+addNotif('⚽','Apuesta: '+d.result+' ('+d.hg+'-'+d.ag+')'+(_doubleActive?' ⚡ DOBLE':''));
+apSaveGrp(g); apSt.group = g;
+document.getElementById('confirm-modal').style.display = 'none';
+_pendingBetData = null; _doubleActive = false;
+toast('🎯', (_doubleActive?'⚡ Apuesta DOBLE: ':'')+''+d.result+' '+d.hg+'-'+d.ag+' · €'+parseFloat(d.amt).toFixed(2));
 apRenderAP(); apBanner(); renderToday();
 };
 function renderToday(){
@@ -4334,8 +4163,29 @@ confetti({particleCount:pts>=5?120:60,spread:pts>=5?80:50,origin:{y:.6},colors:c
 if(pts>=5)setTimeout(function(){confetti({particleCount:60,angle:60,spread:55,origin:{x:0},colors:colors});confetti({particleCount:60,angle:120,spread:55,origin:{x:1},colors:colors});},300);
 }
 }
-// v4: finalSubmitBet con coins - version consolidada arriba
-// Esta version sobreescritora eliminada para evitar conflicto
+var _baseFinalSubmit = window.finalSubmitBet;
+window.finalSubmitBet = function(){
+haptic('bet');
+if(!_pendingBetData) return;
+var d = _pendingBetData;
+var g = apSt.group; var u = apSt.user;
+if(!g||!u){toast('❗','Sin grupo activo');return;}
+if(!g.bets[u.id]) g.bets[u.id] = {};
+g.bets[u.id][d.pid] = {result:d.result, homeGoals:d.hg, awayGoals:d.ag, amount:d.amt, ts:Date.now(), pts:null, isDouble:_doubleActive};
+var mem = g.members.find(function(m){return m.id===u.id;});
+if(mem) mem.lastSeen = Date.now();
+updateDailyStreak(u.id);
+var allP2 = PARTIDOS_AP.concat(KNOCKOUT_AP);
+var p2 = allP2.find(function(x){return x.id===d.pid;});
+addFeed('bet', u.name, 'apostó en '+(p2?p2.home.name+' vs '+p2.away.name:d.pid)+(_doubleActive?' ⚡ (doble)':''), u.emoji);
+addNotif('⚽','Apuesta: '+d.result+' ('+d.hg+'-'+d.ag+')'+(_doubleActive?' ⚡ DOBLE':''));
+apSaveGrp(g); apSt.group = g;
+document.getElementById('confirm-modal').style.display = 'none';
+_pendingBetData = null; _doubleActive = false;
+toast('🎯',(_doubleActive?'⚡ Apuesta DOBLE: ':'')+d.result+' '+d.hg+'-'+d.ag+' · €'+parseFloat(d.amt).toFixed(2));
+apRenderAP(); apBanner(); renderToday();
+setTimeout(scheduleMatchNotifs, 500);
+};
 function injectSettingsPanel(){
 var adj = document.getElementById('ap-ajustes');
 if(!adj || document.getElementById('settings-panel')) return;
@@ -4503,7 +4353,6 @@ localStorage.setItem('wc26_fb_cfg',JSON.stringify({apiKey:ak,projectId:pi,appId:
 fbSt('conn','Firebase conectado - sync en tiempo real activo');
 fbMsg('ok','Conectado con '+pi+'. Los grupos se sincronizan en todos los dispositivos.');
 if(typeof toast==='function')toast('🔥','Firebase conectado!');
-try{ localStorage.setItem('qfc_fb_config', JSON.stringify({apiKey:apiKey,projectId:projectId,appId:appId})); }catch(e){};
 if(apSt.group&&typeof fbListenGroup==='function')fbListenGroup(apSt.group.code);
 }else{
 fbSt('err','Error al conectar');
@@ -5346,31 +5195,7 @@ function fbListenGroup(code){
       if(data.coinPot!==undefined)g.coinPot=data.coinPot;
       if(data.coinContrib)g.coinContrib=data.coinContrib;
       if(data.feed && data.feed.length) g.feed=data.feed;
-      if(data.chat && Array.isArray(data.chat) && data.chat.length){
-  if(typeof apSaveChats==='function') apSaveChats(data.chat);
-  // Forzar re-render inmediato del chat
-  setTimeout(function(){
-    try{if(typeof apRenderChat==='function')apRenderChat();}catch(ex){}
-    try{if(typeof _renderMGChat==='function')_renderMGChat();}catch(ex){}
-    // Forzar render directo con datos de Firebase
-    var cwDirect=document.getElementById('mg-chat-w');
-    if(cwDirect&&data.chat&&data.chat.length){
-      var uDirect=apSt.user;
-      cwDirect.innerHTML=data.chat.slice(-50).map(function(m){
-        var mine=uDirect&&m.uid===uDirect.id;
-        return '<div style="display:flex;flex-direction:'+(mine?'row-reverse':'row')+';gap:6px;margin-bottom:7px;">'+
-          '<span style="font-size:1.1rem;flex-shrink:0;">'+(m.emoji||'⚽')+'</span>'+
-          '<div style="max-width:75%;">'+
-            (mine?'':'<div style="font-size:.6rem;font-weight:700;color:var(--muted);margin-bottom:2px;">'+m.name+'</div>')+
-            '<div style="background:'+(mine?'var(--g)':'var(--panel)')+';color:'+(mine?'#fff':'var(--text)')+';padding:7px 10px;border-radius:12px;font-size:.78rem;font-weight:500;">'+m.text+'</div>'+
-          '</div></div>';
-      }).join('');
-      cwDirect.scrollTop=cwDirect.scrollHeight;
-    }
-    var cw=document.getElementById('chat-w');
-    if(cw) cw.scrollTop=cw.scrollHeight;
-  },100);
-}
+      if(data.chat && Array.isArray(data.chat) && data.chat.length){if(typeof apSaveChats==='function')apSaveChats(data.chat);try{apRenderChat&&apRenderChat();}catch(ex){}try{_renderMGChat&&_renderMGChat();}catch(ex){}}
       // Re-init coins for any member that doesn't have them
       g.members.forEach(function(m){ if(!m.coins) m.coins=COINS_START; });
       apSaveGrp&&apSaveGrp(g);
@@ -5631,7 +5456,6 @@ function _renderApostarList(){
 
 // -- VISTA MI GRUPO --
 window.showMGTab = function(tab, btn){
-  window._chatTabOpen = (tab === 'chat');
   ['ranking','quiniela','miembros','chat','ajustes'].forEach(function(t){
     var el=document.getElementById('mg-tab-'+t);
     var b2=document.getElementById('mgt-'+t);
@@ -5639,25 +5463,7 @@ window.showMGTab = function(tab, btn){
     if(b2) b2.classList.toggle('active',t===tab);
   });
   if(tab==='miembros') _renderMGMembers();
-  if(tab==='chat'){
-    window._chatTabOpen = true;
-    _renderMGChat();
-    // Activar listener en tiempo real y cargar mensajes frescos de Firebase
-    var code=apSt.group&&apSt.group.code;
-    if(code){
-      if(typeof window._initRealtimeChat==='function') window._initRealtimeChat(code);
-      // Cargar mensajes frescos inmediatamente
-      if(typeof _fbConnected!=='undefined'&&_fbConnected&&_fbDB){
-        _fbDB.collection('groups').doc(code).get().then(function(doc){
-          if(doc&&doc.exists&&doc.data().chat&&doc.data().chat.length){
-            window._latestChat=doc.data().chat;
-            if(typeof apSaveChats==='function') apSaveChats(window._latestChat);
-            _renderMGChat();
-          }
-        }).catch(function(){});
-      }
-    }
-  }
+  if(tab==='chat') _renderMGChat();
   if(tab==='ajustes') _renderMGAjustes();
   if(tab==='quiniela') _renderMGQuiniela();
 };
@@ -5771,27 +5577,10 @@ function _renderMGMembers(){
 }
 
 function _renderMGChat(){
+  // Reutilizar apRenderChat si existe, apuntando al nuevo container
   var cw=document.getElementById('mg-chat-w');if(!cw)return;
   var g=apSt.group;if(!g){cw.innerHTML='<div class="nores">Sin grupo.</div>';return;}
-  // Usar siempre latestChat de Firebase si disponible (mas actualizado)
-  var msgs=[];
-  if(window._latestChat&&window._latestChat.length){
-    msgs=window._latestChat;
-    if(typeof apSaveChats==='function') apSaveChats(msgs);
-  } else {
-    msgs=typeof apGetChats==='function'?apGetChats():[];
-  }
-  // Si aun no hay mensajes, cargar de Firebase
-  if(!msgs.length&&typeof _fbConnected!=='undefined'&&_fbConnected&&_fbDB&&g.code){
-    _fbDB.collection('groups').doc(g.code).get().then(function(doc){
-      if(doc&&doc.exists&&doc.data().chat){
-        window._latestChat=doc.data().chat;
-        if(typeof apSaveChats==='function') apSaveChats(window._latestChat);
-        _renderMGChat();
-      }
-    }).catch(function(){});
-    return;
-  }
+  var msgs=typeof apGetChats==='function'?apGetChats():[];
   if(!msgs.length){cw.innerHTML='<div class="nores" style="padding:10px;font-size:.78rem;">Sin mensajes aún. ¡Di algo! 👋</div>';return;}
   var u=apSt.user;
   cw.innerHTML=msgs.slice(-50).map(function(m){
@@ -5815,37 +5604,9 @@ window.sendMGChat=function(){
   var msgs=typeof apGetChats==='function'?apGetChats():[];
   msgs.push({uid:u.id,name:u.name,emoji:u.emoji,text:txt,t:t,ts:Date.now()});
   if(typeof apSaveChats==='function') apSaveChats(msgs);
-  if(typeof _fbConnected!=='undefined'&&_fbConnected&&_fbDB&&g.code){
-  try{
-    // Usar arrayUnion para añadir mensaje sin sobreescribir otros
-    var newMsg=msgs[msgs.length-1];
-    if(newMsg){
-      var FieldValue=firebase.firestore.FieldValue;
-      _fbDB.collection('groups').doc(g.code).set({
-        chat:FieldValue.arrayUnion(newMsg),
-        updatedAt:Date.now()
-      },{merge:true}).catch(function(e){console.warn('[QFC] chat error:',e);});
-    }
-  }catch(e){console.warn('[QFC] chat excepcion:',e);}
-}
+  if(typeof _fbConnected!=='undefined'&&_fbConnected&&_fbDB&&g.code){try{_fbDB.collection('groups').doc(g.code).update({chat:msgs.slice(-100),updatedAt:Date.now()}).catch(function(){});}catch(e){}}
   inp.value='';
-  // Render directo con los mensajes actuales
-  var cwDirect=document.getElementById('mg-chat-w');
-  if(cwDirect&&msgs.length){
-    var uDirect=apSt.user;
-    cwDirect.innerHTML=msgs.slice(-50).map(function(m){
-      var mine=uDirect&&m.uid===uDirect.id;
-      return '<div style="display:flex;flex-direction:'+(mine?'row-reverse':'row')+';gap:6px;margin-bottom:7px;">'+
-        '<span style="font-size:1.1rem;flex-shrink:0;">'+(m.emoji||'?')+'</span>'+
-        '<div style="max-width:75%;">'+
-          (mine?'':'<div style="font-size:.6rem;font-weight:700;color:var(--muted);margin-bottom:2px;">'+m.name+'</div>')+
-          '<div style="background:'+(mine?'var(--g)':'var(--panel)')+';color:'+(mine?'#fff':'var(--text)')+';padding:7px 10px;border-radius:12px;font-size:.78rem;">'+m.text+'</div>'+
-        '</div></div>';
-    }).join('');
-    cwDirect.scrollTop=cwDirect.scrollHeight;
-  } else {
-    _renderMGChat();
-  }
+  _renderMGChat();
 };
 
 function _renderMGAjustes(){
@@ -6499,7 +6260,51 @@ var I18N = {
     empate:'Empate', local:'Casa', visitante:'Fora',
     puntos:'pts', liga:'Liga', ayuda:'Ajuda',
     bienvenido:'Bem-vindo ao QuinielaFC', descripcion:'Bolão da Copa do Mundo 2026'
-  }
+  },
+  de: {
+    apostar:'Wetten', inicio:'Start', migrupo:'Meine Gruppe', partidos:'Spiele', mas:'Mehr',
+    crearGrupo:'Gruppe erstellen', unirseGrupo:'Gruppe beitreten', ranking:'Rangliste',
+    quiniela:'Tippspiel', miembros:'Mitglieder', chat:'Chat', ajustes:'Einstellungen',
+    resultado:'Ergebnis', marcador:'Genaues Ergebnis', importe:'Einsatz',
+    apostarBtn:'⚡ Wetten', apostado:'Getippt', sinApostar:'Nicht getippt',
+    grupos:'Alle Gruppen', cerrado:'Geschlossen', abierto:'Offen',
+    empate:'Unentschieden', local:'Heimteam', visitante:'Auswärtsteam',
+    puntos:'Pkt', liga:'Liga', ayuda:'Hilfe',
+    bienvenido:'Willkommen bei QuinielaFC', descripcion:'WM 2026 Tippspiel mit Freunden'
+  },
+  it: {
+    apostar:'Scommetti', inicio:'Inizio', migrupo:'Il mio gruppo', partidos:'Partite', mas:'Altro',
+    crearGrupo:'Crea gruppo', unirseGrupo:'Unisciti', ranking:'Classifica',
+    quiniela:'Schedina', miembros:'Membri', chat:'Chat', ajustes:'Impostazioni',
+    resultado:'Risultato', marcador:'Risultato esatto', importe:'Importo',
+    apostarBtn:'⚡ Scommetti', apostado:'Scommesso', sinApostar:'Non scommesso',
+    grupos:'Tutti i gruppi', cerrado:'Chiuso', abierto:'Aperto',
+    empate:'Pareggio', local:'Casa', visitante:'Ospite',
+    puntos:'pts', liga:'Lega', ayuda:'Aiuto',
+    bienvenido:'Benvenuto su QuinielaFC', descripcion:'Pronostici Mondiali 2026'
+  },
+  ar: {
+    apostar:'راهن', inicio:'الرئيسية', migrupo:'مجموعتي', partidos:'المباريات', mas:'المزيد',
+    crearGrupo:'إنشاء مجموعة', unirseGrupo:'انضم للمجموعة', ranking:'الترتيب',
+    quiniela:'التوقعات', miembros:'الأعضاء', chat:'الدردشة', ajustes:'الإعدادات',
+    resultado:'النتيجة', marcador:'النتيجة الدقيقة', importe:'الرهان',
+    apostarBtn:'⚡ راهن', apostado:'تم الرهان', sinApostar:'لم يتم الرهان',
+    grupos:'كل المجموعات', cerrado:'مغلق', abierto:'مفتوح',
+    empate:'تعادل', local:'المضيف', visitante:'الضيف',
+    puntos:'نقاط', liga:'دوري', ayuda:'مساعدة',
+    bienvenido:'مرحباً في QuinielaFC', descripcion:'توقعات كأس العالم 2026'
+  },
+  zh: {
+    apostar:'下注', inicio:'主页', migrupo:'我的小组', partidos:'比赛', mas:'更多',
+    crearGrupo:'创建小组', unirseGrupo:'加入小组', ranking:'排名',
+    quiniela:'预测', miembros:'成员', chat:'聊天', ajustes:'设置',
+    resultado:'结果', marcador:'精确比分', importe:'金额',
+    apostarBtn:'⚡ 下注', apostado:'已下注', sinApostar:'未下注',
+    grupos:'所有小组', cerrado:'已关闭', abierto:'开放',
+    empate:'平局', local:'主队', visitante:'客队',
+    puntos:'分', liga:'联赛', ayuda:'帮助',
+    bienvenido:'欢迎来到QuinielaFC', descripcion:'2026世界杯竞猜'
+  },
 };
 
 var _lang = localStorage.getItem('qfc_lang') || (navigator.language||'es').substring(0,2);
@@ -7967,6 +7772,40 @@ window.toggleESPN = function(){
   }
 };
 
+
+window.renderPersonalStats = function(){
+  var g=apSt.group; var u=apSt.user;
+  var panel=document.getElementById('personal-stats-panel');
+  if(!panel||!g||!u) return;
+  panel.style.display='block';
+  var bets=g.bets[u.id]||{};
+  var results=g.results||{};
+  var total=Object.keys(bets).length;
+  var settled=Object.values(bets).filter(function(b){return b.pts!==null&&b.pts!==undefined;});
+  var correct=settled.filter(function(b){return b.pts>0;}).length;
+  var exact=settled.filter(function(b){return b.pts>=3;}).length;
+  var pct=settled.length?Math.round(correct/settled.length*100):0;
+  // Racha actual
+  var sorted=settled.sort(function(a,b){return (b.ts||0)-(a.ts||0);});
+  var streak=0;
+  for(var i=0;i<sorted.length;i++){
+    if(sorted[i].pts>0) streak++;
+    else break;
+  }
+  document.getElementById('stat-pct').textContent=pct+'%';
+  document.getElementById('stat-exact').textContent=exact;
+  document.getElementById('stat-streak').textContent=streak;
+  // Ultimas 10 apuestas
+  var recent=document.getElementById('stat-recent');
+  if(recent){
+    recent.innerHTML=sorted.slice(0,10).map(function(b){
+      var color=b.pts>=3?'#d97706':b.pts>0?'#16a34a':'#dc2626';
+      var ico=b.pts>=3?'🎯':b.pts>0?'✅':'❌';
+      return '<span style="width:28px;height:28px;border-radius:50%;background:'+color+';display:inline-flex;align-items:center;justify-content:center;font-size:.8rem;" title="'+b.result+'">'+ico+'</span>';
+    }).join('');
+  }
+};
+
 console.log('[v27] Liga + Idiomas + Chat reacciones + Standings + Acumulada + Avatar + Stats + Tutorial ✅');
 
 (function(){
@@ -7980,89 +7819,25 @@ console.log('[v27] Liga + Idiomas + Chat reacciones + Standings + Acumulada + Av
         if(!doc||!doc.exists)return;
         var data=doc.data();if(!data)return;
         var remoteAt=data.updatedAt||0;
-        if(remoteAt<=_lastAt){
-          // Mostrar en pantalla que el polling está activo
-          var el=document.getElementById('poll-status');
-          if(!el){el=document.createElement('div');el.id='poll-status';el.style.cssText='position:fixed;bottom:60px;right:8px;background:#16a34a;color:white;padding:4px 8px;border-radius:8px;font-size:10px;z-index:9999;';document.body.appendChild(el);}
-          el.textContent='⟳ '+new Date().toLocaleTimeString();
-          return;
-        }
+        if(remoteAt<=_lastAt)return;
         _lastAt=remoteAt;
         var g=window.apSt.group;if(!g||g.code!==code)return;
         var changed=false;
         if(data.members&&Array.isArray(data.members)){
-          if(data.members.length!==g.members.length){
-            g.members=data.members;changed=true;
-          } else {
-            // Actualizar coins de cada miembro desde Firebase
-            data.members.forEach(function(fm){
-              var loc=g.members.find(function(m){return m.id===fm.id;});
-              if(loc&&fm.coins!==undefined&&fm.coins!==loc.coins){
-                loc.coins=fm.coins;changed=true;
-              }
-            });
-          }
-          else{data.members.forEach(function(fm){var loc=g.members.find(function(m){return m.id===fm.id;});if(!loc){g.members.push(fm);changed=true;}else if(fm.pts!==loc.pts||fm.coins!==loc.coins){loc.pts=fm.pts;if(fm.coins===undefined||loc.coins===undefined||fm.coins<loc.coins)loc.coins=fm.coins;else if(loc.coins<fm.coins){}else loc.coins=fm.coins;loc.online=fm.online;loc.lastSeen=fm.lastSeen;changed=true;}});}
+          if(data.members.length!==g.members.length){g.members=data.members;changed=true;}
+          else{data.members.forEach(function(fm){var loc=g.members.find(function(m){return m.id===fm.id;});if(!loc){g.members.push(fm);changed=true;}else if(fm.pts!==loc.pts||fm.coins!==loc.coins){loc.pts=fm.pts;loc.coins=fm.coins;loc.online=fm.online;loc.lastSeen=fm.lastSeen;changed=true;}});}
         }
         if(data.bets){var rb=Object.values(data.bets).reduce(function(s,v){return s+Object.keys(v||{}).length;},0);var lb=Object.values(g.bets||{}).reduce(function(s,v){return s+Object.keys(v||{}).length;},0);if(rb!==lb){g.bets=data.bets;changed=true;}}
         if(data.results&&Object.keys(data.results).length!==Object.keys(g.results||{}).length){g.results=data.results;changed=true;}
         if(data.feed&&data.feed.length!==(g.feed||[]).length){g.feed=data.feed;changed=true;}
-        if(data.chat&&Array.isArray(data.chat)&&data.chat.length>0){
-  if(typeof apSaveChats==='function')apSaveChats(data.chat);
-  // Guardar en variable global para acceso rapido
-  window._latestChat=data.chat;
-  // Notificar siempre aunque el chat no este abierto
-  var cwP=document.getElementById('mg-chat-w');
-  if(!cwP){
-    // Chat no esta abierto - mostrar toast
-    if(typeof toast==='function') toast('💬','Nuevo mensaje de '+(data.chat[data.chat.length-1]||{}).name,'#dcfce7');
-  }
-  cwP=document.getElementById('mg-chat-w');
-  if(cwP){
-    var uP=window.apSt&&window.apSt.user;
-    var newHtml=data.chat.slice(-50).map(function(m){
-      var mine=uP&&m.uid===uP.id;
-      return '<div style="display:flex;flex-direction:'+(mine?'row-reverse':'row')+';gap:6px;margin-bottom:7px;">'+
-        '<span style="font-size:1.1rem;flex-shrink:0;">'+(m.emoji||'?')+'</span>'+
-        '<div style="max-width:75%;">'+
-          (mine?'':'<div style="font-size:.6rem;font-weight:700;color:var(--muted);margin-bottom:2px;">'+m.name+'</div>')+
-          '<div style="background:'+(mine?'var(--g)':'var(--panel)')+';color:'+(mine?'#fff':'var(--text)')+';padding:7px 10px;border-radius:12px;font-size:.78rem;">'+m.text+'</div>'+
-        '</div></div>';
-    }).join('');
-    // Comparar por numero de mensajes renderizados
-    var currentMsgs=cwP.querySelectorAll('div[style*="flex-direction"]').length;
-    var remoteMsgs=data.chat.slice(-50).length;
-    if(currentMsgs!==remoteMsgs){
-      cwP.innerHTML=newHtml;
-      cwP.scrollTop=cwP.scrollHeight;
-      changed=true;
-      if(typeof toast==='function') toast('💬','Nuevo mensaje en el chat','#dcfce7');
-    } else {
-      cwP.innerHTML=newHtml;
-      cwP.scrollTop=cwP.scrollHeight;
-    }
-  }
-}
+        if(data.chat&&Array.isArray(data.chat)){var lc=typeof apGetChats==='function'?apGetChats():[];if(data.chat.length!==lc.length){if(typeof apSaveChats==='function')apSaveChats(data.chat);try{apRenderChat&&apRenderChat();}catch(ex){}try{_renderMGChat&&_renderMGChat();}catch(ex){}changed=true;}}
         if(data.coinPot!==undefined&&data.coinPot!==g.coinPot){g.coinPot=data.coinPot;changed=true;}
         if(!changed)return;
-        g.members.forEach(function(m){
-          if(!m.coins) m.coins=window.COINS_START||5000;
-          // Marcar usuario actual como siempre online
-          if(window.apSt&&window.apSt.user&&m.id===window.apSt.user.id){
-            m.online=true;
-            m.lastSeen=Date.now();
-          }
-        });
+        g.members.forEach(function(m){if(!m.coins)m.coins=window.COINS_START||5000;});
         if(typeof apSaveGrp==='function')apSaveGrp(g);
         window.apSt.group=g;
         if(window.apSt.user){var me=g.members.find(function(m){return m.id===window.apSt.user.id;});if(me)window.apSt.user=me;}
-        // Re-marcar online en Firebase
-        if(typeof _fbMarkOnline==='function'&&window.apSt&&window.apSt.user){
-          _fbMarkOnline(code, window.apSt.user.id);
-        }
-        console.log('[QFC Poll] sync - miembros:', g.members.length);
-        // Forzar notificacion visual
-        if(typeof toast==='function') toast('🔄','Grupo actualizado: '+g.members.length+' jugadores','#dcfce7');
+        console.log('[QFC Poll] sync');
         try{apBanner&&apBanner();}catch(e){}
         try{renderFeed&&renderFeed();}catch(e){}
         try{apRenderMembers&&apRenderMembers();}catch(e){}
@@ -8085,7 +7860,6 @@ console.log('[v27] Liga + Idiomas + Chat reacciones + Standings + Acumulada + Av
       var code=window.apSt.group.code;if(!code)return;
       if(window._fbConnected&&window._fbDB){
         if(typeof fbListenGroup==='function') fbListenGroup(code);
-        if(typeof window._initRealtimeChat==='function') window._initRealtimeChat(code);
         if(typeof _fbMarkOnline==='function') _fbMarkOnline(code, window.apSt.user&&window.apSt.user.id);
         console.log('[QFC] Firebase reconectado');
       } else {
@@ -8101,7 +7875,7 @@ console.log('[v27] Liga + Idiomas + Chat reacciones + Standings + Acumulada + Av
   }
   window.addEventListener('load',function(){
     setTimeout(function(){
-      setInterval(_poll,5000);
+      setInterval(_poll,10000);
       // Reconectar Firebase cada 30s si es necesario
       setInterval(function(){
         if(window.apSt&&window.apSt.group&&window._fbConnected){
@@ -8124,186 +7898,5 @@ console.log('[v27] Liga + Idiomas + Chat reacciones + Standings + Acumulada + Av
     setTimeout(_reconnectFB,1000);
     setTimeout(_poll,2000);
   });
-})();
-</script>
-
-<script>
-// POLLING SIMPLE INDEPENDIENTE
-(function(){
-  var lastAt = 0;
-  var indicator = null;
-
-  function showIndicator(txt, color){
-    if(!indicator){
-      indicator = document.createElement('div');
-      indicator.style.cssText = 'position:fixed;bottom:65px;right:8px;padding:3px 7px;border-radius:6px;font-size:9px;font-weight:700;z-index:99999;color:white;';
-      document.body.appendChild(indicator);
-    }
-    indicator.style.background = color||'#16a34a';
-    indicator.textContent = txt;
-  }
-
-  function poll(){
-    try{
-      // Buscar Firebase DB de cualquier manera posible
-      var db = window._fbDB || (window.firebase && window.firebase.firestore && window.firebase.firestore());
-      if(!db){ showIndicator('FB sin DB','#dc2626'); return; }
-
-      var grpSession = null;
-      try{ grpSession = JSON.parse(localStorage.getItem('wc26_ap')||'{}'); }catch(e){}
-      var code = grpSession && grpSession.code;
-      if(!code){
-        // Intentar obtener codigo de apSt
-        code = window.apSt && window.apSt.group && window.apSt.group.code;
-      }
-      if(!code){ showIndicator('sin grupo','#f59e0b'); return; }
-
-      showIndicator('polling...','#3b82f6');
-
-      db.collection('groups').doc(code).get().then(function(doc){
-        if(!doc||!doc.exists){ showIndicator('no doc','#dc2626'); return; }
-        var data = doc.data();
-        var remoteAt = data.updatedAt || 0;
-        showIndicator(new Date().toLocaleTimeString(),'#16a34a');
-
-        if(remoteAt <= lastAt) return;
-        lastAt = remoteAt;
-
-        // Hay cambios - aplicar
-        var g = window.apSt && window.apSt.group;
-        if(!g || g.code !== code) return;
-
-        var changed = false;
-        if(data.members && data.members.length !== g.members.length){
-          g.members = data.members; changed = true;
-        }
-        if(data.bets) g.bets = data.bets;
-        if(data.feed && data.feed.length !== (g.feed||[]).length){ g.feed = data.feed; changed = true; }
-
-        if(!changed) return;
-
-        g.members.forEach(function(m){ if(!m.coins) m.coins = 5000; });
-        if(typeof apSaveGrp==='function') apSaveGrp(g);
-        window.apSt.group = g;
-        if(window.apSt.user){
-          var me = g.members.find(function(m){ return m.id===window.apSt.user.id; });
-          if(me) window.apSt.user = me;
-        }
-        try{ if(typeof apBanner==='function') apBanner(); }catch(e){}
-        try{ if(typeof renderFeed==='function') renderFeed(); }catch(e){}
-        try{ if(typeof apRenderMembers==='function') apRenderMembers(); }catch(e){}
-        try{
-          var ap = document.querySelector('.tab-pane.active');
-          if(ap){
-            var aid = ap.id.replace('ap-','');
-            if(aid==='partidos') apRenderAP&&apRenderAP();
-            if(aid==='ranking') apRenderRanking&&apRenderRanking();
-            if(aid==='miembros') apRenderMembers&&apRenderMembers();
-          }
-        }catch(e){}
-        if(typeof toast==='function') toast('👥', g.members.length+' jugadores en el grupo','#dcfce7');
-
-      }).catch(function(e){ showIndicator('error','#dc2626'); });
-
-    }catch(e){ showIndicator('excepcion','#dc2626'); }
-  }
-
-  // Esperar a que todo cargue
-  window.addEventListener('load', function(){
-    setTimeout(function(){
-      setInterval(poll, 5000);
-      poll();
-    }, 3000);
-  });
-})();
-</script>
-
-<script>
-// CHAT EN TIEMPO REAL - independiente del sistema principal
-(function(){
-  var _chatUnsub = null;
-  var _chatCode = null;
-
-  function initRealtimeChat(code){
-    if(!code || !_fbDB) return;
-    // No cachear - reiniciar listener siempre para garantizar actualizaciones
-    _chatCode = code;
-    if(_chatUnsub) _chatUnsub();
-    
-    console.log('[CHAT] Iniciando listener para grupo:', code);
-    
-    _chatUnsub = _fbDB.collection('groups').doc(code).onSnapshot(function(doc){
-      if(!doc.exists) return;
-      var data = doc.data();
-      var chat = data.chat || [];
-      if(!chat.length) return;
-      
-      // Guardar localmente
-      if(typeof apSaveChats==='function') apSaveChats(chat);
-      window._latestChat = chat;
-      
-      // Renderizar SIEMPRE en mg-chat-w si existe
-      function renderChat(){
-        var cw = document.getElementById('mg-chat-w');
-        if(!cw) return;
-        var u = window.apSt && window.apSt.user;
-        cw.innerHTML = chat.slice(-50).map(function(m){
-          var mine = u && m.uid === u.id;
-          return '<div style="display:flex;flex-direction:'+(mine?'row-reverse':'row')+';gap:6px;margin-bottom:7px;">'+
-            '<span style="font-size:1.1rem;">'+(m.emoji||'?')+'</span>'+
-            '<div style="max-width:75%;">'+
-              (mine?'':'<div style="font-size:.6rem;font-weight:700;color:var(--muted);margin-bottom:2px;">'+m.name+'</div>')+
-              '<div style="background:'+(mine?'var(--g)':'var(--panel)')+';color:'+(mine?'#fff':'var(--text)')+';padding:7px 10px;border-radius:12px;font-size:.78rem;">'+m.text+'</div>'+
-            '</div></div>';
-        }).join('');
-        cw.scrollTop = cw.scrollHeight;
-      }
-      renderChat();
-      // Reintentar despues de 300ms por si el DOM no estaba listo
-      setTimeout(renderChat, 300);
-      console.log('[CHAT] onSnapshot:', chat.length, 'mensajes');
-    }, function(err){ console.warn('[CHAT] Error:', err.message); });
-  }
-
-  // Iniciar cuando Firebase y grupo esten listos
-  function tryInit(){
-    var code = window.apSt && window.apSt.group && window.apSt.group.code;
-    if(code && typeof _fbDB!=='undefined' && _fbDB && _fbConnected){
-      initRealtimeChat(code);
-    }
-  }
-
-  // Intentar cada 2 segundos
-  setInterval(tryInit, 1000);
-  window.addEventListener('focus', tryInit);
-
-  // Refrescar chat cada 2s si esta visible
-  setInterval(function(){
-    var cw = document.getElementById('mg-chat-w');
-    if(!cw) return;
-    // Comprobar si el elemento es visible
-    // Comprobar si la pestaña chat esta activa
-    var chatTab = document.getElementById('mg-tab-chat');
-    // siempre refrescar
-    if(!window._latestChat || !window._latestChat.length) return;
-    var u = window.apSt && window.apSt.user;
-    var newHtml = window._latestChat.slice(-50).map(function(m){
-      var mine = u && m.uid === u.id;
-      return '<div style="display:flex;flex-direction:'+(mine?'row-reverse':'row')+';gap:6px;margin-bottom:7px;">'+
-        '<span style="font-size:1.1rem;">'+(m.emoji||'?')+'</span>'+
-        '<div style="max-width:75%;">'+
-          (mine?'':'<div style="font-size:.6rem;font-weight:700;color:var(--muted);margin-bottom:2px;">'+m.name+'</div>')+
-          '<div style="background:'+(mine?'var(--g)':'var(--panel)')+';color:'+(mine?'#fff':'var(--text)')+';padding:7px 10px;border-radius:12px;font-size:.78rem;">'+m.text+'</div>'+
-        '</div></div>';
-    }).join('');
-    if(cw.innerHTML !== newHtml){
-      cw.innerHTML = newHtml;
-      cw.scrollTop = cw.scrollHeight;
-    }
-  }, 2000);
-
-  // Exponer para uso externo
-  window._initRealtimeChat = initRealtimeChat;
-  console.log('[CHAT] Sistema de chat en tiempo real cargado');
 })();
 </script>
