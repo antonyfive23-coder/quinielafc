@@ -6331,8 +6331,8 @@ window.setLang = function(lang){
 // Language selector HTML
 function renderLangSelector(){
   var cont = document.getElementById('lang-selector'); if(!cont) return;
-  cont.innerHTML = ['es','en','fr','pt'].map(function(l){
-    var flags = {es:'🇪🇸',en:'🇬🇧',fr:'🇫🇷',pt:'🇧🇷'};
+  cont.innerHTML = ['es','en','fr','pt','de','it','ar','zh'].map(function(l){
+    var flags = {es:'🇪🇸',en:'🇬🇧',fr:'🇫🇷',pt:'🇵🇹',de:'🇩🇪',it:'🇮🇹',ar:'🇸🇦',zh:'🇨🇳'};
     return '<button onclick="setLang(\''+l+'\')" style="padding:6px 10px;border-radius:8px;background:'+(l===_lang?'var(--g)':'var(--bg)')+';border:1.5px solid '+(l===_lang?'var(--g)':'var(--border)')+';color:'+(l===_lang?'#fff':'var(--text)')+';font-size:.78rem;font-weight:700;cursor:pointer;">'+flags[l]+' '+l.toUpperCase()+'</button>';
   }).join('');
 }
