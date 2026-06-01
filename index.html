@@ -7852,6 +7852,7 @@ console.log('[v27] Liga + Idiomas + Chat reacciones + Standings + Acumulada + Av
         window.apSt.group=g;
         if(window.apSt.user){var me=g.members.find(function(m){return m.id===window.apSt.user.id;});if(me)window.apSt.user=me;}
         console.log('[QFC Poll] sync');
+        if(typeof _fbMarkOnline==='function'&&window.apSt&&window.apSt.user) _fbMarkOnline(code, window.apSt.user.id);
         try{apBanner&&apBanner();}catch(e){}
         try{renderFeed&&renderFeed();}catch(e){}
         try{apRenderMembers&&apRenderMembers();}catch(e){}
