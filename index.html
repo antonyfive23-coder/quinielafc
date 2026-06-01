@@ -2877,7 +2877,7 @@ window._fbMarkOnline = function(groupCode, uid){
       });
       _fbDB.collection('groups').doc(groupCode).update({members:updM,updatedAt:Date.now()}).catch(function(){});
     }catch(e){}
-  }, 45000);
+  }, 10000);
   /* mark offline on tab/window close */
   window.addEventListener('beforeunload', function(){
     _fbMarkOffline(groupCode, uid);
