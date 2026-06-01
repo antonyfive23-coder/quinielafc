@@ -136,6 +136,19 @@ window.installPWA = function(){
       <input type="password" class="linp" id="lpass" placeholder="Introduce la contraseña" onkeydown="if(event.key==='Enter')doLogin()">
       <button class="leye" onclick="togglePass()" id="leye">👁️</button>
     </div>
+  <div style="margin-bottom:16px;">
+    <div style="font-size:.65rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;text-align:center;">🌐 Idioma / Language</div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;">
+      <button onclick="setLang('es')" style="padding:5px 9px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);font-size:.78rem;cursor:pointer;">🇪🇸 ES</button>
+      <button onclick="setLang('en')" style="padding:5px 9px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);font-size:.78rem;cursor:pointer;">🇬🇧 EN</button>
+      <button onclick="setLang('fr')" style="padding:5px 9px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);font-size:.78rem;cursor:pointer;">🇫🇷 FR</button>
+      <button onclick="setLang('pt')" style="padding:5px 9px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);font-size:.78rem;cursor:pointer;">🇵🇹 PT</button>
+      <button onclick="setLang('de')" style="padding:5px 9px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);font-size:.78rem;cursor:pointer;">🇩🇪 DE</button>
+      <button onclick="setLang('it')" style="padding:5px 9px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);font-size:.78rem;cursor:pointer;">🇮🇹 IT</button>
+      <button onclick="setLang('ar')" style="padding:5px 9px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);font-size:.78rem;cursor:pointer;">🇸🇦 AR</button>
+      <button onclick="setLang('zh')" style="padding:5px 9px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);font-size:.78rem;cursor:pointer;">🇨🇳 ZH</button>
+    </div>
+  </div>
     <button class="lbtn" onclick="doLogin()">⚽ ENTRAR AL MUNDIAL</button>
     <div class="lerr" id="lerr"></div>
     <div class="llocked" id="llocked">🔒 Demasiados intentos. Espera <span class="lcd" id="lcd">30</span>s</div>
