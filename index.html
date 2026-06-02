@@ -8358,21 +8358,27 @@ console.log('[v27] Liga + Idiomas + Chat reacciones + Standings + Acumulada + Av
       var uid=window.apSt.user.id;
       if(!code||!uid) return;
       var g=window.apSt.group;
-      var members=g.members.map(function(m){
+        // Solo actualizar lastSeen del usuario actual, no sobreescribir members
+      var FieldValue=firebase.firestore.FieldValue;
+      // Actualizar localmente
+      g.members=g.members.map(function(m){
         if(m.id===uid) return Object.assign({},m,{online:true,lastSeen:Date.now()});
         return m;
       });
-      _fbDB.collection('groups').doc(code).update({
-        members:members,
-        updatedAt:Date.now()
-      }).catch(function(){});
-      // Actualizar localmente
-      g.members=members;
       window.apSt.group=g;
       if(window.apSt.user){
-        var me=members.find(function(m){return m.id===uid;});
+        var me=g.members.find(function(m){return m.id===uid;});
         if(me) window.apSt.user=me;
       }
+      // En Firebase solo actualizar el campo del usuario actual
+      _fbDB.collection('groups').doc(code).update({
+        ['members_'+uid+'_lastSeen']: Date.now()
+      }).catch(function(){
+        // Si falla usar set merge con members completos
+        _fbDB.collection('groups').doc(code).set({
+          members:g.members, updatedAt:Date.now()
+        },{merge:true}).catch(function(){});
+      });
     }catch(e){}
   }
   // Arrancar cuando todo esté listo
