@@ -3020,7 +3020,10 @@ if(_fbConnected && _fbDB && apSt.group && apSt.user){
     var g=apSt.group; var u=apSt.user;
     // Eliminar al miembro de Firebase al salir
     var updMembers=g.members.filter(function(m){ return m.id!==u.id; });
-    _fbDB.collection('groups').doc(g.code).update({members:updMembers,updatedAt:Date.now()}).catch(function(){});
+    console.log('[QFC] Saliendo, miembros restantes:', updMembers.length);
+    _fbDB.collection('groups').doc(g.code).set({members:updMembers,updatedAt:Date.now()},{merge:true})
+      .then(function(){console.log('[QFC] Miembro eliminado de Firebase OK');})
+      .catch(function(e){console.warn('[QFC] Error al salir:',e);});
     /* FIX v2: also remove presence entry */
     _fbMarkOffline(g.code, u.id);
   }catch(e){}
