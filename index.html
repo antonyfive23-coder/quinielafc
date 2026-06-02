@@ -611,7 +611,7 @@ window.installPWA = function(){
       <button class="tab-btn" onclick="apTab('ranking',this)">🏆 Ranking</button>
       <button class="tab-btn" onclick="apTab('semanal',this)">📆 Semanal</button>
       <button class="tab-btn" onclick="apTab('supervivencia',this)">💀 Supervivencia</button>
-      <button class="tab-btn" onclick="apTab('bizum',this)">📱 Bizum</button>
+      <button class="tab-btn" onclick="apTab('zumo manzana',this)">📱 Zumo Manzana</button>
       <button class="tab-btn" onclick="apTab('especiales',this)">⭐ Especiales</button>
       <button class="tab-btn" onclick="apTab('bracket',this)">🏆 Bracket</button>
       <button class="tab-btn" onclick="apTab('estadisticas',this)">📊 Stats</button>
@@ -683,8 +683,8 @@ window.installPWA = function(){
     <!-- QUINIELA -->
     <div id="ap-quiniela" class="tab-pane">
       <div class="panel"><div class="ptitle"><span class="ico">📊</span> Quiniela colectiva — todos vs todos</div>
-        <p style="font-size:0.76rem;color:var(--muted);margin-bottom:11px;font-weight:500;">🟡 Exacto · 🟢 Correcto · 🔴 Fallo · — Sin apuesta</p>
-        <div class="mx-wrap" id="quiniela-mx"><div class="nores">Sin apuestas aún.</div></div>
+        <p style="font-size:0.76rem;color:var(--muted);margin-bottom:11px;font-weight:500;">🟡 Exacto · 🟢 Correcto · 🔴 Fallo · — Sin manzanas</p>
+        <div class="mx-wrap" id="quiniela-mx"><div class="nores">Sin manzanass aún.</div></div>
       </div>
     </div>
 
@@ -718,11 +718,11 @@ window.installPWA = function(){
       </div>
     </div>
 
-    <!-- BIZUM -->
-    <div id="ap-bizum" class="tab-pane">
-      <div class="panel" style="margin-bottom:12px;"><div class="ptitle"><span class="ico">📱</span> Liquidación Bizum</div><div id="ap-biz-list"></div></div>
+    <!-- ZUMO MANZANA -->
+    <div id="ap-zumo manzana" class="tab-pane">
+      <div class="panel" style="margin-bottom:12px;"><div class="ptitle"><span class="ico">📱</span> Liquidación Zumo Manzana</div><div id="ap-biz-list"></div></div>
       <div class="panel"><div class="ptitle"><span class="ico">📋</span> Mi resumen</div>
-        <div class="summ-box" id="ap-summ">Sin apuestas aún.</div>
+        <div class="summ-box" id="ap-summ">Sin manzanass aún.</div>
         <div style="text-align:center;margin-bottom:7px;font-weight:800;font-size:0.82rem;color:var(--g);">COMPARTIR</div>
         <div class="share-row"><button class="share-btn wa" onclick="apShareWA()">💚 WhatsApp</button><button class="share-btn" onclick="apCopyMsg()">📋 Copiar</button><button class="share-btn tw" onclick="apShareTW()">🐦 Twitter</button></div>
       </div>
@@ -764,7 +764,7 @@ window.installPWA = function(){
         <div id="hist-member-bar" style="display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:8px;margin-bottom:10px;border-bottom:1px solid var(--border);"></div>
         <div class="hist-search-wrap"><i class="fas fa-search"></i><input type="text" class="hist-search" id="hist-q" placeholder="Buscar partido, equipo..." oninput="filterHist()"></div>
         <div id="hist-viewing-label" style="font-size:.7rem;color:var(--muted);font-weight:600;margin-bottom:8px;display:none;"></div>
-      <div id="ap-hist-list"><div class="nores">Sin apuestas.</div></div></div>
+      <div id="ap-hist-list"><div class="nores">Sin manzanass.</div></div></div>
       <div class="panel"><div class="ptitle"><span class="ico">🏅</span> Premios por categorías</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;" id="premios-grid"></div></div>
     </div>
 
@@ -2358,7 +2358,7 @@ window.apTab=function(tab,btn){
 document.querySelectorAll('.tab-pane').forEach(function(s){s.classList.remove('active');});
 document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
 var el=document.getElementById('ap-'+tab);if(el)el.classList.add('active');if(btn)btn.classList.add('active');
-if(tab==='ranking')apRenderRanking();if(tab==='bizum')apRenderBizum();if(tab==='quiniela')apRenderQuiniela();
+if(tab==='ranking')apRenderRanking();if(tab==='zumo manzana')apRenderZumo Manzana();if(tab==='quiniela')apRenderQuiniela();
 if(tab==='ajustes')apRenderGrpMgmt();if(tab==='chat')apRenderChat();if(tab==='especiales')apRenderEsp();
 if(tab==='miembros')apRenderMembers();if(tab==='semanal')apRenderSemanal();if(tab==='supervivencia')apRenderSv();
 if(tab==='bracket')apRenderBracket();
@@ -2719,7 +2719,7 @@ return '<div class="sv-card"><div style="display:flex;align-items:center;gap:10p
 }).join('');
 }
 var _bizMsgs=[];
-function apRenderBizum(){
+function apRenderZumo Manzana(){
 var g=apSt.group;var u=apSt.user;
 var bl=document.getElementById('ap-biz-list');var sb=document.getElementById('ap-summ');
 if(!g||!u){if(bl)bl.innerHTML='<div class="nores">Sin grupo activo</div>';if(sb)sb.textContent='Sin grupo.';return;}
@@ -2735,13 +2735,13 @@ _bizMsgs.push(msg);
 return '<div class="biz-card"><div class="biz-avi">'+m.emoji+'</div>'+
 '<div class="biz-info"><div class="biz-name">'+m.name+'</div><div class="biz-det">🍎'+m.totalAmt.toFixed(2)+' · '+m.pts+' pts</div></div>'+
 '<div class="biz-bal"><div class="biz-a '+bc+'">🍎'+Math.abs(bal).toFixed(2)+'</div><div class="biz-l">'+bl2+'</div></div>'+
-'<button class="biz-btn" data-idx="'+idx+'" onclick="apCopyBiz(this.dataset.idx)">📋 Bizum</button></div>';
+'<button class="biz-btn" data-idx="'+idx+'" onclick="apCopyBiz(this.dataset.idx)">📋 Zumo Manzana</button></div>';
 }).join('')||'<div class="nores">Eres el único miembro del grupo.</div>';
 var myB2=g.bets[u.id]||{};
 var fl=Object.entries(myB2).map(function(e){var p=PARTIDOS_AP.find(function(x){return x.id===e[0];});var rl=e[1].result==='1'?'Local':e[1].result==='X'?'Empate':'Visitante';return p?(p.home.name+' vs '+p.away.name+' - '+rl+' ('+e[1].homeGoals+'-'+e[1].awayGoals+') 🍎'+parseFloat(e[1].amount).toFixed(2)):'';}).filter(Boolean);
-if(sb){if(fl.length){sb.textContent='QUINIELAFC MUNDIAL 2026\n'+u.name+'\n========================\n'+fl.join('\n')+'\n========================\nTotal: 🍎'+me.totalAmt.toFixed(2)+'\nPuntos: '+(me.pts||0)+' · Nivel: '+calcLevel(me.pts||0).lbl+'\nGrupo: '+g.name+' ('+g.code+')';}else{sb.textContent='Sin apuestas aún.';}}
+if(sb){if(fl.length){sb.textContent='QUINIELAFC MUNDIAL 2026\n'+u.name+'\n========================\n'+fl.join('\n')+'\n========================\nTotal: 🍎'+me.totalAmt.toFixed(2)+'\nPuntos: '+(me.pts||0)+' · Nivel: '+calcLevel(me.pts||0).lbl+'\nGrupo: '+g.name+' ('+g.code+')';}else{sb.textContent='Sin manzanass aún.';}}
 }
-window.apCopyBiz=function(idx){var msg=_bizMsgs[parseInt(idx)];if(!msg)return;navigator.clipboard.writeText(msg).then(function(){toast('📋','Copiado para Bizum!');});};
+window.apCopyBiz=function(idx){var msg=_bizMsgs[parseInt(idx)];if(!msg)return;navigator.clipboard.writeText(msg).then(function(){toast('📋','Copiado para Zumo Manzana!');});};
 window.apCopyMsg=function(){var msg=(document.getElementById('ap-summ')||{}).textContent||'';navigator.clipboard.writeText(msg).then(function(){toast('📋','Resumen copiado');});};
 window.apShareWA=function(){var msg=(document.getElementById('ap-summ')||{}).textContent||'';window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');};
 window.apShareTW=function(){var g=apSt.group;if(!g)return;window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent('#Mundial2026 apostando con '+g.name+' en QuinielaFC!'),'_blank');};
@@ -2810,7 +2810,7 @@ var premios=[
 {ico:'🎯',name:'Rey del Exacto',desc:'Más exactos',val:'🏅 Insignia',crit:topEx&&topEx.exact>0?(topEx.emoji+' '+topEx.name+' ('+topEx.exact+')  '):'Sin exactos aún',col:'var(--gold)'},
 {ico:'🔥',name:'Rey de la Racha',desc:'Racha más larga',val:'🏅 Insignia',crit:topStr&&topStr.streak>0?(topStr.emoji+' '+topStr.name+' ('+topStr.streak+')  '):'Sin rachas',col:'#f97316'},
 {ico:'📆',name:'Premio Semanal',desc:'Mejor de la semana',val:'👑 Reconocimiento',crit:topWk&&topWk.weekPts>0?(topWk.emoji+' '+topWk.name+' ('+topWk.weekPts+' pts)'):'Sin puntos',col:'var(--blue)'},
-{ico:'🏟️',name:'Más Activo',desc:'Más apuestas',val:'🏅 Insignia',crit:(function(){var t=mems.slice().sort(function(a,b){return b.totalBets-a.totalBets;})[0];return t&&t.totalBets>0?(t.emoji+' '+t.name+' ('+t.totalBets+')  '):'Sin apuestas';})(),col:'var(--purple)'},
+{ico:'🏟️',name:'Más Activo',desc:'Más apuestas',val:'🏅 Insignia',crit:(function(){var t=mems.slice().sort(function(a,b){return b.totalBets-a.totalBets;})[0];return t&&t.totalBets>0?(t.emoji+' '+t.name+' ('+t.totalBets+')  '):'Sin manzanass';})(),col:'var(--purple)'},
 ];
 pg.innerHTML=premios.map(function(p){return '<div class="premio-card"><div class="premio-ico">'+p.ico+'</div><div class="premio-name">'+p.name+'</div><div class="premio-desc">'+p.desc+'</div><div class="premio-val" style="color:'+p.col+'">'+p.val+'</div><div class="premio-crit">'+p.crit+'</div></div>';}).join('');
 }
@@ -2860,7 +2860,7 @@ var premios=[
 {ico:'🎯',name:'Rey del Exacto',desc:'Más marcadores exactos',val:'🏅 Insignia',crit:topEx&&topEx.exact>0?(topEx.emoji+' '+topEx.name+' ('+topEx.exact+')'):'Sin exactos aún',col:'var(--gold)'},
 {ico:'🔥',name:'Rey de la Racha',desc:'Racha más larga',val:'🏅 Insignia',crit:topStr&&topStr.streak>0?(topStr.emoji+' '+topStr.name+' ('+topStr.streak+')'):'Sin rachas',col:'#f97316'},
 {ico:'📆',name:'Premio Semanal',desc:'Mejor de la semana',val:'👑 Reconocimiento',crit:topWk&&topWk.weekPts>0?(topWk.emoji+' '+topWk.name+' ('+topWk.weekPts+' pts)'):'Sin puntos esta semana',col:'var(--blue)'},
-{ico:'🏟️',name:'Más Activo',desc:'Más apuestas',val:'🏅 Insignia',crit:(function(){var t=mems.slice().sort(function(a,b){return b.totalBets-a.totalBets;})[0];return t&&t.totalBets>0?(t.emoji+' '+t.name+' ('+t.totalBets+')'):'Sin apuestas';})(),col:'var(--purple)'},
+{ico:'🏟️',name:'Más Activo',desc:'Más apuestas',val:'🏅 Insignia',crit:(function(){var t=mems.slice().sort(function(a,b){return b.totalBets-a.totalBets;})[0];return t&&t.totalBets>0?(t.emoji+' '+t.name+' ('+t.totalBets+')'):'Sin manzanass';})(),col:'var(--purple)'},
 ];
 pg.innerHTML=premios.map(function(p){return '<div class="premio-card"><div class="premio-ico">'+p.ico+'</div><div class="premio-name">'+p.name+'</div><div class="premio-desc">'+p.desc+'</div><div class="premio-val" style="color:'+p.col+'">'+p.val+'</div><div class="premio-crit">'+p.crit+'</div></div>';}).join('');
 }
@@ -3140,7 +3140,7 @@ apBanner();renderFeed();
 var active=document.querySelector('.tab-pane.active');
 if(active){var id=active.id.replace('ap-','');
 if(id==='partidos')apRenderAP();if(id==='miembros')apRenderMembers();if(id==='ranking')apRenderRanking();
-if(id==='quiniela')apRenderQuiniela();if(id==='bizum')apRenderBizum();if(id==='semanal')apRenderSemanal();
+if(id==='quiniela')apRenderQuiniela();if(id==='zumo manzana')apRenderZumo Manzana();if(id==='semanal')apRenderSemanal();
 if(id==='supervivencia')apRenderSv();
 }
 }
@@ -3498,7 +3498,7 @@ return '<div style="display:flex;align-items:center;gap:8px;padding:7px 0;border
 (b.isDouble?'<span class="double-badge">×2</span>':'')+
 '<span style="font-family:Bebas Neue,sans-serif;font-size:.9rem;color:'+col+';">'+(pts!==null&&pts!==undefined?(pts>0?'+'+pts:'0'):'-')+'</span>'+
 '</div>';
-}).join('') : '<div class="nores" style="padding:10px;">Sin apuestas aún.</div>';
+}).join('') : '<div class="nores" style="padding:10px;">Sin manzanass aún.</div>';
 document.getElementById('player-modal').style.display = 'flex';
 };
 window.closePlayerModal = function(){document.getElementById('player-modal').style.display='none';};
@@ -3775,7 +3775,7 @@ document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('ac
 var el = document.getElementById('ap-'+tab); if(el)el.classList.add('active');
 if(btn)btn.classList.add('active');
 if(tab==='ranking')apRenderRanking();
-if(tab==='bizum')apRenderBizum();
+if(tab==='zumo manzana')apRenderZumo Manzana();
 if(tab==='quiniela')apRenderQuiniela();
 if(tab==='ajustes'){apRenderGrpMgmt();updateAdminUI();if(typeof _initPassDisplay==='function')_initPassDisplay();}
 if(tab==='manzanas'){
@@ -3869,7 +3869,7 @@ if(id==='partidos')apRenderAP();
 if(id==='miembros')apRenderMembers();
 if(id==='ranking')apRenderRanking();
 if(id==='quiniela')apRenderQuiniela();
-if(id==='bizum')apRenderBizum();
+if(id==='zumo manzana')apRenderZumo Manzana();
 if(id==='semanal')apRenderSemanal();
 if(id==='supervivencia')apRenderSv();
 if(id==='estadisticas')apRenderEstadisticas();
@@ -6087,7 +6087,7 @@ function _renderMGQuiniela(){
   cont.innerHTML=
     '<div style="display:flex;gap:6px;margin-bottom:10px;overflow-x:auto;-webkit-overflow-scrolling:touch;">'+
       '<button class="fchip active" onclick="setQFilter(\'todos\',this)">📋 Todos</button>'+
-      '<button class="fchip" onclick="setQFilter(\'pendientes\',this)">⏳ Sin apostar</button>'+
+      '<button class="fchip" onclick="setQFilter(\'pendientes\',this)">⏳ Sin manzanas</button>'+
       '<button class="fchip" onclick="setQFilter(\'jugados\',this)">✅ Jugados</button>'+
     '</div>'+
     '<div id="mg-quiniela-list"></div>';
@@ -6144,7 +6144,7 @@ function _renderQList(filter){
           '<span style="font-size:.62rem;color:var(--muted);">'+(bet.coins?'🍎'+bet.coins:'')+'</span>'+
           (pts!==null?'<span style="font-size:.7rem;font-weight:800;color:'+ptsCol+';">'+ptsLbl+'</span>':'')
         :
-          '<span style="font-size:.68rem;color:var(--muted);font-style:italic;">Sin apostar</span>'
+          '<span style="font-size:.68rem;color:var(--muted);font-style:italic;">Sin manzanas</span>'
         )+
       '</div>';
     }).join('');
@@ -6429,7 +6429,7 @@ var I18N = {
     crearGrupo:'Crear grupo', unirseGrupo:'Unirse a grupo', ranking:'Ranking',
     quiniela:'Quiniela', miembros:'Miembros', chat:'Chat', ajustes:'Ajustes',
     resultado:'Resultado', marcador:'Marcador exacto', puntos:'Puntos',
-    apostarBtn:'⚡ Apostar', apostado:'Apostado', sinApostar:'Sin apostar',
+    apostarBtn:'⚡ Apostar', apostado:'Apostado', sinManzanas:'Sin manzanas',
     grupos:'Todos los grupos', cerrado:'Cerrado', abierto:'Abierto',
     empate:'Empate', local:'Local', visitante:'Visitante',
     puntos:'pts', liga:'Liga', ayuda:'Ayuda',
@@ -6450,7 +6450,7 @@ var I18N = {
     crearGrupo:'Create group', unirseGrupo:'Join group', ranking:'Ranking',
     quiniela:'Quiniela', miembros:'Members', chat:'Chat', ajustes:'Settings',
     resultado:'Result', marcador:'Exact score', puntos:'Amount',
-    apostarBtn:'⚡ Bet', apostado:'Bet placed', sinApostar:'Not bet',
+    apostarBtn:'⚡ Bet', apostado:'Bet placed', sinManzanas:'Not bet',
     grupos:'All groups', cerrado:'Closed', abierto:'Open',
     empate:'Draw', local:'Home', visitante:'Away',
     puntos:'pts', liga:'League', ayuda:'Help',
@@ -6471,7 +6471,7 @@ var I18N = {
     crearGrupo:'Créer groupe', unirseGrupo:'Rejoindre', ranking:'Classement',
     quiniela:'Quiniela', miembros:'Membres', chat:'Chat', ajustes:'Paramètres',
     resultado:'Résultat', marcador:'Score exact', puntos:'Montant',
-    apostarBtn:'⚡ Parier', apostado:'Parié', sinApostar:'Non parié',
+    apostarBtn:'⚡ Parier', apostado:'Parié', sinManzanas:'Non parié',
     grupos:'Tous les groupes', cerrado:'Fermé', abierto:'Ouvert',
     empate:'Nul', local:'Domicile', visitante:'Extérieur',
     puntos:'pts', liga:'Ligue', ayuda:'Aide',
@@ -6492,7 +6492,7 @@ var I18N = {
     crearGrupo:'Criar grupo', unirseGrupo:'Entrar no grupo', ranking:'Classificação',
     quiniela:'Quiniela', miembros:'Membros', chat:'Chat', ajustes:'Ajustes',
     resultado:'Resultado', marcador:'Placar exato', puntos:'Valor',
-    apostarBtn:'⚡ Apostar', apostado:'Apostado', sinApostar:'Sem aposta',
+    apostarBtn:'⚡ Apostar', apostado:'Apostado', sinManzanas:'Sem aposta',
     grupos:'Todos os grupos', cerrado:'Fechado', abierto:'Aberto',
     empate:'Empate', local:'Casa', visitante:'Fora',
     puntos:'pts', liga:'Liga', ayuda:'Ajuda',
@@ -7426,7 +7426,7 @@ applyAppleResult = function(group, memberId, pid, real){
       var hasBet = g && u && g.bets && g.bets[u.id] && g.bets[u.id][p.id];
       var minLeft = Math.round(msLeft/60000);
       if(!hasBet){
-        toast('⏰','¡'+minLeft+' min! Sin apuesta: '+p.home.name+' vs '+p.away.name,'#fef3c7');
+        toast('⏰','¡'+minLeft+' min! Sin manzanas: '+p.home.name+' vs '+p.away.name,'#fef3c7');
         addNotif('⏰','Cierra en '+minLeft+' min: '+p.home.name+' vs '+p.away.name+' - ¡apuesta ya!');
       } else {
         toast('✅',p.home.name+' vs '+p.away.name+' - ¡tu apuesta está lista!','#dcfce7');
@@ -7435,7 +7435,7 @@ applyAppleResult = function(group, memberId, pid, real){
       if('Notification' in window && Notification.permission === 'granted'){
         try{
           new Notification('⚽ QuinielaFC', {
-            body: (hasBet?'✅ Tienes apuesta para ':'⚠️ Sin apuesta: ')+p.home.name+' vs '+p.away.name+' ('+minLeft+' min)',
+            body: (hasBet?'✅ Tienes apuesta para ':'⚠️ Sin manzanas: ')+p.home.name+' vs '+p.away.name+' ('+minLeft+' min)',
             icon: '⚽', tag: 'qfc-match-'+p.id
           });
         }catch(e){}
