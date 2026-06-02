@@ -2617,7 +2617,7 @@ apConfResCore(pid,rh,ra);admUpdateBar();
 function apRenderMembers(){
 var g=apSt.group;var u=apSt.user;var c=document.getElementById('ap-mems');if(!c)return;
 if(!g||!u){c.innerHTML='<div class="nores">Sin grupo activo</div>';return;}
-var now=Date.now();var ONLINE=90*1000; /* FIX v2: 90s threshold consistent with presence heartbeat */
+var now=Date.now();var ONLINE=5*60*1000; /* 5min threshold */
 var colors=['linear-gradient(135deg,#4ade80,#16a34a)','linear-gradient(135deg,#60a5fa,#2563eb)','linear-gradient(135deg,#f87171,#dc2626)','linear-gradient(135deg,#fbbf24,#d97706)','linear-gradient(135deg,#c4b5fd,#7c3aed)','linear-gradient(135deg,#f9a8d4,#ec4899)'];
 var mems=[].concat(g.members).sort(function(a,b){return (b.pts||0)-(a.pts||0);});
 c.innerHTML=mems.map(function(m,i){
@@ -5427,7 +5427,7 @@ function fbListenGroup(code){
 function _refreshOnlineDots(){
   var g=apSt.group; if(!g) return;
   var now=Date.now();
-  var ONLINE_THRESH=90*1000; /* 90s - if lastSeen is within 90s = online */
+  var ONLINE_THRESH=5*60*1000; /* 5min threshold */
   document.querySelectorAll('[data-member-id]').forEach(function(el){
     var mid=el.getAttribute('data-member-id');
     var mem=g.members.find(function(m){return m.id===mid;});
