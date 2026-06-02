@@ -8337,3 +8337,45 @@ console.log('[v27] Liga + Idiomas + Chat reacciones + Standings + Acumulada + Av
   });
 })();
 </script>
+
+<script>
+// HEARTBEAT SIMPLE - actualiza lastSeen cada 15s
+(function(){
+  function heartbeat(){
+    try{
+      if(!window._fbConnected||!_fbDB) return;
+      if(!window.apSt||!window.apSt.group||!window.apSt.user) return;
+      var code=window.apSt.group.code;
+      var uid=window.apSt.user.id;
+      if(!code||!uid) return;
+      var g=window.apSt.group;
+      var members=g.members.map(function(m){
+        if(m.id===uid) return Object.assign({},m,{online:true,lastSeen:Date.now()});
+        return m;
+      });
+      _fbDB.collection('groups').doc(code).update({
+        members:members,
+        updatedAt:Date.now()
+      }).catch(function(){});
+      // Actualizar localmente
+      g.members=members;
+      window.apSt.group=g;
+      if(window.apSt.user){
+        var me=members.find(function(m){return m.id===uid;});
+        if(me) window.apSt.user=me;
+      }
+    }catch(e){}
+  }
+  // Arrancar cuando todo esté listo
+  window.addEventListener('load',function(){
+    setTimeout(function(){
+      setInterval(heartbeat,15000);
+      console.log('[QFC] Heartbeat iniciado');
+    },5000);
+  });
+  window.addEventListener('focus',function(){ setTimeout(heartbeat,500); });
+  document.addEventListener('visibilitychange',function(){
+    if(!document.hidden) setTimeout(heartbeat,500);
+  });
+})();
+</script>
