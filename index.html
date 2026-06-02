@@ -6517,7 +6517,7 @@ var I18N = {
   }
 };
 
-// Login language switcher — runs before full I18N/setLang is available
+// Login language switcher ? runs before full I18N/setLang is available
 window.setLoginLang = function(lang) {
   if (!I18N[lang]) return;
   // Persist choice (shared with main setLang)
@@ -7323,7 +7323,7 @@ window.executeDeleteGroup = async function(){
 
 // ===========================================================
 // 🔥 RACHA BONUS - Premia aciertos consecutivos
-// 3 aciertos → +50🍎 | 5 aciertos → +150🍎 | 10 → +500🍎
+// 3 aciertos ? +50🍎 | 5 aciertos ? +150🍎 | 10 ? +500🍎
 // ===========================================================
 function calcStreak(group, userId){
   var bets = group.bets[userId] || {};
@@ -7864,7 +7864,7 @@ window.renderResultsTab = function(){
 // ===============================================================
 (function(){
 
-  // Mapa de nombres ESPN → IDs internos de PARTIDOS_AP
+  // Mapa de nombres ESPN ? IDs internos de PARTIDOS_AP
   // ESPN usa nombres en inglés; los mapeamos a nuestros IDs
   var ESPN_NAME_MAP = {
     // Grupo A
