@@ -8105,7 +8105,7 @@ console.log('[v27] Liga + Idiomas + Chat reacciones + Standings + Acumulada + Av
           var lTs0=(lc0.length&&lc0[lc0.length-1].ts)||0;
           if(rTs0>_lastChatTs){_lastChatTs=rTs0;if(typeof apSaveChats==='function')apSaveChats(data.chat);try{apRenderChat&&apRenderChat();}catch(ex){}try{_renderMGChat&&_renderMGChat();}catch(ex){}}
         }
-        if(remoteAt<=_lastAt){
+        if(remoteAt<=_lastAt&&false){
           var el=document.getElementById('poll-status');
           if(!el){el=document.createElement('div');el.id='poll-status';el.style.cssText='position:fixed;bottom:60px;right:8px;background:#16a34a;color:white;padding:4px 8px;border-radius:8px;font-size:10px;z-index:9999;';document.body.appendChild(el);}
           el.textContent='⟳ '+new Date().toLocaleTimeString();
