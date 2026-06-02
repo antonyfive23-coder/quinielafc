@@ -3018,10 +3018,8 @@ if(!confirm('¿Seguro que quieres salir del grupo?'))return;
 if(_fbConnected && _fbDB && apSt.group && apSt.user){
   try{
     var g=apSt.group; var u=apSt.user;
-    var updMembers=g.members.map(function(m){
-      if(m.id===u.id) return Object.assign({},m,{online:false,lastSeen:Date.now()});
-      return m;
-    });
+    // Eliminar al miembro de Firebase al salir
+    var updMembers=g.members.filter(function(m){ return m.id!==u.id; });
     _fbDB.collection('groups').doc(g.code).update({members:updMembers,updatedAt:Date.now()}).catch(function(){});
     /* FIX v2: also remove presence entry */
     _fbMarkOffline(g.code, u.id);
