@@ -2009,6 +2009,13 @@ return '<div class="feed-item"><div class="feed-avi">'+e.emoji+'</div><div class
 }
 (function(){
 var DEF='Mundial2026',MAX=5,LOCK=30;
+// Reset bloqueo si se pasa ?reset en la URL
+if(window.location.search.includes('reset')){
+  localStorage.removeItem('wc26_att');
+  localStorage.removeItem('wc26_lock');
+  localStorage.removeItem('wc26_auth');
+  window.location.href=window.location.pathname;
+}
 var att=parseInt(localStorage.getItem('wc26_att')||'0');
 var lockUntil=parseInt(localStorage.getItem('wc26_lock')||'0');
 function locked(){return Date.now()<lockUntil;}
