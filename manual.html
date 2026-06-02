@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>📖 Manual QuinielaFC — Guía de configuración</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #f0fdf4; color: #111; line-height: 1.6; }
+  .cover { background: linear-gradient(135deg, #15803d, #22c55e); color: #fff; padding: 48px 24px; text-align: center; }
+  .cover h1 { font-size: 2.8rem; font-weight: 900; letter-spacing: 3px; margin-bottom: 8px; }
+  .cover p { font-size: 1rem; opacity: .85; max-width: 500px; margin: 0 auto 16px; }
+  .cover .badge { display: inline-block; background: rgba(255,255,255,.2); border: 2px solid rgba(255,255,255,.4); border-radius: 20px; padding: 6px 18px; font-size: .8rem; font-weight: 700; letter-spacing: 1px; }
+  .container { max-width: 720px; margin: 0 auto; padding: 32px 20px 60px; }
+  .section { background: #fff; border-radius: 16px; padding: 24px; margin-bottom: 24px; border: 1px solid #d1fae5; box-shadow: 0 2px 12px rgba(22,163,74,.07); }
+  .section-title { font-size: 1.2rem; font-weight: 900; color: #15803d; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; padding-bottom: 12px; border-bottom: 2px solid #dcfce7; }
+  .step { display: flex; gap: 14px; margin-bottom: 18px; align-items: flex-start; }
+  .step-num { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #22c55e, #15803d); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1rem; flex-shrink: 0; box-shadow: 0 4px 12px rgba(22,163,74,.3); }
+  .step-content h3 { font-size: .95rem; font-weight: 800; color: #111; margin-bottom: 4px; }
+  .step-content p { font-size: .84rem; color: #374151; line-height: 1.6; }
+  .step-content code { background: #f0fdf4; border: 1px solid #86efac; border-radius: 5px; padding: 2px 7px; font-size: .8rem; color: #15803d; font-family: monospace; }
+  .tip { background: #fef3c7; border: 1.5px solid #fcd34d; border-radius: 10px; padding: 12px 14px; margin: 10px 0; font-size: .82rem; color: #92400e; }
+  .tip strong { color: #d97706; }
+  .success { background: #dcfce7; border: 1.5px solid #86efac; border-radius: 10px; padding: 12px 14px; margin: 10px 0; font-size: .82rem; color: #15803d; }
+  .url-box { background: #f0fdf4; border: 2px solid #22c55e; border-radius: 10px; padding: 12px 16px; text-align: center; font-family: monospace; font-size: 1rem; font-weight: 700; color: #15803d; margin: 10px 0; letter-spacing: 1px; }
+  .coins-table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+  .coins-table th { background: #f0fdf4; color: #15803d; font-size: .75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; padding: 10px 12px; border-bottom: 2px solid #d1fae5; text-align: left; }
+  .coins-table td { padding: 10px 12px; border-bottom: 1px solid #f3f4f6; font-size: .84rem; }
+  .coins-table tr:last-child td { border: none; }
+  .green { color: #16a34a; font-weight: 700; }
+  .red { color: #dc2626; font-weight: 700; }
+  .gold { color: #d97706; font-weight: 700; }
+  .footer { text-align: center; padding: 32px 20px; font-size: .75rem; color: #6b7280; border-top: 1px solid #d1fae5; background: #fff; }
+  .footer strong { color: #15803d; }
+  .warning { background: #fee2e2; border: 1.5px solid #fca5a5; border-radius: 10px; padding: 12px 14px; margin: 10px 0; font-size: .82rem; color: #dc2626; }
+  h2.big { font-size: 1rem; font-weight: 800; color: #374151; margin: 16px 0 8px; }
+  .new-badge { display: inline-block; background: #dcfce7; color: #15803d; border: 1px solid #86efac; border-radius: 20px; padding: 2px 10px; font-size: .7rem; font-weight: 800; margin-left: 8px; vertical-align: middle; }
+  @media(max-width: 600px) {
+    .cover h1 { font-size: 2rem; }
+    .container { padding: 20px 14px 50px; }
+    .section { padding: 18px; }
+  }
+  @media print {
+    body { background: #fff; }
+    .cover { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<!-- PORTADA -->
+<div class="cover">
+  <div style="font-size:3rem;margin-bottom:12px;">⚽</div>
+  <h1>QUINIELAFC</h1>
+  <p>Guía completa de configuración y uso — Mundial 2026</p>
+  <div class="badge">📖 MANUAL DE USUARIO · VERSIÓN 4.0 · JUNIO 2026</div>
+  <div style="margin-top:16px;font-size:.75rem;opacity:.7;">© 2026 Anthony / AnthonyFC · ID: QFC-2026-AJD-64005C</div>
+</div>
+
+<div class="container">
+
+  <!-- SECCIÓN 0: QUÉ ES -->
+  <div class="section">
+    <div class="section-title">🏆 ¿Qué es QuinielaFC?</div>
+    <p style="font-size:.9rem;color:#374151;margin-bottom:12px;">
+      QuinielaFC es una app de quiniela privada para el <strong>Mundial 2026</strong>. Tú y tus amigos apostáis los resultados de los 104 partidos, acumuláis puntos y monedas virtuales, y competís en un ranking en tiempo real.
+    </p>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;text-align:center;">
+      <div style="background:#f0fdf4;border:1px solid #d1fae5;border-radius:10px;padding:12px;">
+        <div style="font-size:1.5rem;">⚽</div>
+        <div style="font-size:.75rem;font-weight:700;color:#15803d;margin-top:4px;">104 partidos</div>
+      </div>
+      <div style="background:#fef3c7;border:1px solid #fcd34d;border-radius:10px;padding:12px;">
+        <div style="font-size:1.5rem;">🪙</div>
+        <div style="font-size:.75rem;font-weight:700;color:#d97706;margin-top:4px;">5.000 monedas</div>
+      </div>
+      <div style="background:#dbeafe;border:1px solid #93c5fd;border-radius:10px;padding:12px;">
+        <div style="font-size:1.5rem;">🔥</div>
+        <div style="font-size:.75rem;font-weight:700;color:#1d4ed8;margin-top:4px;">Tiempo real</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;text-align:center;margin-top:10px;">
+      <div style="background:#ede9fe;border:1px solid #c4b5fd;border-radius:10px;padding:12px;">
+        <div style="font-size:1.5rem;">🌐</div>
+        <div style="font-size:.75rem;font-weight:700;color:#7c3aed;margin-top:4px;">8 idiomas</div>
+        <div style="font-size:.65rem;color:#6b7280;margin-top:2px;">🇪🇸🇬🇧🇫🇷🇵🇹🇩🇪🇮🇹🇸🇦🇨🇳</div>
+      </div>
+      <div style="background:#fce7f3;border:1px solid #f9a8d4;border-radius:10px;padding:12px;">
+        <div style="font-size:1.5rem;">🔔</div>
+        <div style="font-size:.75rem;font-weight:700;color:#be185d;margin-top:4px;">Notificaciones</div>
+        <div style="font-size:.65rem;color:#6b7280;margin-top:2px;">Push en tiempo real</div>
+      </div>
+    </div>
+    <div style="margin-top:14px;background:#f0fdf4;border-radius:10px;padding:12px;font-size:.82rem;color:#374151;">
+      <strong style="color:#15803d;">📱 Funciona en cualquier móvil</strong> — Solo necesitas Chrome. No hay que instalar nada. Accede desde la URL que te dé el administrador.
+    </div>
+  </div>
+
+  <!-- SECCIÓN 1: FIREBASE -->
+  <div class="section">
+    <div class="section-title">🔥 PASO 1 — Crear tu base de datos Firebase</div>
+    <div class="tip">⏱️ <strong>Tiempo estimado: 5 minutos.</strong> Firebase es completamente gratuito para hasta 400 usuarios diarios. No necesitas tarjeta de crédito.</div>
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h3>Abre Firebase Console</h3>
+        <p>En tu navegador, ve a:</p>
+        <div class="url-box">firebase.google.com</div>
+        <p>Inicia sesión con tu cuenta de Google. Si no tienes, créala gratis.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h3>Crear nuevo proyecto</h3>
+        <p>Pulsa <strong>"Ir a la consola"</strong> → <strong>"Crear un proyecto"</strong>.<br>
+        Ponle un nombre (ej: <code>miQuiniela2026</code>).<br>
+        <strong>Desactiva</strong> Google Analytics → pulsa <strong>"Crear proyecto"</strong>.<br>
+        Espera ~30 segundos → pulsa <strong>"Continuar"</strong>.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h3>Crear la base de datos Firestore</h3>
+        <p>En el menú lateral izquierdo, busca y pulsa <strong>"Firestore Database"</strong>.<br>
+        Pulsa <strong>"Crear base de datos"</strong>.<br>
+        Selecciona <strong>"Comenzar en modo de producción"</strong> → <strong>Siguiente</strong>.<br>
+        Elige la región más cercana (ej: <code>europe-west1</code>) → <strong>"Listo"</strong>.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h3>Configurar reglas de seguridad</h3>
+        <p>En Firestore, pulsa la pestaña <strong>"Reglas"</strong>. Borra el contenido y pega esto exactamente:</p>
+        <div style="background:#1e1e1e;color:#4ade80;border-radius:8px;padding:14px;font-family:monospace;font-size:.78rem;margin:8px 0;line-height:1.8;">
+          rules_version = '2';<br>
+          service cloud.firestore {<br>
+          &nbsp;&nbsp;match /databases/{database}/documents {<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;match /{document=**} {<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;allow read, write: if true;<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+          &nbsp;&nbsp;}<br>
+          }
+        </div>
+        <p>Pulsa <strong>"Publicar"</strong>.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-content">
+        <h3>Añadir dominio autorizado <span class="new-badge">NUEVO</span></h3>
+        <p>Ve a <strong>Authentication → Configuración → Dominios autorizados</strong>.<br>
+        Pulsa <strong>"Agregar un dominio"</strong> y añade la URL donde tienes la app alojada.<br>
+        Ejemplo: <code>tuusuario.github.io</code></p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">6</div>
+      <div class="step-content">
+        <h3>Registrar tu app web</h3>
+        <p>Pulsa el <strong>⚙️ engranaje</strong> (junto a "Descripción general del proyecto") → <strong>"Configuración del proyecto"</strong>.<br>
+        Baja hasta <strong>"Tus apps"</strong>.<br>
+        Pulsa el icono <strong>&lt;/&gt;</strong> (Web).<br>
+        Ponle un nombre (ej: <code>QuinielaWeb</code>) → <strong>"Registrar app"</strong>.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">7</div>
+      <div class="step-content">
+        <h3>Copiar las credenciales</h3>
+        <p>Verás un bloque de código como este:</p>
+        <div style="background:#1e1e1e;color:#93c5fd;border-radius:8px;padding:14px;font-family:monospace;font-size:.76rem;margin:8px 0;line-height:2;">
+          const firebaseConfig = {<br>
+          &nbsp;&nbsp;<span style="color:#fcd34d;">apiKey</span>: <span style="color:#86efac;">"AIzaSy..."</span>,<br>
+          &nbsp;&nbsp;<span style="color:#fcd34d;">projectId</span>: <span style="color:#86efac;">"tu-proyecto-12345"</span>,<br>
+          &nbsp;&nbsp;<span style="color:#fcd34d;">appId</span>: <span style="color:#86efac;">"1:123456:web:abc123"</span>,<br>
+          &nbsp;&nbsp;...
+        </div>
+        <p>Necesitas copiar 3 valores: <strong>apiKey</strong>, <strong>projectId</strong> y <strong>appId</strong>. Anótalos.</p>
+      </div>
+    </div>
+
+    <div class="success">✅ Ya tienes Firebase listo. Ahora vamos a conectarlo con la app.</div>
+  </div>
+
+  <!-- SECCIÓN 2: ALOJAR EN GITHUB PAGES -->
+  <div class="section">
+    <div class="section-title">🌐 PASO 2 — Alojar la app en GitHub Pages (gratis)</div>
+    <div class="tip">💡 GitHub Pages es gratuito y permite que todos accedan a la app desde cualquier móvil con una URL fija.</div>
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h3>Crear cuenta en GitHub</h3>
+        <p>Ve a <strong>github.com</strong> y crea una cuenta gratuita si no tienes.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h3>Crear repositorio</h3>
+        <p>Pulsa <strong>"New repository"</strong>. Ponle un nombre (ej: <code>quinielafc</code>). Márcalo como <strong>público</strong>. Pulsa <strong>"Create repository"</strong>.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h3>Subir los archivos</h3>
+        <p>Sube los 3 archivos que recibirás: <code>index.html</code>, <code>manifest.json</code> y <code>sw.js</code>.<br>
+        Pulsa <strong>"Add file → Upload files"</strong>, selecciona los 3 y pulsa <strong>"Commit changes"</strong>.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h3>Activar GitHub Pages</h3>
+        <p>Ve a <strong>Settings → Pages</strong>. En <strong>"Source"</strong> selecciona <strong>"Deploy from a branch"</strong> → rama <strong>main</strong> → carpeta <strong>/ (root)</strong>. Pulsa <strong>"Save"</strong>.</p>
+        <p style="margin-top:6px;">En 1-2 minutos tu URL estará activa:</p>
+        <div class="url-box">https://tuusuario.github.io/quinielafc/</div>
+      </div>
+    </div>
+
+    <div class="success">✅ Comparte esa URL con todos los jugadores. Desde cualquier móvil con Chrome pueden acceder y unirse al grupo.</div>
+  </div>
+
+  <!-- SECCIÓN 3: CONECTAR APP -->
+  <div class="section">
+    <div class="section-title">⚡ PASO 3 — Conectar la app a Firebase</div>
+    <div class="tip">🔑 <strong>Solo el administrador necesita hacer esto una vez.</strong> Las credenciales se guardan automáticamente para futuras sesiones.</div>
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h3>Abrir la app</h3>
+        <p>Abre la URL de GitHub Pages en Chrome. Introduce la contraseña de acceso (por defecto: <code>Mundial2026</code>).</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h3>Ir a la sección Firebase</h3>
+        <p>Pulsa el botón <strong>⚽ APOSTAR</strong> en la barra inferior.<br>
+        Baja hasta el panel <strong>"🔥 Firebase"</strong> con 3 campos: <strong>API KEY</strong>, <strong>PROJECT ID</strong> y <strong>APP ID</strong>.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h3>Pegar las credenciales</h3>
+        <p>Pega los 3 valores que copiaste de Firebase:<br>
+        • <strong>API KEY</strong> → valor de <code>apiKey</code><br>
+        • <strong>PROJECT ID</strong> → valor de <code>projectId</code><br>
+        • <strong>APP ID</strong> → valor de <code>appId</code></p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h3>Conectar y verificar</h3>
+        <p>Pulsa el botón naranja <strong>"🔥 CONECTAR"</strong>.<br>
+        Si ves <strong>"Firebase conectado - sync en tiempo real activo"</strong> en verde, ¡todo está listo!</p>
+        <p style="margin-top:6px;"><strong>Desde este momento la app recuerda las credenciales.</strong> En futuras sesiones Firebase se conecta solo al arrancar.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 4: CREAR GRUPO -->
+  <div class="section">
+    <div class="section-title">👥 PASO 4 — Crear tu grupo de amigos</div>
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h3>Crear el grupo</h3>
+        <p>En la sección <strong>Apuestas</strong>, baja hasta <strong>"CREAR GRUPO"</strong>.<br>
+        Escribe el nombre del grupo, tu apodo y elige un emoji.<br>
+        Pulsa <strong>"🚀 CREAR GRUPO"</strong>.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h3>Compartir el código</h3>
+        <p>Verás un código de 6 letras (ej: <code>ABC123</code>).<br>
+        Compártelo con tus amigos por WhatsApp, Telegram o como prefieras junto con la URL de la app.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h3>Los demás se unen</h3>
+        <p>Cada jugador debe:<br>
+        1. Abrir la URL en Chrome<br>
+        2. Introducir la contraseña (<code>Mundial2026</code>)<br>
+        3. Ir a <strong>Apuestas → Unirme a un grupo</strong><br>
+        4. Introducir el código de 6 letras<br>
+        5. Escribir su apodo y elegir un emoji<br>
+        6. Pulsar <strong>"🔑 UNIRME AL GRUPO"</strong></p>
+      </div>
+    </div>
+
+    <div class="tip">🔥 <strong>Sincronización automática:</strong> Un indicador verde en la esquina inferior derecha confirma que el polling está activo. Los datos se sincronizan cada 5 segundos entre todos los móviles.</div>
+  </div>
+
+  <!-- SECCIÓN 5: APOSTAR -->
+  <div class="section">
+    <div class="section-title">🎯 PASO 5 — Cómo apostar</div>
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h3>Seleccionar un partido</h3>
+        <p>En la pestaña <strong>Partidos</strong>, pulsa sobre cualquier partido disponible para abrirlo.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h3>Elegir resultado y marcador</h3>
+        <p>Selecciona <strong>1 (local gana)</strong>, <strong>X (empate)</strong> o <strong>2 (visitante gana)</strong>.<br>
+        Introduce el marcador exacto (opcional pero suma más puntos).<br>
+        Añade las monedas que quieres apostar en el campo 🪙.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h3>Confirmar la apuesta</h3>
+        <p>Pulsa <strong>"✅ Confirmar apuesta"</strong>. Las monedas apostadas se descuentan inmediatamente de tu saldo y la apuesta se guarda en Firebase para que todos la vean.</p>
+      </div>
+    </div>
+
+    <div class="tip">⏰ <strong>Límite de tiempo:</strong> Solo puedes apostar antes del inicio del partido. Una vez comenzado, la apuesta se cierra automáticamente.</div>
+  </div>
+
+  <!-- SECCIÓN 6: MONEDAS -->
+  <div class="section">
+    <div class="section-title">🪙 Sistema de Monedas <span class="new-badge">ACTUALIZADO</span></div>
+    <p style="font-size:.84rem;color:#374151;margin-bottom:14px;">
+      Cada jugador empieza con <strong>5.000 monedas</strong>. Al apostar un partido, puedes añadir monedas a tu apuesta. Las monedas apostadas se descuentan inmediatamente del saldo. Al final del Mundial, el jugador con más monedas gana el bote.
+    </p>
+    <table class="coins-table">
+      <thead>
+        <tr><th>Resultado</th><th>Premio</th><th>Ejemplo (apuesta 100🪙)</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>🎯 Marcador exacto</td>
+          <td class="gold">+200% de la apuesta</td>
+          <td class="gold">Ganas 200🪙 → Total: +200🪙</td>
+        </tr>
+        <tr>
+          <td>✅ Resultado correcto</td>
+          <td class="green">+50% de la apuesta</td>
+          <td class="green">Ganas 50🪙 → Total: +50🪙</td>
+        </tr>
+        <tr>
+          <td>❌ Resultado incorrecto</td>
+          <td class="red">-100% de la apuesta</td>
+          <td class="red">Pierdes 100🪙</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="tip">💡 <strong>Estrategia:</strong> Apuesta más monedas cuando tengas mucha confianza en el resultado. Guarda monedas para los partidos de semifinales y final.</div>
+    <div class="success">✅ El <strong>Ranking de monedas</strong> muestra el saldo actual de cada jugador y cuánto ha ganado o perdido respecto al inicio (en verde/rojo).</div>
+  </div>
+
+  <!-- SECCIÓN 7: PUNTOS -->
+  <div class="section">
+    <div class="section-title">📊 Sistema de Puntos</div>
+    <table class="coins-table">
+      <thead>
+        <tr><th>Acierto</th><th>Puntos</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>🎯 Marcador exacto (ej: 2-1)</td><td class="gold">3 puntos</td></tr>
+        <tr><td>✅ Resultado correcto (gana/empate/pierde)</td><td class="green">1 punto</td></tr>
+        <tr><td>❌ Resultado incorrecto</td><td class="red">0 puntos</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:.82rem;color:#374151;margin-top:10px;">El administrador del grupo confirma los resultados desde el panel <strong>"Admin — Confirmar resultado"</strong> en la parte inferior de la pantalla de partidos.</p>
+  </div>
+
+  <!-- SECCIÓN 8: CHAT -->
+  <div class="section">
+    <div class="section-title">💬 Chat del grupo <span class="new-badge">NUEVO</span></div>
+    <p style="font-size:.84rem;color:#374151;margin-bottom:12px;">
+      Cada grupo tiene un chat en tiempo real. Accede desde <strong>Mi Grupo → pestaña 💬 Chat</strong>.
+    </p>
+    <div class="tip">📱 <strong>Los mensajes se sincronizan automáticamente.</strong> Cuando alguien escribe un mensaje, aparece en el chat de todos los miembros del grupo en pocos segundos.</div>
+    <div class="warning">⚠️ El chat requiere que Firebase esté conectado. Si ves el chat vacío, espera unos segundos a que se sincronice o sal y vuelve a entrar a la pestaña Chat.</div>
+  </div>
+
+  <!-- SECCIÓN 9: FEED DEL GRUPO -->
+  <div class="section">
+    <div class="section-title">📢 Feed del grupo <span class="new-badge">NUEVO</span></div>
+    <p style="font-size:.84rem;color:#374151;margin-bottom:12px;">
+      El feed muestra la actividad del grupo en tiempo real: quién se une, quién apuesta y quién acierta resultados. Aparece en la pantalla de <strong>Inicio</strong>.
+    </p>
+    <table class="coins-table">
+      <thead><tr><th>Icono</th><th>Significa</th></tr></thead>
+      <tbody>
+        <tr><td>⚽</td><td>Un jugador ha realizado una apuesta</td></tr>
+        <tr><td>🎯</td><td>Un jugador ha acertado un resultado</td></tr>
+        <tr><td>👋</td><td>Un nuevo jugador se ha unido al grupo</td></tr>
+        <tr><td>🏆</td><td>Un jugador ha aportado monedas al bote</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SECCIÓN 10: PREGUNTAS -->
+  <div class="section">
+    <div class="section-title">❓ Preguntas frecuentes</div>
+
+    <h2 class="big">¿Cuántos usuarios pueden usar la app al mismo tiempo?</h2>
+    <p style="font-size:.84rem;color:#374151;margin-bottom:14px;">Con Firebase gratuito, hasta 400 usuarios activos diarios sin coste. Más que suficiente para grupos de amigos.</p>
+
+    <h2 class="big">¿Se pierden los datos si cierro la app o recargo la página?</h2>
+    <p style="font-size:.84rem;color:#374151;margin-bottom:14px;">No. Los datos están en Firebase. Al volver a abrir la app, Firebase se conecta automáticamente y restaura tu grupo y apuestas.</p>
+
+    <h2 class="big">¿Por qué aparece un indicador verde en la esquina inferior derecha?</h2>
+    <p style="font-size:.84rem;color:#374151;margin-bottom:14px;">Es el indicador de sincronización activa. Muestra la hora de la última sincronización con Firebase. Si desaparece, recarga la página.</p>
+
+    <h2 class="big">¿Qué pasa si los resultados de ESPN no son correctos?</h2>
+    <p style="font-size:.84rem;color:#374151;margin-bottom:14px;">El administrador del grupo puede introducir los resultados manualmente. La sincronización con ESPN es automática pero el admin siempre tiene el control final.</p>
+
+    <h2 class="big">¿Puedo usar la misma base de datos Firebase para varios grupos?</h2>
+    <p style="font-size:.84rem;color:#374151;margin-bottom:14px;">Sí. Un solo proyecto Firebase puede alojar múltiples grupos sin problema.</p>
+
+    <h2 class="big">¿Cómo vuelvo a entrar si borro la caché del navegador?</h2>
+    <p style="font-size:.84rem;color:#374151;">Abre la URL → introduce la contraseña → ve a <strong>Apuestas → Unirme a un grupo</strong> → introduce el código y tu mismo apodo. El sistema recupera tu historial de apuestas automáticamente.</p>
+  </div>
+
+  <!-- SECCIÓN 11: MEJORAS V4 -->
+  <div class="section">
+    <div class="section-title">🔧 Versión 4 — Novedades y mejoras</div>
+    <p style="font-size:.84rem;color:#374151;margin-bottom:14px;">
+      Esta versión añade funciones importantes y corrige problemas de sincronización.
+    </p>
+    <div class="success" style="margin-bottom:10px;">✅ <strong>8 idiomas</strong> — Español, Inglés, Francés, Portugués, Alemán, Italiano, Árabe y Chino.</div>
+    <div class="success" style="margin-bottom:10px;">✅ <strong>Notificaciones push</strong> — Aviso cuando un compañero apuesta o acierta un resultado.</div>
+    <div class="success" style="margin-bottom:10px;">✅ <strong>Estadísticas personales</strong> — % aciertos, exactos y racha actual en la pestaña Quiniela.</div>
+    <div class="success" style="margin-bottom:10px;">✅ <strong>Firebase auto-conecta</strong> al arrancar — no hay que volver a introducir credenciales.</div>
+    <div class="success" style="margin-bottom:10px;">✅ <strong>Sincronización cada 5 segundos</strong> — miembros, apuestas, monedas y feed en tiempo real.</div>
+    <div class="success" style="margin-bottom:10px;">✅ <strong>Monedas sincronizadas</strong> — el saldo se descuenta al apostar y se ve en todos los móviles.</div>
+    <div class="success" style="margin-bottom:10px;">✅ <strong>Chat del grupo</strong> — mensajes en tiempo real entre todos los jugadores.</div>
+    <div class="success" style="margin-bottom:10px;">✅ <strong>Indicadores online</strong> — punto verde junto a cada jugador activo.</div>
+    <div class="success">✅ <strong>Apuestas se restauran</strong> al recargar la página desde Firebase.</div>
+  </div>
+
+  <!-- SECCIÓN 12: GUÍA DE REINGRESO -->
+  <div class="section">
+    <div class="section-title">🔑 Cómo volver a entrar al grupo</div>
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h3>Pide el código al organizador</h3>
+        <p>El código de 6 caracteres del grupo sigue existiendo en Firebase aunque hayas cerrado la app o borrado la caché.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h3>Introduce el código y tu apodo</h3>
+        <p>Ve a <strong>Apuestas → Unirme a un grupo</strong>. Escribe el código y exactamente el mismo apodo que usabas antes.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h3>Tus apuestas anteriores siguen ahí</h3>
+        <p>Tus apuestas, puntos y monedas están guardados en Firebase. Al volver a unirte, el sistema los restaura automáticamente.</p>
+      </div>
+    </div>
+
+    <div class="tip">
+      <strong>⚠️ Importante:</strong> Usa siempre el mismo apodo para mantener tu historial. Si usas un apodo diferente, el sistema te creará como un jugador nuevo.
+    </div>
+  </div>
+
+  <!-- SECCIÓN: NOTIFICACIONES PUSH -->
+  <div class="section">
+    <div class="section-title">🔔 Notificaciones push <span class="new-badge">NUEVO v4</span></div>
+    <p style="font-size:.84rem;color:#374151;margin-bottom:12px;">
+      La app envía notificaciones automáticas cuando hay actividad en tu grupo.
+    </p>
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h3>Activar notificaciones</h3>
+        <p>Al entrar al grupo por primera vez, el navegador preguntará si quieres recibir notificaciones. Pulsa <strong>"Permitir"</strong>.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h3>Qué notificaciones recibirás</h3>
+        <p>
+          • <strong>⚽ Nueva apuesta</strong> — cuando un compañero apuesta un partido con su resultado<br>
+          • <strong>🎯 Resultado acertado</strong> — cuando alguien del grupo acierta un resultado<br>
+          • <strong>👥 Nuevo miembro</strong> — cuando alguien se une al grupo
+        </p>
+      </div>
+    </div>
+    <div class="tip">📱 <strong>Importante:</strong> Las notificaciones solo funcionan cuando la app está abierta en Chrome. Para recibirlas en segundo plano, añade la app a la pantalla de inicio (instalar como PWA).</div>
+    <div class="warning">⚠️ No recibirás notificaciones de tus propias acciones, solo de las acciones de los demás jugadores del grupo.</div>
+  </div>
+
+  <!-- SECCIÓN: ESTADÍSTICAS PERSONALES -->
+  <div class="section">
+    <div class="section-title">📊 Estadísticas personales <span class="new-badge">NUEVO v4</span></div>
+    <p style="font-size:.84rem;color:#374151;margin-bottom:12px;">
+      Accede a tus estadísticas desde la pestaña <strong>📋 Quiniela</strong> dentro de la sección Apuestas.
+    </p>
+    <table class="coins-table">
+      <thead><tr><th>Estadística</th><th>Descripción</th></tr></thead>
+      <tbody>
+        <tr><td>% Aciertos</td><td>Porcentaje de partidos apostados que has acertado (resultado correcto o exacto)</td></tr>
+        <tr><td>🎯 Exactos</td><td>Número de veces que has acertado el marcador exacto</td></tr>
+        <tr><td>🔥 Racha</td><td>Número de apuestas consecutivas acertadas desde la última fallida</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:.82rem;color:#374151;margin-top:10px;">Los últimos 10 resultados aparecen como círculos de colores: 🟡 exacto · 🟢 correcto · 🔴 fallado.</p>
+  </div>
+
+  <!-- SECCIÓN: IDIOMAS -->
+  <div class="section">
+    <div class="section-title">🌐 Idiomas disponibles <span class="new-badge">NUEVO v4</span></div>
+    <p style="font-size:.84rem;color:#374151;margin-bottom:12px;">
+      La app está disponible en 8 idiomas. Para cambiar el idioma ve a <strong>Más → Ajustes → Idioma</strong>.
+    </p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+      <div style="background:#f0fdf4;border:1px solid #d1fae5;border-radius:8px;padding:10px;display:flex;align-items:center;gap:8px;">
+        <span style="font-size:1.4rem;">🇪🇸</span><span style="font-weight:700;font-size:.84rem;">Español</span>
+      </div>
+      <div style="background:#f0fdf4;border:1px solid #d1fae5;border-radius:8px;padding:10px;display:flex;align-items:center;gap:8px;">
+        <span style="font-size:1.4rem;">🇬🇧</span><span style="font-weight:700;font-size:.84rem;">English</span>
+      </div>
+      <div style="background:#f0fdf4;border:1px solid #d1fae5;border-radius:8px;padding:10px;display:flex;align-items:center;gap:8px;">
+        <span style="font-size:1.4rem;">🇫🇷</span><span style="font-weight:700;font-size:.84rem;">Français</span>
+      </div>
+      <div style="background:#f0fdf4;border:1px solid #d1fae5;border-radius:8px;padding:10px;display:flex;align-items:center;gap:8px;">
+        <span style="font-size:1.4rem;">🇵🇹</span><span style="font-weight:700;font-size:.84rem;">Português</span>
+      </div>
+      <div style="background:#f0fdf4;border:1px solid #d1fae5;border-radius:8px;padding:10px;display:flex;align-items:center;gap:8px;">
+        <span style="font-size:1.4rem;">🇩🇪</span><span style="font-weight:700;font-size:.84rem;">Deutsch</span>
+      </div>
+      <div style="background:#f0fdf4;border:1px solid #d1fae5;border-radius:8px;padding:10px;display:flex;align-items:center;gap:8px;">
+        <span style="font-size:1.4rem;">🇮🇹</span><span style="font-weight:700;font-size:.84rem;">Italiano</span>
+      </div>
+      <div style="background:#f0fdf4;border:1px solid #d1fae5;border-radius:8px;padding:10px;display:flex;align-items:center;gap:8px;">
+        <span style="font-size:1.4rem;">🇸🇦</span><span style="font-weight:700;font-size:.84rem;">العربية</span>
+      </div>
+      <div style="background:#f0fdf4;border:1px solid #d1fae5;border-radius:8px;padding:10px;display:flex;align-items:center;gap:8px;">
+        <span style="font-size:1.4rem;">🇨🇳</span><span style="font-weight:700;font-size:.84rem;">中文</span>
+      </div>
+    </div>
+    <div class="tip">💡 El idioma se guarda automáticamente y se aplica cada vez que abres la app.</div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <div style="font-size:1.5rem;margin-bottom:8px;">⚽</div>
+  <strong>QuinielaFC — Mundial 2026</strong><br>
+  © 2026 Anthony / AnthonyFC · Todos los derechos reservados<br>
+  ID de obra: QFC-2026-AJD-64005C · Registro: 2026-05-30<br><br>
+  <span style="font-size:.7rem;">PROHIBIDO copiar, redistribuir o modificar sin autorización expresa del autor.</span>
+</div>
+
+</body>
+</html>
