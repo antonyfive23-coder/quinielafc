@@ -4575,7 +4575,11 @@ fbSt('conn','Firebase conectado - sync en tiempo real activo');
 fbMsg('ok','Conectado con '+pi+'. Los grupos se sincronizan en todos los dispositivos.');
 if(typeof toast==='function')toast('🔥','Firebase conectado!');
 try{ localStorage.setItem('qfc_fb_config', JSON.stringify({apiKey:apiKey,projectId:projectId,appId:appId})); }catch(e){};
-if(apSt.group&&typeof fbListenGroup==='function')fbListenGroup(apSt.group.code);
+if(apSt.group&&typeof fbListenGroup==='function'){
+  fbListenGroup(apSt.group.code);
+  if(apSt.user&&typeof _fbMarkOnline==='function') _fbMarkOnline(apSt.group.code,apSt.user.id);
+  setTimeout(function(){if(typeof apBanner==='function')apBanner();},1000);
+}
 }else{
 fbSt('err','Error al conectar');
 fbMsg('fail','No se pudo conectar. Verifica los datos y que Firestore este en modo prueba.');
