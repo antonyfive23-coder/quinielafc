@@ -187,7 +187,7 @@ window.addEventListener('load',function(){
         }
       }
     }catch(e){}
-  },1500);
+  },0);
 });
 
 if('serviceWorker' in navigator){
@@ -3206,7 +3206,7 @@ if(saved&&saved.code){
           try{localStorage.removeItem('wc26_ap');}catch(e){}
         }
       }catch(e){ console.warn('[QFC] Firebase restore error:',e.message); }
-    }, 3000); // Wait for Firebase to connect first
+    }, 0); // Wait for Firebase to connect first
   }
 }
 }catch(e){}
