@@ -503,7 +503,7 @@ window.installPWA = function(){
           <p>Crea tu quiniela privada y comparte el código con tus amigos para que se unan.</p>
           <label class="f-lbl">Nombre del grupo</label>
           <input type="text" class="f-inp" id="gn-name" placeholder="Los Cracks del Barrio" maxlength="30">
-          <label class="f-lbl">Inscripción por jugador (€)</label>
+          <label class="f-lbl">Inscripción por jugador (🍎)</label>
           <input type="number" class="f-inp" id="gn-inscr" placeholder="10" min="0" step="1" style="width:90px;">
           <label class="f-lbl">Tu apodo</label>
           <input type="text" class="f-inp" id="gn-user" placeholder="El Crack" maxlength="20">
@@ -561,13 +561,13 @@ window.installPWA = function(){
     <div class="bote-banner" id="bote-banner">
       <div style="font-size:1.5rem;">🏆</div>
       <div style="flex:1;">
-        <div class="bote-val" id="bote-val" style="font-family:Bebas Neue,sans-serif;font-size:1.6rem;color:#92400e;">🪙 0</div>
+        <div class="bote-val" id="bote-val" style="font-family:Bebas Neue,sans-serif;font-size:1.6rem;color:#92400e;">🍎 0</div>
         <div class="bote-sub" id="bote-sub" style="font-size:0.7rem;color:#b45309;font-weight:600;">Bote final del Mundial</div>
       </div>
       <div style="text-align:right;min-width:90px;">
         <div style="font-size:0.55rem;color:#b45309;font-weight:700;text-transform:uppercase;letter-spacing:1px;">Mi aporte al bote</div>
-        <div style="font-family:Bebas Neue,sans-serif;font-size:.9rem;color:#d97706;line-height:1.3;" id="inscr-val">🪙 0</div>
-        <div style="font-size:.55rem;color:#b45309;margin-top:2px;" id="my-coins-label">Saldo: 🪙5000</div>
+        <div style="font-family:Bebas Neue,sans-serif;font-size:.9rem;color:#d97706;line-height:1.3;" id="inscr-val">🍎 0</div>
+        <div style="font-size:.55rem;color:#b45309;margin-top:2px;" id="my-coins-label">Saldo: 🍎5000</div>
         
       </div>
     </div>
@@ -607,7 +607,7 @@ window.installPWA = function(){
       <div class="qprogress-bar"><div class="qprogress-fill" id="qprogress-fill" style="width:0%"></div></div>
       <div class="qprogress-sub" id="qprogress-sub">Cargando...</div>
     </div>
-    <!-- 🪙 Saldo de monedas -->
+    <!-- 🍎 Saldo de monedas -->
     <div id="coin-bar-wrap"></div>
     <!-- Main tabs -->
     <div class="tab-bar">
@@ -626,7 +626,7 @@ window.installPWA = function(){
       <button class="tab-btn" onclick="apTab('historial',this)">📜 Historial</button>
       <button class="tab-btn" onclick="apTab('ajustes',this)">⚙️ Grupo</button>
       <button class="tab-btn" onclick="apTab('firebase',this)">🔥 Firebase</button>
-      <button class="tab-btn" onclick="apTab('monedas',this)">🪙 Monedas</button>
+      <button class="tab-btn" onclick="apTab('monedas',this)">🍎 Monedas</button>
     </div>
 
     <!-- PARTIDOS -->
@@ -689,8 +689,8 @@ window.installPWA = function(){
     <!-- QUINIELA -->
     <div id="ap-quiniela" class="tab-pane">
       <div class="panel"><div class="ptitle"><span class="ico">📊</span> Quiniela colectiva — todos vs todos</div>
-        <p style="font-size:0.76rem;color:var(--muted);margin-bottom:11px;font-weight:500;">🟡 Exacto · 🟢 Correcto · 🔴 Fallo · — Sin apuesta</p>
-        <div class="mx-wrap" id="quiniela-mx"><div class="nores">Sin apuestas aún.</div></div>
+        <p style="font-size:0.76rem;color:var(--muted);margin-bottom:11px;font-weight:500;">🟡 Exacto · 🟢 Correcto · 🔴 Fallo · — Sin manzanas</p>
+        <div class="mx-wrap" id="quiniela-mx"><div class="nores">Sin manzanass aún.</div></div>
       </div>
     </div>
 
@@ -700,7 +700,7 @@ window.installPWA = function(){
         <div style="flex:1;min-width:80px;background:var(--g5);border-radius:9px;padding:11px;border:1.5px solid var(--border2);text-align:center;"><div style="font-size:0.85rem;">🎯</div><div style="font-family:Bebas Neue,sans-serif;font-size:1.5rem;color:var(--g);">5</div><div style="font-size:0.62rem;color:var(--muted);font-weight:700;">Exacto</div></div>
         <div style="flex:1;min-width:80px;background:#dbeafe;border-radius:9px;padding:11px;border:1.5px solid #93c5fd;text-align:center;"><div style="font-size:0.85rem;">✅</div><div style="font-family:Bebas Neue,sans-serif;font-size:1.5rem;color:var(--blue);">3-4</div><div style="font-size:0.62rem;color:var(--muted);font-weight:700;">Resultado</div></div>
         <div style="flex:1;min-width:80px;background:#fef3c7;border-radius:9px;padding:11px;border:1.5px solid #fcd34d;text-align:center;"><div style="font-size:0.85rem;">⭐</div><div style="font-family:Bebas Neue,sans-serif;font-size:1.5rem;color:var(--gold);">25</div><div style="font-size:0.62rem;color:var(--muted);font-weight:700;">Campeón</div></div>
-        <div style="flex:1;min-width:80px;background:#f3f4f6;border-radius:9px;padding:11px;border:1.5px solid #e5e7eb;text-align:center;"><div style="font-size:0.85rem;">💸</div><div style="font-family:Bebas Neue,sans-serif;font-size:1.5rem;color:var(--text);">€</div><div style="font-size:0.62rem;color:var(--muted);font-weight:700;">Bote</div></div>
+        <div style="flex:1;min-width:80px;background:#f3f4f6;border-radius:9px;padding:11px;border:1.5px solid #e5e7eb;text-align:center;"><div style="font-size:0.85rem;">💸</div><div style="font-family:Bebas Neue,sans-serif;font-size:1.5rem;color:var(--text);">🍎</div><div style="font-size:0.62rem;color:var(--muted);font-weight:700;">Bote</div></div>
       </div>
       <div class="g2">
         <div class="panel"><div class="ptitle"><span class="ico">🏆</span> Clasificación general <button onclick="openExport()" style="margin-left:auto;padding:3px 9px;border-radius:12px;border:1.5px solid var(--border2);background:var(--g5);color:var(--g2);font-size:.65rem;font-weight:700;cursor:pointer;">📋 Exportar</button></div><div id="ap-rank-list"></div></div>
@@ -728,7 +728,7 @@ window.installPWA = function(){
     <div id="ap-bizum" class="tab-pane">
       <div class="panel" style="margin-bottom:12px;"><div class="ptitle"><span class="ico">📱</span> Liquidación Bizum</div><div id="ap-biz-list"></div></div>
       <div class="panel"><div class="ptitle"><span class="ico">📋</span> Mi resumen</div>
-        <div class="summ-box" id="ap-summ">Sin apuestas aún.</div>
+        <div class="summ-box" id="ap-summ">Sin manzanass aún.</div>
         <div style="text-align:center;margin-bottom:7px;font-weight:800;font-size:0.82rem;color:var(--g);">COMPARTIR</div>
         <div class="share-row"><button class="share-btn wa" onclick="apShareWA()">💚 WhatsApp</button><button class="share-btn" onclick="apCopyMsg()">📋 Copiar</button><button class="share-btn tw" onclick="apShareTW()">🐦 Twitter</button></div>
       </div>
@@ -770,7 +770,7 @@ window.installPWA = function(){
         <div id="hist-member-bar" style="display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:8px;margin-bottom:10px;border-bottom:1px solid var(--border);"></div>
         <div class="hist-search-wrap"><i class="fas fa-search"></i><input type="text" class="hist-search" id="hist-q" placeholder="Buscar partido, equipo..." oninput="filterHist()"></div>
         <div id="hist-viewing-label" style="font-size:.7rem;color:var(--muted);font-weight:600;margin-bottom:8px;display:none;"></div>
-      <div id="ap-hist-list"><div class="nores">Sin apuestas.</div></div></div>
+      <div id="ap-hist-list"><div class="nores">Sin manzanass.</div></div></div>
       <div class="panel"><div class="ptitle"><span class="ico">🏅</span> Premios por categorías</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;" id="premios-grid"></div></div>
     </div>
 
@@ -884,16 +884,16 @@ window.installPWA = function(){
     <!-- MONEDAS TAB -->
     <div id="ap-monedas" class="tab-pane">
       <div class="panel">
-        <div class="ptitle"><span class="ico">🪙</span> Banco de Monedas</div>
+        <div class="ptitle"><span class="ico">🍎</span> Banco de Monedas</div>
         <div id="coin-bar-wrap-tab"></div>
         <div style="background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:12px;margin-bottom:10px;font-size:.78rem;color:var(--muted);line-height:1.7;">
           <strong style="color:var(--text);">¿Cómo funciona?</strong><br>
-          🪙 Empiezas con <strong>1.000 monedas</strong><br>
+          🍎 Empiezas con <strong>1.000 monedas</strong><br>
           ✅ Resultado correcto → ganas <strong>+50%</strong> de tu apuesta<br>
           🎯 Marcador exacto → ganas <strong>+200%</strong> (x3 total)<br>
           ❌ Fallo → pierdes las monedas apostadas<br>
-          🔥 Racha 3/5/10 aciertos → bonus <strong>+250/750/2500🪙</strong><br>
-          🎰 Si bajas de 500🪙 → rescate automático <strong>+1000🪙</strong> (1 vez)<br>
+          🔥 Racha 3/5/10 aciertos → bonus <strong>+250/750/2500🍎</strong><br>
+          🎰 Si bajas de 500🍎 → rescate automático <strong>+1000🍎</strong> (1 vez)<br>
           🏆 Bote final: el #1 del ranking se lleva el bote
         </div>
         <!-- Bote final -->
@@ -902,17 +902,17 @@ window.installPWA = function(){
           <p style="font-size:.72rem;color:#b45309;margin-bottom:10px;line-height:1.5;">Aporta monedas al bote. Al terminar el Mundial, el jugador con más puntos se lleva todo.</p>
           <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
             <div style="display:flex;align-items:center;gap:4px;background:#fff;border:2px solid #fcd34d;border-radius:8px;padding:6px 10px;">
-              <span style="font-size:.9rem;">🪙</span>
+              <span style="font-size:.9rem;">🍎</span>
               <input type="number" id="bote-contrib-input" min="10" step="10" placeholder="100" style="width:70px;border:none;outline:none;font-family:Bebas Neue,sans-serif;font-size:1.1rem;color:#92400e;">
             </div>
             <button onclick="contribuirBote(document.getElementById('bote-contrib-input').value)" style="padding:9px 16px;background:linear-gradient(135deg,#f59e0b,#d97706);border:none;border-radius:8px;color:#fff;font-weight:800;font-size:.8rem;cursor:pointer;">Aportar al bote</button>
           </div>
           <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;">
-            <button onclick="document.getElementById('bote-contrib-input').value=100;contribuirBote(100)" style="padding:4px 10px;border-radius:20px;border:1.5px solid #fcd34d;background:#fff8e1;color:#92400e;font-size:.7rem;font-weight:700;cursor:pointer;">🪙100</button>
-            <button onclick="document.getElementById('bote-contrib-input').value=250;contribuirBote(250)" style="padding:4px 10px;border-radius:20px;border:1.5px solid #fcd34d;background:#fff8e1;color:#92400e;font-size:.7rem;font-weight:700;cursor:pointer;">🪙250</button>
-            <button onclick="document.getElementById('bote-contrib-input').value=500;contribuirBote(500)" style="padding:4px 10px;border-radius:20px;border:1.5px solid #fcd34d;background:#fff8e1;color:#92400e;font-size:.7rem;font-weight:700;cursor:pointer;">🪙500</button>
-            <button onclick="document.getElementById('bote-contrib-input').value=1000;contribuirBote(1000)" style="padding:4px 10px;border-radius:20px;border:1.5px solid #fcd34d;background:#fff8e1;color:#92400e;font-size:.7rem;font-weight:700;cursor:pointer;">🪙1000</button>
-            <button onclick="document.getElementById('bote-contrib-input').value=2500;contribuirBote(2500)" style="padding:4px 10px;border-radius:20px;border:1.5px solid #fcd34d;background:#fff8e1;color:#92400e;font-size:.7rem;font-weight:700;cursor:pointer;">🪙2500</button>
+            <button onclick="document.getElementById('bote-contrib-input').value=100;contribuirBote(100)" style="padding:4px 10px;border-radius:20px;border:1.5px solid #fcd34d;background:#fff8e1;color:#92400e;font-size:.7rem;font-weight:700;cursor:pointer;">🍎100</button>
+            <button onclick="document.getElementById('bote-contrib-input').value=250;contribuirBote(250)" style="padding:4px 10px;border-radius:20px;border:1.5px solid #fcd34d;background:#fff8e1;color:#92400e;font-size:.7rem;font-weight:700;cursor:pointer;">🍎250</button>
+            <button onclick="document.getElementById('bote-contrib-input').value=500;contribuirBote(500)" style="padding:4px 10px;border-radius:20px;border:1.5px solid #fcd34d;background:#fff8e1;color:#92400e;font-size:.7rem;font-weight:700;cursor:pointer;">🍎500</button>
+            <button onclick="document.getElementById('bote-contrib-input').value=1000;contribuirBote(1000)" style="padding:4px 10px;border-radius:20px;border:1.5px solid #fcd34d;background:#fff8e1;color:#92400e;font-size:.7rem;font-weight:700;cursor:pointer;">🍎1000</button>
+            <button onclick="document.getElementById('bote-contrib-input').value=2500;contribuirBote(2500)" style="padding:4px 10px;border-radius:20px;border:1.5px solid #fcd34d;background:#fff8e1;color:#92400e;font-size:.7rem;font-weight:700;cursor:pointer;">🍎2500</button>
           </div>
         </div>
         <div class="ptitle" style="margin-top:4px;"><span class="ico">🏆</span> Ranking de Monedas</div>
@@ -1078,7 +1078,7 @@ window.installPWA = function(){
     <div class="confirm-row"><span class="confirm-lbl">Partido</span><span class="confirm-val" id="cm-match" style="font-size:.9rem;text-align:right;max-width:220px;"></span></div>
     <div class="confirm-row"><span class="confirm-lbl">Tu resultado</span><span class="confirm-val green" id="cm-result"></span></div>
     <div class="confirm-row"><span class="confirm-lbl">Marcador exacto</span><span class="confirm-val" id="cm-score"></span></div>
-    <!-- € importe removed -->
+    <!-- 🍎 importe removed -->
     <div class="confirm-double" id="confirm-double-toggle" onclick="toggleDouble()">
       <span style="font-size:1.2rem;">⚡</span>
       <div style="flex:1;">
@@ -1846,7 +1846,7 @@ var resStr=res?(' → Real: '+res.homeGoals+'-'+res.awayGoals):'';
 var teams=e.match?(e.match.home.flag+' '+e.match.home.name+' vs '+e.match.away.flag+' '+e.match.away.name):(e.pid);
 return '<div class="hist-item"><div class="hr '+cls+'">'+ico+'</div>'+
 '<div class="hist-match"><div class="hist-teams">'+teams+'</div>'+
-'<div class="hist-bet">'+rl+' ('+e.bet.homeGoals+'-'+e.bet.awayGoals+') · '+(e.bet.coins?'🪙'+e.bet.coins:'')+resStr+'</div></div>'+
+'<div class="hist-bet">'+rl+' ('+e.bet.homeGoals+'-'+e.bet.awayGoals+') · '+(e.bet.coins?'🍎'+e.bet.coins:'')+resStr+'</div></div>'+
 '<div class="hist-pts"><div class="v" style="color:'+ptsCol+';">'+(confirmed?(pts>0?'+'+pts:'0'):'-')+'</div><div class="l">pts</div></div></div>';
 }).join('');
 hl.innerHTML=rows;
@@ -1934,9 +1934,9 @@ if(bet.homeGoals===real.homeGoals&&bet.awayGoals===real.awayGoals)return 5;
 var bonus=(bet.homeGoals===real.homeGoals||bet.awayGoals===real.awayGoals)?1:0;
 return real.result==='X'?(3+bonus):(3+bonus);
 }
-var COINS_START = 5000;
+var APPLES_START = 5000;
 function getCoins(member) {
-return (member.coins !== undefined && member.coins !== null) ? member.coins : COINS_START;
+return (member.coins !== undefined && member.coins !== null) ? member.coins : APPLES_START;
 }
 function calcCoinResult(bet, real) {
 if (!bet || !real) return { delta: 0, label: '⏳', cls: 'zero' };
@@ -1945,12 +1945,12 @@ if (!wagered) return { delta: 0, label: '-', cls: 'zero' };
 var correct = bet.result === real.result;
 var exact = correct && bet.homeGoals === real.homeGoals && bet.awayGoals === real.awayGoals;
 if (exact) {
-return { delta: wagered * 2, label: '🎯 +' + (wagered*2) + '🪙', cls: 'exact', mult: 3 };
+return { delta: wagered * 2, label: '🎯 +' + (wagered*2) + '🍎', cls: 'exact', mult: 3 };
 } else if (correct) {
 var gain = Math.round(wagered * 0.5);
-return { delta: gain, label: '✅ +' + gain + '🪙', cls: 'win', mult: 1.5 };
+return { delta: gain, label: '✅ +' + gain + '🍎', cls: 'win', mult: 1.5 };
 } else {
-return { delta: -wagered, label: '❌ -' + wagered + '🪙', cls: 'loss', mult: 0 };
+return { delta: -wagered, label: '❌ -' + wagered + '🍎', cls: 'loss', mult: 0 };
 }
 }
 function applyCoinResult(group, memberId, pid, real) {
@@ -1966,7 +1966,7 @@ bet.coinDelta = cr.delta;
 }
 function initMemberCoins(member) {
 if (member.coins === undefined || member.coins === null) {
-member.coins = COINS_START;
+member.coins = APPLES_START;
 }
 }
 function getAvailableCoins(group, userId) {
@@ -2172,7 +2172,7 @@ c.innerHTML='<div class="perfil-header">'+
 '<div class="panel"><div class="ptitle"><span class="ico">📈</span> Estadísticas</div>'+
 '<div class="sbar"><div class="sbar-h"><span style="color:var(--muted);">Exactos</span><span style="font-weight:700;color:var(--gold);">'+exact+'</span></div><div class="sbar-bg"><div class="sbar-f" style="width:'+(nb?Math.round(exact/nb*100):0)+'%;background:var(--gold2);"></div></div></div>'+
 '<div class="sbar"><div class="sbar-h"><span style="color:var(--muted);">Acertados</span><span style="font-weight:700;color:var(--g);">'+ok+'</span></div><div class="sbar-bg"><div class="sbar-f" style="width:'+(nb?Math.round(ok/nb*100):0)+'%;background:var(--g3);"></div></div></div>'+
-'<div style="padding:8px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;font-size:0.82rem;font-weight:600;"><span style="color:var(--muted);">Total apostado</span><span style="color:var(--gold);">€'+totalAmt.toFixed(2)+'</span></div>'+
+'<div style="padding:8px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;font-size:0.82rem;font-weight:600;"><span style="color:var(--muted);">Total apostado</span><span style="color:var(--gold);">🍎'+totalAmt.toFixed(2)+'</span></div>'+
 '<div style="padding:8px 0;display:flex;justify-content:space-between;font-size:0.82rem;font-weight:600;"><span style="color:var(--muted);">Pts esta semana</span><span style="color:var(--g);">'+wk+' pts</span></div>'+
 '</div>'+
 '<div class="panel"><div class="ptitle"><span class="ico">🔥</span> Racha de aciertos</div>'+
@@ -2312,7 +2312,7 @@ function renderLigaView(){
             '<div style="font-size:.65rem;color:var(--muted);">'+(gr.pts||0)+' pts</div>'+
           '</div>'+
           '<div style="text-align:right;">'+
-            '<div style="font-family:Bebas Neue,sans-serif;font-size:1.1rem;color:#d97706;">'+coinsVal.toLocaleString()+'🪙</div>'+
+            '<div style="font-family:Bebas Neue,sans-serif;font-size:1.1rem;color:#d97706;">'+coinsVal.toLocaleString()+'🍎</div>'+
             '<div style="font-size:.62rem;font-weight:700;color:'+deltaCol+';">'+deltaStr+'</div>'+
           '</div>'+
         '</div>';
@@ -2349,12 +2349,12 @@ var bv=document.getElementById('bote-val');var bs=document.getElementById('bote-
 if(gn)gn.textContent='Grupo: '+g.name;
 if(gi)gi.textContent=u.emoji+' '+u.name+' · '+g.members.length+' jugadores · '+calcLevel(u.pts||0).ico+' '+calcLevel(u.pts||0).lbl;
 if(pill)pill.style.display='block';if(cd2)cd2.textContent=g.code;if(gc)gc.textContent=g.code;
-if(bv)bv.textContent="🪙 "+((g.coinPot||0)).toLocaleString();
+if(bv)bv.textContent="🍎 "+((g.coinPot||0)).toLocaleString();
 if(bs)bs.textContent=g.members.length+" jugadores · El ganador se lleva el bote";
 var myContrib=(g.coinContrib&&u?g.coinContrib[u.id]:0)||0;
-if(iv)iv.textContent="🪙 "+myContrib.toLocaleString();
+if(iv)iv.textContent="🍎 "+myContrib.toLocaleString();
 var myCoinsLbl=document.getElementById("my-coins-label");
-if(myCoinsLbl){var mMember=g.members.find(function(m){return m.id===u.id;});var avail=mMember?getAvailableCoins(g,u.id):0;myCoinsLbl.textContent="Saldo: 🪙"+avail.toLocaleString();}
+if(myCoinsLbl){var mMember=g.members.find(function(m){return m.id===u.id;});var avail=mMember?getAvailableCoins(g,u.id):0;myCoinsLbl.textContent="Saldo: 🍎"+avail.toLocaleString();}
 updateOnline();
 if(typeof renderCoinBar==='function') try{ renderCoinBar(); }catch(e){}
 }
@@ -2454,7 +2454,7 @@ function apFormHTML(pid){
 var pb=apSt.pending[pid]||{};
 var r1=pb.result==='1'?'active':'';var rx=pb.result==='X'?'active':'';var r2=pb.result==='2'?'active':'';
 var hv=pb.homeGoals!==undefined?pb.homeGoals:'';var av=pb.awayGoals!==undefined?pb.awayGoals:'';var amv=pb.amount||'';
-var qa=''; /* € buttons removed */
+var qa=''; /* 🍎 buttons removed */
 return '<div class="afrow">'+
 '<div class="afg"><div class="afl">Resultado</div><div class="rbtns">'+
 '<button class="rb r1 '+r1+'" data-pid="'+pid+'" data-r="1" onclick="apRes(this.dataset.pid,this.dataset.r,this)">1</button>'+
@@ -2466,15 +2466,15 @@ return '<div class="afrow">'+
 '<span class="sc-d"> - </span>'+
 '<input type="number" class="sc-in" id="sa-'+pid+'" data-pid="'+pid+'" min="0" max="20" value="'+av+'" placeholder="0" oninput="apSync(this.dataset.pid)">'+
 '</div></div>'+
-/* € importe removed */
+/* 🍎 importe removed */
 (function(){
 var g=apSt.group; var u=apSt.user;
 if(!g||!u) return '';
 var avail=getAvailableCoins(g,u.id);
 var cwv=pb.coins||'';
-var cq=[10,25,50,100,250,500,1000,2000].filter(function(x){return x<=avail;}).map(function(a){return '<button class="cbtn" data-pid="'+pid+'" data-c="'+a+'" onclick="apCoin(this.dataset.pid,this.dataset.c)">🪙'+a+'</button>';}).join('');
-return '<div class="afg"><div class="afl" style="display:flex;align-items:center;gap:6px;">🪙 Monedas <span style="font-size:.65rem;color:var(--muted);font-weight:600;">Disponibles: '+avail+'</span></div>'+
-'<div class="coin-inp-w"><span class="coin-sym">🪙</span><input type="number" class="amt-i" id="cw-'+pid+'" min="0" max="'+avail+'" step="1" value="'+cwv+'" placeholder="0" style="width:80px;"></div>'+
+var cq=[10,25,50,100,250,500,1000,2000].filter(function(x){return x<=avail;}).map(function(a){return '<button class="cbtn" data-pid="'+pid+'" data-c="'+a+'" onclick="apCoin(this.dataset.pid,this.dataset.c)">🍎'+a+'</button>';}).join('');
+return '<div class="afg"><div class="afl" style="display:flex;align-items:center;gap:6px;">🍎 Monedas <span style="font-size:.65rem;color:var(--muted);font-weight:600;">Disponibles: '+avail+'</span></div>'+
+'<div class="coin-inp-w"><span class="coin-sym">🍎</span><input type="number" class="amt-i" id="cw-'+pid+'" min="0" max="'+avail+'" step="1" value="'+cwv+'" placeholder="0" style="width:80px;"></div>'+
 '<div class="cbtns">'+cq+'<button class="cbtn" data-pid="'+pid+'" onclick="apCoin(this.dataset.pid,'+avail+')">Todo in</button></div></div>';
 })()+
 '<button class="sub-btn" data-pid="'+pid+'" onclick="apSubmit(this.dataset.pid)">⚡ Apostar</button></div>';
@@ -2491,9 +2491,9 @@ var coinHtml='';
 if(bet.coins>0){
 if(bet.coinSettled&&bet.coinDelta!==null){
 var cd=bet.coinDelta;
-coinHtml='<span class="coin-result-tag '+(cd>0?'win':cd<0?'loss':'zero')+'">'+(cd>0?'🪙+'+cd:cd<0?'🪙'+cd:'🪙0')+'</span>';
+coinHtml='<span class="coin-result-tag '+(cd>0?'win':cd<0?'loss':'zero')+'">'+(cd>0?'🍎+'+cd:cd<0?'🍎'+cd:'🍎0')+'</span>';
 } else {
-coinHtml='<span class="coin-result-tag zero">🪙'+bet.coins+' apostadas</span>';
+coinHtml='<span class="coin-result-tag zero">🍎'+bet.coins+' apostadas</span>';
 }
 }
 return '<div class="placed-s"><span class="p-ok">✅</span><span class="p-txt">'+rl+' · '+bet.homeGoals+'-'+bet.awayGoals+'</span>'+
@@ -2559,20 +2559,20 @@ var pb=apSt.pending[pid]||{};
 var av=document.querySelector('.view.active');
 var h=parseInt((av?av.querySelector('#sh-'+pid):document.getElementById('sh-'+pid)||{}).value);
 var a=parseInt((av?av.querySelector('#sa-'+pid):document.getElementById('sa-'+pid)||{}).value);
-var amt=0; /* € removed - only coins */
+var amt=0; /* 🍎 removed - only coins */
 if(!pb.result){toast('❗','Elige 1 / X / 2 primero','#fca5a5');return;}
 if(isNaN(h)||isNaN(a)){toast('❗','Introduce el marcador (ej: 2-1)','#fca5a5');return;}
 /* amt validation removed */
 if(!g.bets[u.id])g.bets[u.id]={};
 var coinsWager = parseInt((av?av.querySelector('#cw-'+pid):(document.getElementById('cw-'+pid)||{})).value)||0;
 var available = getAvailableCoins(g, u.id);
-if(coinsWager > available){ toast('🪙','No tienes suficientes monedas (disponibles: '+available+')','#fca5a5'); return; }
+if(coinsWager > available){ toast('🍎','No tienes suficientes monedas (disponibles: '+available+')','#fca5a5'); return; }
 g.bets[u.id][pid]={result:pb.result,homeGoals:h,awayGoals:a,amount:amt,coins:coinsWager,coinSettled:false,coinDelta:null,ts:Date.now(),pts:null};
 // FIX: descontar monedas del jugador
 if(coinsWager>0){
   var mem=g.members.find(function(m){return m.id===u.id;});
   if(mem){
-    mem.coins=Math.max(0,(mem.coins||COINS_START)-coinsWager);
+    mem.coins=Math.max(0,(mem.coins||APPLES_START)-coinsWager);
     apSt.user=mem;
   }
 }
@@ -2585,12 +2585,12 @@ var mem=g.members.find(function(m){return m.id===u.id;});
 if(mem){
   mem.lastSeen=Date.now();
   // Asegurar coins inicializado
-  if(mem.coins===undefined||mem.coins===null) mem.coins=COINS_START;
+  if(mem.coins===undefined||mem.coins===null) mem.coins=APPLES_START;
 }
 addFeed('bet',u.name,'apostó en '+(p?p.home.name+' vs '+p.away.name:pid),u.emoji);
 apSaveGrp(g);apSt.group=g;delete apSt.pending[pid];
 if(typeof fbSaveGroup==='function') safeRun(function(){fbSaveGroup(g);},'fbSaveBet');
-var coinMsg = coinsWager>0?' · 🪙'+coinsWager:'';
+var coinMsg = coinsWager>0?' · 🍎'+coinsWager:'';
 toast('🎯','¡Apostado! '+pb.result+' '+h+'-'+a+coinMsg);
 addNotif('⚽','Apuesta: '+pb.result+' ('+h+'-'+a+')'+coinMsg);
 var activeId=av?av.id:'';
@@ -2695,12 +2695,12 @@ return '<div class="rank-row"><div class="rpos '+pc(i)+'">'+(i+1)+'</div><div cl
 var pot=apTotalPot();
 if(bp)bp.innerHTML='<div style="text-align:center;padding:13px 0 16px;">'+
 '<div style="font-size:0.65rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">Bote total del grupo</div>'+
-'<div style="font-family:Bebas Neue,sans-serif;font-size:2.8rem;color:var(--gold);line-height:1;">€'+pot.toFixed(2)+'</div>'+
-'<div style="font-size:0.7rem;color:var(--muted);margin-top:2px;font-weight:600;">'+apSt.group.members.length+' jugadores · €'+(apSt.group.inscripcion||0)+' inscripción</div></div>'+
+'<div style="font-family:Bebas Neue,sans-serif;font-size:2.8rem;color:var(--gold);line-height:1;">🍎'+pot.toFixed(2)+'</div>'+
+'<div style="font-size:0.7rem;color:var(--muted);margin-top:2px;font-weight:600;">'+apSt.group.members.length+' jugadores · 🍎'+(apSt.group.inscripcion||0)+' inscripción</div></div>'+
 '<div style="border-top:1px solid var(--border);padding-top:10px;font-size:0.78rem;font-weight:600;">'+
-'<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);"><span>🥇 1er puesto</span><span style="color:var(--gold);">50% = €'+(pot*.5).toFixed(2)+'</span></div>'+
-'<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);"><span>🥈 2do puesto</span><span style="color:var(--muted);">30% = €'+(pot*.3).toFixed(2)+'</span></div>'+
-'<div style="display:flex;justify-content:space-between;padding:6px 0;"><span>🥉 3er puesto</span><span style="color:var(--muted);">20% = €'+(pot*.2).toFixed(2)+'</span></div></div>';
+'<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);"><span>🥇 1er puesto</span><span style="color:var(--gold);">50% = 🍎'+(pot*.5).toFixed(2)+'</span></div>'+
+'<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);"><span>🥈 2do puesto</span><span style="color:var(--muted);">30% = 🍎'+(pot*.3).toFixed(2)+'</span></div>'+
+'<div style="display:flex;justify-content:space-between;padding:6px 0;"><span>🥉 3er puesto</span><span style="color:var(--muted);">20% = 🍎'+(pot*.2).toFixed(2)+'</span></div></div>';
 }
 function apRenderSemanal(){
 var g=apSt.group;var c=document.getElementById('ap-semanal-list');if(!c)return;
@@ -2735,17 +2735,17 @@ _bizMsgs=[];
 if(bl)bl.innerHTML=mems.filter(function(m){return m.id!==u.id;}).map(function(m,idx){
 var iB=m.pts>(me.pts||0);var bal=iB?-me.totalAmt:m.totalAmt;var bc=bal>0?'pos':bal<0?'neg':'zer';var bl2=bal>0?'Te debe':bal<0?'Le debes':'Ajustado';
 var myB=g.bets[u.id]||{};
-var lines=Object.entries(myB).map(function(e){var p=PARTIDOS_AP.find(function(x){return x.id===e[0];});return p?(p.home.name+' vs '+p.away.name+': '+e[1].result+' ('+e[1].homeGoals+'-'+e[1].awayGoals+') €'+parseFloat(e[1].amount).toFixed(2)):'';}).filter(Boolean);
-var msg='QUINIELAFC MUNDIAL 2026\n'+u.name+'\n------\n'+lines.join('\n')+'\n------\nTotal: €'+me.totalAmt.toFixed(2)+' | '+g.name+' ('+g.code+')';
+var lines=Object.entries(myB).map(function(e){var p=PARTIDOS_AP.find(function(x){return x.id===e[0];});return p?(p.home.name+' vs '+p.away.name+': '+e[1].result+' ('+e[1].homeGoals+'-'+e[1].awayGoals+') 🍎'+parseFloat(e[1].amount).toFixed(2)):'';}).filter(Boolean);
+var msg='QUINIELAFC MUNDIAL 2026\n'+u.name+'\n------\n'+lines.join('\n')+'\n------\nTotal: 🍎'+me.totalAmt.toFixed(2)+' | '+g.name+' ('+g.code+')';
 _bizMsgs.push(msg);
 return '<div class="biz-card"><div class="biz-avi">'+m.emoji+'</div>'+
-'<div class="biz-info"><div class="biz-name">'+m.name+'</div><div class="biz-det">€'+m.totalAmt.toFixed(2)+' · '+m.pts+' pts</div></div>'+
-'<div class="biz-bal"><div class="biz-a '+bc+'">€'+Math.abs(bal).toFixed(2)+'</div><div class="biz-l">'+bl2+'</div></div>'+
+'<div class="biz-info"><div class="biz-name">'+m.name+'</div><div class="biz-det">🍎'+m.totalAmt.toFixed(2)+' · '+m.pts+' pts</div></div>'+
+'<div class="biz-bal"><div class="biz-a '+bc+'">🍎'+Math.abs(bal).toFixed(2)+'</div><div class="biz-l">'+bl2+'</div></div>'+
 '<button class="biz-btn" data-idx="'+idx+'" onclick="apCopyBiz(this.dataset.idx)">📋 Bizum</button></div>';
 }).join('')||'<div class="nores">Eres el único miembro del grupo.</div>';
 var myB2=g.bets[u.id]||{};
-var fl=Object.entries(myB2).map(function(e){var p=PARTIDOS_AP.find(function(x){return x.id===e[0];});var rl=e[1].result==='1'?'Local':e[1].result==='X'?'Empate':'Visitante';return p?(p.home.name+' vs '+p.away.name+' - '+rl+' ('+e[1].homeGoals+'-'+e[1].awayGoals+') €'+parseFloat(e[1].amount).toFixed(2)):'';}).filter(Boolean);
-if(sb){if(fl.length){sb.textContent='QUINIELAFC MUNDIAL 2026\n'+u.name+'\n========================\n'+fl.join('\n')+'\n========================\nTotal: €'+me.totalAmt.toFixed(2)+'\nPuntos: '+(me.pts||0)+' · Nivel: '+calcLevel(me.pts||0).lbl+'\nGrupo: '+g.name+' ('+g.code+')';}else{sb.textContent='Sin apuestas aún.';}}
+var fl=Object.entries(myB2).map(function(e){var p=PARTIDOS_AP.find(function(x){return x.id===e[0];});var rl=e[1].result==='1'?'Local':e[1].result==='X'?'Empate':'Visitante';return p?(p.home.name+' vs '+p.away.name+' - '+rl+' ('+e[1].homeGoals+'-'+e[1].awayGoals+') 🍎'+parseFloat(e[1].amount).toFixed(2)):'';}).filter(Boolean);
+if(sb){if(fl.length){sb.textContent='QUINIELAFC MUNDIAL 2026\n'+u.name+'\n========================\n'+fl.join('\n')+'\n========================\nTotal: 🍎'+me.totalAmt.toFixed(2)+'\nPuntos: '+(me.pts||0)+' · Nivel: '+calcLevel(me.pts||0).lbl+'\nGrupo: '+g.name+' ('+g.code+')';}else{sb.textContent='Sin manzanass aún.';}}
 }
 window.apCopyBiz=function(idx){var msg=_bizMsgs[parseInt(idx)];if(!msg)return;navigator.clipboard.writeText(msg).then(function(){toast('📋','Copiado para Bizum!');});};
 window.apCopyMsg=function(){var msg=(document.getElementById('ap-summ')||{}).textContent||'';navigator.clipboard.writeText(msg).then(function(){toast('📋','Resumen copiado');});};
@@ -2811,12 +2811,12 @@ var topEx=mems.slice().sort(function(a,b){return b.exact-a.exact;})[0];
 var topStr=mems.slice().sort(function(a,b){return b.streak-a.streak;})[0];
 var topWk=mems.slice().sort(function(a,b){return b.weekPts-a.weekPts;})[0];
 var premios=[
-{ico:'🏆',name:'Gran Premio',desc:'Mayor bote',val:'€'+(pot*.5).toFixed(2),crit:topPts?(topPts.emoji+' '+topPts.name+' ('+topPts.pts+' pts)'):'Sin datos',col:'var(--gold)'},
-{ico:'🥈',name:'Segundo Premio',desc:'2do clasificado',val:'€'+(pot*.3).toFixed(2),crit:'Distribución 50/30/20%',col:'#9ca3af'},
+{ico:'🏆',name:'Gran Premio',desc:'Mayor bote',val:'🍎'+(pot*.5).toFixed(2),crit:topPts?(topPts.emoji+' '+topPts.name+' ('+topPts.pts+' pts)'):'Sin datos',col:'var(--gold)'},
+{ico:'🥈',name:'Segundo Premio',desc:'2do clasificado',val:'🍎'+(pot*.3).toFixed(2),crit:'Distribución 50/30/20%',col:'#9ca3af'},
 {ico:'🎯',name:'Rey del Exacto',desc:'Más exactos',val:'🏅 Insignia',crit:topEx&&topEx.exact>0?(topEx.emoji+' '+topEx.name+' ('+topEx.exact+')  '):'Sin exactos aún',col:'var(--gold)'},
 {ico:'🔥',name:'Rey de la Racha',desc:'Racha más larga',val:'🏅 Insignia',crit:topStr&&topStr.streak>0?(topStr.emoji+' '+topStr.name+' ('+topStr.streak+')  '):'Sin rachas',col:'#f97316'},
 {ico:'📆',name:'Premio Semanal',desc:'Mejor de la semana',val:'👑 Reconocimiento',crit:topWk&&topWk.weekPts>0?(topWk.emoji+' '+topWk.name+' ('+topWk.weekPts+' pts)'):'Sin puntos',col:'var(--blue)'},
-{ico:'🏟️',name:'Más Activo',desc:'Más apuestas',val:'🏅 Insignia',crit:(function(){var t=mems.slice().sort(function(a,b){return b.totalBets-a.totalBets;})[0];return t&&t.totalBets>0?(t.emoji+' '+t.name+' ('+t.totalBets+')  '):'Sin apuestas';})(),col:'var(--purple)'},
+{ico:'🏟️',name:'Más Activo',desc:'Más apuestas',val:'🏅 Insignia',crit:(function(){var t=mems.slice().sort(function(a,b){return b.totalBets-a.totalBets;})[0];return t&&t.totalBets>0?(t.emoji+' '+t.name+' ('+t.totalBets+')  '):'Sin manzanass';})(),col:'var(--purple)'},
 ];
 pg.innerHTML=premios.map(function(p){return '<div class="premio-card"><div class="premio-ico">'+p.ico+'</div><div class="premio-name">'+p.name+'</div><div class="premio-desc">'+p.desc+'</div><div class="premio-val" style="color:'+p.col+'">'+p.val+'</div><div class="premio-crit">'+p.crit+'</div></div>';}).join('');
 }
@@ -2836,7 +2836,7 @@ var ok=entries.filter(function(e){return e.bet.pts>0&&e.bet.pts<5;}).length;
 var fail=entries.filter(function(e){return e.bet.pts===0;}).length;
 var pend=entries.filter(function(e){return e.bet.pts===null||e.bet.pts===undefined;}).length;
 var summ='<div style="display:flex;gap:8px;margin-bottom:12px;padding:12px;background:var(--g5);border-radius:9px;border:1.5px solid var(--border2);flex-wrap:wrap;">'+
-[{v:entries.length,l:'Total',c:'var(--g)'},{v:exact,l:'Exactos',c:'var(--gold)'},{v:ok,l:'Acertados',c:'var(--g)'},{v:fail,l:'Fallos',c:'var(--red)'},{v:pend,l:'Pendientes',c:'var(--muted)'},{v:totalPts,l:'Pts',c:'var(--g)'},{v:'€'+totalAmt.toFixed(0),l:'Apostado',c:'var(--gold)'}]
+[{v:entries.length,l:'Total',c:'var(--g)'},{v:exact,l:'Exactos',c:'var(--gold)'},{v:ok,l:'Acertados',c:'var(--g)'},{v:fail,l:'Fallos',c:'var(--red)'},{v:pend,l:'Pendientes',c:'var(--muted)'},{v:totalPts,l:'Pts',c:'var(--g)'},{v:'🍎'+totalAmt.toFixed(0),l:'Apostado',c:'var(--gold)'}]
 .map(function(s){return '<div style="text-align:center;flex:1;min-width:50px;"><div style="font-family:Bebas Neue,sans-serif;font-size:1.4rem;color:'+s.c+';">'+s.v+'</div><div style="font-size:0.6rem;color:var(--muted);font-weight:700;text-transform:uppercase;">'+s.l+'</div></div>';}).join('')+'</div>';
 var rows=entries.map(function(e){
 var pts=e.bet.pts;var confirmed=pts!==null&&pts!==undefined;
@@ -2848,7 +2848,7 @@ var res=g.results&&g.results[e.pid];var resStr=res?(' → Real: '+res.homeGoals+
 var teams=e.match?(e.match.home.flag+' '+e.match.home.name+' vs '+e.match.away.flag+' '+e.match.away.name):(e.pid);
 return '<div class="hist-item"><div class="hist-result '+cls+'">'+ico+'</div>'+
 '<div class="hist-match"><div class="hist-teams">'+teams+'</div>'+
-'<div class="hist-bet">'+rl+' ('+e.bet.homeGoals+'-'+e.bet.awayGoals+') · '+(e.bet.coins?'🪙'+e.bet.coins:'')+resStr+'</div></div>'+
+'<div class="hist-bet">'+rl+' ('+e.bet.homeGoals+'-'+e.bet.awayGoals+') · '+(e.bet.coins?'🍎'+e.bet.coins:'')+resStr+'</div></div>'+
 '<div class="hist-pts"><div class="v" style="color:'+ptsCol+';">'+(confirmed?(pts>0?'+'+pts:'0'):'-')+'</div><div class="l">pts</div></div></div>';
 }).join('');
 if(hl)hl.innerHTML=summ+rows;
@@ -2861,12 +2861,12 @@ var topEx=mems.slice().sort(function(a,b){return b.exact-a.exact;})[0];
 var topStr=mems.slice().sort(function(a,b){return b.streak-a.streak;})[0];
 var topWk=mems.slice().sort(function(a,b){return b.weekPts-a.weekPts;})[0];
 var premios=[
-{ico:'🏆',name:'Gran Premio',desc:'Mayor bote',val:'€'+(pot*.5).toFixed(2),crit:topPts?(topPts.emoji+' '+topPts.name+' ('+topPts.pts+' pts)'):'Sin datos',col:'var(--gold)'},
-{ico:'🥈',name:'Segundo Premio',desc:'2do clasificado',val:'€'+(pot*.3).toFixed(2),crit:'Distribución 50/30/20% del bote',col:'#9ca3af'},
+{ico:'🏆',name:'Gran Premio',desc:'Mayor bote',val:'🍎'+(pot*.5).toFixed(2),crit:topPts?(topPts.emoji+' '+topPts.name+' ('+topPts.pts+' pts)'):'Sin datos',col:'var(--gold)'},
+{ico:'🥈',name:'Segundo Premio',desc:'2do clasificado',val:'🍎'+(pot*.3).toFixed(2),crit:'Distribución 50/30/20% del bote',col:'#9ca3af'},
 {ico:'🎯',name:'Rey del Exacto',desc:'Más marcadores exactos',val:'🏅 Insignia',crit:topEx&&topEx.exact>0?(topEx.emoji+' '+topEx.name+' ('+topEx.exact+')'):'Sin exactos aún',col:'var(--gold)'},
 {ico:'🔥',name:'Rey de la Racha',desc:'Racha más larga',val:'🏅 Insignia',crit:topStr&&topStr.streak>0?(topStr.emoji+' '+topStr.name+' ('+topStr.streak+')'):'Sin rachas',col:'#f97316'},
 {ico:'📆',name:'Premio Semanal',desc:'Mejor de la semana',val:'👑 Reconocimiento',crit:topWk&&topWk.weekPts>0?(topWk.emoji+' '+topWk.name+' ('+topWk.weekPts+' pts)'):'Sin puntos esta semana',col:'var(--blue)'},
-{ico:'🏟️',name:'Más Activo',desc:'Más apuestas',val:'🏅 Insignia',crit:(function(){var t=mems.slice().sort(function(a,b){return b.totalBets-a.totalBets;})[0];return t&&t.totalBets>0?(t.emoji+' '+t.name+' ('+t.totalBets+')'):'Sin apuestas';})(),col:'var(--purple)'},
+{ico:'🏟️',name:'Más Activo',desc:'Más apuestas',val:'🏅 Insignia',crit:(function(){var t=mems.slice().sort(function(a,b){return b.totalBets-a.totalBets;})[0];return t&&t.totalBets>0?(t.emoji+' '+t.name+' ('+t.totalBets+')'):'Sin manzanass';})(),col:'var(--purple)'},
 ];
 pg.innerHTML=premios.map(function(p){return '<div class="premio-card"><div class="premio-ico">'+p.ico+'</div><div class="premio-name">'+p.name+'</div><div class="premio-desc">'+p.desc+'</div><div class="premio-val" style="color:'+p.col+'">'+p.val+'</div><div class="premio-crit">'+p.crit+'</div></div>';}).join('');
 }
@@ -2876,10 +2876,10 @@ var g=apSt.group;var u=apSt.user;var ml=document.getElementById('ap-grp-mems');i
 if(!g||!u){ml.innerHTML='';return;}
 var colors=['linear-gradient(135deg,#4ade80,#16a34a)','linear-gradient(135deg,#60a5fa,#2563eb)','linear-gradient(135deg,#f87171,#dc2626)','linear-gradient(135deg,#fbbf24,#d97706)','linear-gradient(135deg,#c4b5fd,#7c3aed)','linear-gradient(135deg,#f9a8d4,#ec4899)'];
 ml.innerHTML=g.members.map(function(m,i){var b=g.bets[m.id]||{};var lvl=calcLevel(m.pts||0);
-var mcoins=getCoins(m);var mdelta=mcoins-COINS_START;
+var mcoins=getCoins(m);var mdelta=mcoins-APPLES_START;
 return '<div class="mem-row"><div class="mem-avi" style="background:'+colors[i%colors.length]+';">'+m.emoji+'</div>'+
 '<div class="mem-info"><div class="mem-name">'+m.name+(m.id===u.id?' (tú)':'')+(m.isCreator?' 👑':'')+' <span class="lvl-badge '+lvl.cls+'" style="font-size:0.58rem;">'+lvl.ico+'</span></div>'+
-'<div class="mem-det">'+Object.keys(b).length+' apuestas · '+(m.pts||0)+' pts · 🪙'+mcoins+'</div></div>'+
+'<div class="mem-det">'+Object.keys(b).length+' apuestas · '+(m.pts||0)+' pts · 🍎'+mcoins+'</div></div>'+
 '<div style="text-align:right;"><div style="font-family:Bebas Neue,sans-serif;font-size:1.1rem;color:var(--g);">'+(m.pts||0)+'</div><div style="font-size:0.58rem;color:var(--muted);font-weight:700;">pts</div></div></div>';
 }).join('');
 }
@@ -2897,7 +2897,7 @@ var inscr=parseFloat((document.getElementById('gn-inscr')||{}).value)||0;
 if(!gname||!uname){toast('❗','Rellena todos los campos','#fca5a5');return;}
 var code=apGenCode();var uid='u_'+Date.now();
 /* FIX v2: presence field 'online:true' added to creator from the start */
-var user={id:uid,name:uname,emoji:emoji,pts:0,coins:COINS_START,isCreator:true,lastSeen:Date.now(),online:true,coinsInit:COINS_START};
+var user={id:uid,name:uname,emoji:emoji,pts:0,coins:APPLES_START,isCreator:true,lastSeen:Date.now(),online:true,coinsInit:APPLES_START};
 var group={code:code,name:gname,inscripcion:inscr,members:[user],bets:{},specialBets:{},results:{},feed:[],created:Date.now()};
 apSaveGrp(group);apSt.group=group;apSt.user=user;
 /* FIX v2: persist session with both code AND uid so reconnection works after clearing cache */
@@ -2969,7 +2969,7 @@ if(existingMember){
 }
 var uid='u_'+Date.now();
 /* FIX v2: include online:true from the start */
-var user={id:uid,name:uname,emoji:emoji,pts:0,coins:COINS_START,isCreator:false,lastSeen:Date.now(),online:true,coinsInit:COINS_START};
+var user={id:uid,name:uname,emoji:emoji,pts:0,coins:APPLES_START,isCreator:false,lastSeen:Date.now(),online:true,coinsInit:APPLES_START};
 group.members.push(user);addFeed('join',uname,'se unió al grupo',emoji);
 apSaveGrp(group);apSt.group=group;apSt.user=user;
 /* FIX v2: save name and emoji too for reconnection after cache clear */
@@ -3131,7 +3131,7 @@ else if(np!==null){toast('❗','Mínimo 4 caracteres');}
 };
 window.apShareGrp=function(){
 var g=apSt.group;if(!g)return;
-var msg='¡Únete a mi quiniela del Mundial 2026!\n\nGrupo: '+g.name+'\nCódigo: '+g.code+'\nInscripción: €'+g.inscripcion+'\n\n⚽ QuinielaFC - Apuesta con tus amigos';
+var msg='¡Únete a mi quiniela del Mundial 2026!\n\nGrupo: '+g.name+'\nCódigo: '+g.code+'\nInscripción: 🍎'+g.inscripcion+'\n\n⚽ QuinielaFC - Apuesta con tus amigos';
 if(navigator.share){navigator.share({title:'QuinielaFC',text:msg});}
 else{navigator.clipboard.writeText(msg).then(function(){toast('📤','Mensaje copiado al portapapeles');});}
 };
@@ -3158,7 +3158,7 @@ if(saved&&saved.code){
   var g=apGetGrp(saved.code);
   if(g){
     // Group found in localStorage
-    if(g.members) g.members.forEach(function(m){ if(m.coins===undefined||m.coins===null) m.coins=COINS_START; });
+    if(g.members) g.members.forEach(function(m){ if(m.coins===undefined||m.coins===null) m.coins=APPLES_START; });
     apSt.group=g;
     apSt.user=g.members.find(function(m){return m.id===saved.uid;})||null;
     /* FIX v2: start listener immediately if Firebase is already connected */
@@ -3190,7 +3190,7 @@ if(saved&&saved.code){
           var data=doc.data();
           if(data&&data.members){
             // Restore coins
-            if(data.members) data.members.forEach(function(m){ if(m.coins===undefined||m.coins===null) m.coins=COINS_START; });
+            if(data.members) data.members.forEach(function(m){ if(m.coins===undefined||m.coins===null) m.coins=APPLES_START; });
             apSaveGrp(data); // Save back to localStorage
             apSt.group=data;
             apSt.user=data.members.find(function(m){return m.id===saved.uid;})||null;
@@ -3315,7 +3315,7 @@ document.getElementById('cm-result').textContent = rl;
 document.getElementById('cm-score').textContent = hg + ' - ' + ag;
 var cwEl=document.getElementById('cw-'+pid); var cwv=cwEl?parseInt(cwEl.value)||0:0;
 var cmAmt=document.getElementById('cm-amount');
-if(cmAmt) cmAmt.textContent = cwv>0?'🪙'+cwv:'-';
+if(cmAmt) cmAmt.textContent = cwv>0?'🍎'+cwv:'-';
 var dbl = document.getElementById('confirm-double-toggle');
 var dlbl = document.getElementById('double-label');
 var dsub = document.getElementById('double-sub');
@@ -3355,7 +3355,7 @@ if(!g||!u){toast('❗','Sin grupo activo');return;}
 var coinsWager=d.coins||0;
 // Validar monedas disponibles
 var available=getAvailableCoins(g,u.id);
-if(coinsWager>available){toast('🪙','Sin monedas suficientes: '+available+' disponibles','#fca5a5');return;}
+if(coinsWager>available){toast('🍎','Sin monedas suficientes: '+available+' disponibles','#fca5a5');return;}
 if(!g.bets[u.id]) g.bets[u.id]={};
 // Guardar apuesta CON coins
 g.bets[u.id][d.pid]={result:d.result,homeGoals:d.hg,awayGoals:d.ag,amount:d.amt,coins:coinsWager,coinSettled:false,coinDelta:null,ts:Date.now(),pts:null,isDouble:_doubleActive};
@@ -3363,7 +3363,7 @@ g.bets[u.id][d.pid]={result:d.result,homeGoals:d.hg,awayGoals:d.ag,amount:d.amt,
 if(coinsWager>0){
   var mem2=g.members.find(function(m){return m.id===u.id;});
   if(mem2){
-    if(mem2.coins===undefined||mem2.coins===null) mem2.coins=COINS_START;
+    if(mem2.coins===undefined||mem2.coins===null) mem2.coins=APPLES_START;
     mem2.coins=Math.max(0,mem2.coins-coinsWager);
     apSt.user=mem2;
   }
@@ -3372,7 +3372,7 @@ var mem=g.members.find(function(m){return m.id===u.id;});
 if(mem) mem.lastSeen=Date.now();
 updateDailyStreak(u.id);
 var p=PARTIDOS_AP.concat(KNOCKOUT_AP).find(function(x){return x.id===d.pid;});
-var coinMsg=coinsWager>0?' · 🪙'+coinsWager:'';
+var coinMsg=coinsWager>0?' · 🍎'+coinsWager:'';
 addFeed('bet',u.name,'apostó en '+(p?p.home.name+' vs '+p.away.name:d.pid)+': '+(d.result==='1'?'Local':d.result==='X'?'Empate':'Visitante')+' '+d.hg+'-'+d.ag+coinMsg+(_doubleActive?' ⚡ (doble)':''),u.emoji);
 addNotif('⚽','Apuesta: '+d.result+' ('+d.hg+'-'+d.ag+')'+coinMsg+(_doubleActive?' ⚡ DOBLE':''));
 apSaveGrp(g); apSt.group=g;
@@ -3519,7 +3519,7 @@ return '<div style="display:flex;align-items:center;gap:8px;padding:7px 0;border
 (b.isDouble?'<span class="double-badge">×2</span>':'')+
 '<span style="font-family:Bebas Neue,sans-serif;font-size:.9rem;color:'+col+';">'+(pts!==null&&pts!==undefined?(pts>0?'+'+pts:'0'):'-')+'</span>'+
 '</div>';
-}).join('') : '<div class="nores" style="padding:10px;">Sin apuestas aún.</div>';
+}).join('') : '<div class="nores" style="padding:10px;">Sin manzanass aún.</div>';
 document.getElementById('player-modal').style.display = 'flex';
 };
 window.closePlayerModal = function(){document.getElementById('player-modal').style.display='none';};
@@ -3534,7 +3534,7 @@ return Object.assign({},m,{exact:ex,totalBets:nb,totalAmt:amt,pts:m.pts||0});
 }).sort(function(a,b){return b.pts-a.pts;});
 var pot = apTotalPot();
 var pos = ['🥇','🥈','🥉'];
-var tbl = '<table class="export-table"><thead><tr><th>#</th><th>Jugador</th><th>Pts</th><th>Exactos</th><th>Apuestas</th><th>€ Apostado</th></tr></thead><tbody>'+
+var tbl = '<table class="export-table"><thead><tr><th>#</th><th>Jugador</th><th>Pts</th><th>Exactos</th><th>Apuestas</th><th>🍎 Apostado</th></tr></thead><tbody>'+
 mems.map(function(m,i){
 var cls = i===0?'pos1':i===1?'pos2':i===2?'pos3':'';
 return '<tr><td class="'+cls+'">'+(pos[i]||i+1)+'</td>'+
@@ -3542,9 +3542,9 @@ return '<tr><td class="'+cls+'">'+(pos[i]||i+1)+'</td>'+
 '<td style="font-family:Bebas Neue,sans-serif;font-size:1rem;color:var(--g);">'+m.pts+'</td>'+
 '<td style="color:var(--gold);font-weight:700;">'+m.exact+'</td>'+
 '<td>'+m.totalBets+'</td>'+
-'<td style="color:var(--gold);">€'+m.totalAmt.toFixed(2)+'</td></tr>';
+'<td style="color:var(--gold);">🍎'+m.totalAmt.toFixed(2)+'</td></tr>';
 }).join('')+'</tbody></table>';
-var header = '<div style="text-align:center;margin-bottom:10px;"><div style="font-family:Bebas Neue,sans-serif;font-size:1.2rem;letter-spacing:2px;color:var(--g);">'+g.name+'</div><div style="font-size:.72rem;color:var(--muted);font-weight:500;">Bote: €'+pot.toFixed(2)+' · 1º €'+(pot*.5).toFixed(2)+' · 2º €'+(pot*.3).toFixed(2)+' · 3º €'+(pot*.2).toFixed(2)+'</div></div>';
+var header = '<div style="text-align:center;margin-bottom:10px;"><div style="font-family:Bebas Neue,sans-serif;font-size:1.2rem;letter-spacing:2px;color:var(--g);">'+g.name+'</div><div style="font-size:.72rem;color:var(--muted);font-weight:500;">Bote: 🍎'+pot.toFixed(2)+' · 1º 🍎'+(pot*.5).toFixed(2)+' · 2º 🍎'+(pot*.3).toFixed(2)+' · 3º 🍎'+(pot*.2).toFixed(2)+'</div></div>';
 document.getElementById('export-table-wrap').innerHTML = header+tbl;
 document.getElementById('export-modal').style.display = 'flex';
 };
@@ -3555,14 +3555,14 @@ var mems = g.members.map(function(m){return Object.assign({},m,{pts:m.pts||0});}
 var pot = apTotalPot();
 var txt = '🏆 QUINIELA FC - '+g.name+'\n'+'='.repeat(32)+'\n'+
 mems.map(function(m,i){return (i+1)+'. '+m.emoji+' '+m.name.padEnd(15)+' '+String(m.pts||0).padStart(4)+' pts';}).join('\n')+
-'\n'+'-'.repeat(32)+'\nBote: €'+pot.toFixed(2)+' · 🥇 €'+(pot*.5).toFixed(2)+' 🥈 €'+(pot*.3).toFixed(2)+' 🥉 €'+(pot*.2).toFixed(2)+'\n#Mundial2026 #QuinielaFC';
+'\n'+'-'.repeat(32)+'\nBote: 🍎'+pot.toFixed(2)+' · 🥇 🍎'+(pot*.5).toFixed(2)+' 🥈 🍎'+(pot*.3).toFixed(2)+' 🥉 🍎'+(pot*.2).toFixed(2)+'\n#Mundial2026 #QuinielaFC';
 navigator.clipboard.writeText(txt).then(function(){toast('📋','Clasificación copiada');});
 };
 window.exportShare = function(){
 var g = apSt.group; if(!g) return;
 var mems = g.members.map(function(m){return Object.assign({},m,{pts:m.pts||0});}).sort(function(a,b){return b.pts-a.pts;});
 var pot = apTotalPot();
-var txt = '🏆 '+g.name+' · QuinielaFC\n'+mems.slice(0,3).map(function(m,i){return ['🥇','🥈','🥉'][i]+' '+m.emoji+' '+m.name+' - '+(m.pts||0)+' pts';}).join('\n')+'\nBote: €'+pot.toFixed(2)+' #Mundial2026';
+var txt = '🏆 '+g.name+' · QuinielaFC\n'+mems.slice(0,3).map(function(m,i){return ['🥇','🥈','🥉'][i]+' '+m.emoji+' '+m.name+' - '+(m.pts||0)+' pts';}).join('\n')+'\nBote: 🍎'+pot.toFixed(2)+' #Mundial2026';
 if(navigator.share) navigator.share({text:txt});
 else navigator.clipboard.writeText(txt).then(function(){toast('📋','Texto copiado');});
 };
@@ -3597,7 +3597,7 @@ if(grid) grid.innerHTML = [
 {v:avgPts+'pts', l:'Media puntos', c:'var(--blue)'},
 {v:pctExact+'%', l:'% de exactos', c:'var(--gold)'},
 {v:g.members.length, l:'Jugadores', c:'var(--g)'},
-{v:'€'+pot.toFixed(0), l:'Bote total', c:'var(--gold)'},
+{v:'🍎'+pot.toFixed(0), l:'Bote total', c:'var(--gold)'},
 ].map(function(s){return '<div class="group-stat"><div class="group-stat-val" style="color:'+s.c+'">'+s.v+'</div><div class="group-stat-lbl">'+s.l+'</div></div>';}).join('');
 var sorted = memberStats.slice().sort(function(a,b){return b.pts-a.pts;});
 if(detail) detail.innerHTML = '<div class="ptitle" style="margin-top:13px;"><span class="ico">🏅</span> Detalle por jugador <span style="margin-left:auto;font-size:.65rem;color:var(--g);cursor:pointer;" onclick="openExport()">📋 Exportar</span></div>'+
@@ -3683,7 +3683,7 @@ g.name = name; g.inscripcion = inscr;
 apSaveGrp(g); apSt.group = g;
 apBanner(); apRenderRanking();
 document.getElementById('edit-group-form').style.display = 'none';
-toast('✅','Grupo actualizado: '+name+' · €'+inscr);
+toast('✅','Grupo actualizado: '+name+' · 🍎'+inscr);
 };
 window.apKickMember = function(){
 var g = apSt.group; var u = apSt.user;
@@ -3738,7 +3738,7 @@ if(p&&!isOpen(p)){toast('🔒','Apuestas cerradas - partido próximo','#fcd34d')
 var pb = apSt.pending[pid]||{};
 var h = parseInt((document.getElementById('sh-'+pid)||{}).value);
 var a = parseInt((document.getElementById('sa-'+pid)||{}).value);
-var amt = 0; /* € field removed */
+var amt = 0; /* 🍎 field removed */
 if(!pb.result){toast('❗','Elige 1 / X / 2','#fca5a5');return;}
 if(isNaN(h)||isNaN(a)){toast('❗','Introduce el marcador','#fca5a5');return;}
 /* amt validation removed */
@@ -3864,12 +3864,12 @@ var pot=apTotalPot();
 var totalBote=(g.coinPot||0);
 var myAporte=apSt.user&&g.coinContrib?( g.coinContrib[apSt.user.id]||0):0;
 var myMemberCoins=apSt.user?( (g.members.find(function(m){return m.id===apSt.user.id;})||{}).coins||1000):1000;
-var bv=document.getElementById('bote-val'); if(bv)bv.textContent='🪙 '+totalBote.toLocaleString();
+var bv=document.getElementById('bote-val'); if(bv)bv.textContent='🍎 '+totalBote.toLocaleString();
 var bs=document.getElementById('bote-sub'); if(bs)bs.textContent=g.members.length+' jugadores · El ganador se lleva el bote';
 var iv=document.getElementById('inscr-val');
-if(iv) iv.textContent='🪙 '+myAporte;
+if(iv) iv.textContent='🍎 '+myAporte;
 var mcl=document.getElementById('my-coins-label');
-if(mcl) mcl.textContent='Saldo: 🪙'+myMemberCoins;
+if(mcl) mcl.textContent='Saldo: 🍎'+myMemberCoins;
 updateOnline(); updateAdminUI(); renderToday();
 if(typeof renderCoinBar==='function') try{ renderCoinBar(); }catch(e){}
 setTimeout(scheduleMatchNotifs, 800);
@@ -4219,7 +4219,7 @@ list.innerHTML = publicGroups.map(function(g2,i){
 return '<div class="global-row">'+
 '<div class="rpos '+(i===0?'p1':i===1?'p2':i===2?'p3':'')+'">'+(i+1)+'</div>'+
 '<div style="flex:1;"><div style="font-weight:700;font-size:.84rem;">'+g2.name+(g2.isMe?' <span class="global-tag">(el tuyo)</span>':'')+'</div>'+
-'<div style="font-size:.68rem;color:var(--muted);font-weight:500;">'+g2.members+' jugadores · '+g2.totalBets+' apuestas · €'+g2.pot.toFixed(0)+' bote</div></div>'+
+'<div style="font-size:.68rem;color:var(--muted);font-weight:500;">'+g2.members+' jugadores · '+g2.totalBets+' apuestas · 🍎'+g2.pot.toFixed(0)+' bote</div></div>'+
 '<div class="rpts"><div class="v">'+g2.avg+'</div><div class="l">pts/jug</div></div>'+
 '</div>';
 }).join('');
@@ -5053,7 +5053,7 @@ return '<div style="display:flex;align-items:center;gap:7px;padding:4px 0;border
 '<span style="flex:1;font-weight:'+(isMine?'700':'500')+';">'+m.name+(isMine?' (tú)':'')+'</span>'+
 '<span style="font-weight:700;">'+rl+'</span>'+
 '<span style="color:var(--muted);">'+bet.homeGoals+'-'+bet.awayGoals+'</span>'+
-'<span style="color:var(--gold);">'+(bet.coins?'🪙'+bet.coins:'')+'</span>'+
+'<span style="color:var(--gold);">'+(bet.coins?'🍎'+bet.coins:'')+'</span>'+
 '</div>';
 }).filter(Boolean);
 groupBetsHtml = betsForMatch.length ?
@@ -5429,7 +5429,7 @@ function fbListenGroup(code){
       if(data.feed && data.feed.length) g.feed=data.feed;
       if(data.chat&&Array.isArray(data.chat)&&data.chat.length){var lc2=typeof apGetChats==='function'?apGetChats():[];var rTs=(data.chat[data.chat.length-1]&&data.chat[data.chat.length-1].ts)||0;var lTs=(lc2.length&&lc2[lc2.length-1].ts)||0;if(rTs>lTs||data.chat.length!==lc2.length){if(typeof apSaveChats==='function')apSaveChats(data.chat);try{apRenderChat&&apRenderChat();}catch(ex){}try{_renderMGChat&&_renderMGChat();}catch(ex){}}
       // Re-init coins for any member that doesn't have them
-      g.members.forEach(function(m){ if(!m.coins) m.coins=COINS_START; });
+      g.members.forEach(function(m){ if(!m.coins) m.coins=APPLES_START; });
       apSaveGrp&&apSaveGrp(g);
       apSt.group=g;
       /* FIX v2: also update apSt.user reference in case pts/coins changed */
@@ -5722,7 +5722,7 @@ function _renderMGStats(){
   grid.innerHTML=
     '<div class="mg-stat"><div class="mg-stat-v">'+myRank+'º</div><div class="mg-stat-l">Posición</div></div>'+
     '<div class="mg-stat"><div class="mg-stat-v">'+(u.pts||0)+'</div><div class="mg-stat-l">Mis pts</div></div>'+
-    '<div class="mg-stat"><div class="mg-stat-v">€'+pot.toFixed(0)+'</div><div class="mg-stat-l">Bote</div></div>';
+    '<div class="mg-stat"><div class="mg-stat-v">🍎'+pot.toFixed(0)+'</div><div class="mg-stat-l">Bote</div></div>';
 }
 
 function _renderMGProgress(){
@@ -5771,7 +5771,7 @@ function _renderMGRanking(){
   if(bote&&pot>0) bote.innerHTML=
     '<div style="background:linear-gradient(135deg,rgba(217,119,6,.1),rgba(245,158,11,.1));border:1px solid rgba(217,119,6,.3);border-radius:12px;padding:13px;margin-top:12px;text-align:center;">'+
     '<div style="font-size:.65rem;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">💰 Bote total</div>'+
-    '<div style="font-family:Bebas Neue,sans-serif;font-size:2.5rem;color:var(--gold);">€'+pot.toFixed(2)+'</div>'+
+    '<div style="font-family:Bebas Neue,sans-serif;font-size:2.5rem;color:var(--gold);">🍎'+pot.toFixed(2)+'</div>'+
     '<div style="font-size:.65rem;color:var(--muted);margin-top:4px;">🥇 50% · 🥈 30% · 🥉 20%</div>'+
     '</div>';
 }
@@ -5898,7 +5898,7 @@ function _renderMGAjustes(){
   var html=
     '<div style="background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:13px;margin-bottom:12px;">'+
       '<div style="font-weight:800;font-size:.9rem;margin-bottom:4px;">'+g.name+' <span style="font-size:.7rem;color:var(--muted);">'+g.code+'</span></div>'+
-      '<div style="font-size:.7rem;color:var(--muted);">'+g.members.length+' jugadores · €'+((g.members.length*(g.inscripcion||0)).toFixed(0))+' bote · Inscripción: €'+(g.inscripcion||0)+'</div>'+
+      '<div style="font-size:.7rem;color:var(--muted);">'+g.members.length+' jugadores · 🍎'+((g.members.length*(g.inscripcion||0)).toFixed(0))+' bote · Inscripción: 🍎'+(g.inscripcion||0)+'</div>'+
     '</div>'+
     '<div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px;">'+
       '<button onclick="apCopyCode()" style="padding:11px;border-radius:10px;background:var(--g5);border:1.5px solid var(--border2);color:var(--g2);font-weight:700;font-size:.84rem;cursor:pointer;text-align:left;">📋 Copiar código · '+g.code+'</button>'+
@@ -6026,7 +6026,7 @@ window.shareApuesta=function(pid){
   var resText=bet.result==='1'?hN+' GANA':bet.result==='X'?'EMPATE':aN+' GANA';
   ctx.fillStyle='#4ade80';ctx.font='bold 22px system-ui';ctx.fillText(resText,300,140);
   ctx.fillStyle='#fff';ctx.font='bold 50px system-ui';ctx.fillText(bet.homeGoals+' - '+bet.awayGoals,300,200);
-  ctx.fillStyle='#fbbf24';ctx.font='bold 14px system-ui';ctx.fillText(bet.coins?'🪙'+bet.coins:''+' apostados',300,230);
+  ctx.fillStyle='#fbbf24';ctx.font='bold 14px system-ui';ctx.fillText(bet.coins?'🍎'+bet.coins:''+' apostados',300,230);
   ctx.fillStyle='rgba(255,255,255,0.6)';ctx.font='13px system-ui';ctx.fillText(u.emoji+' '+u.name+' · '+g.name+' ('+g.code+')',300,258);
   ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='10px system-ui';ctx.fillText(p.date+' · '+p.time,300,278);
   ctx.fillStyle='rgba(255,255,255,0.2)';ctx.fillText('quinielafc-50209.web.app',300,298);
@@ -6063,7 +6063,7 @@ window.exportQuiniela=function(){
       var hN=p._resolvedHome?p._resolvedHome.name:p.home.name;
       var aN=p._resolvedAway?p._resolvedAway.name:p.away.name;
       var res=bet.result==='1'?'Local':bet.result==='X'?'Empate':'Visitante';
-      lines.push(p.home.flag+hN+' '+bet.homeGoals+'-'+bet.awayGoals+' '+aN+p.away.flag+' → '+res+(bet.coins?' 🪙'+bet.coins:'')+'/* ||0).toFixed(0));
+      lines.push(p.home.flag+hN+' '+bet.homeGoals+'-'+bet.awayGoals+' '+aN+p.away.flag+' → '+res+(bet.coins?' 🍎'+bet.coins:'')+'/* ||0).toFixed(0));
     });
     lines.push('');
   });
@@ -6166,7 +6166,7 @@ function _renderQList(filter){
         '<span style="flex:1;font-size:.72rem;font-weight:'+(isMine?800:500)+';color:var(--text2);">'+m.name+(isMine?' ✓':'')+'</span>'+
         (bet?
           '<span style="font-size:.7rem;font-weight:700;color:var(--g);background:var(--g5);padding:2px 8px;border-radius:8px;white-space:nowrap;">'+bet.result+' '+bet.homeGoals+'-'+bet.awayGoals+'</span>'+
-          '<span style="font-size:.62rem;color:var(--muted);">'+(bet.coins?'🪙'+bet.coins:'')+'</span>'+
+          '<span style="font-size:.62rem;color:var(--muted);">'+(bet.coins?'🍎'+bet.coins:'')+'</span>'+
           (pts!==null?'<span style="font-size:.7rem;font-weight:800;color:'+ptsCol+';">'+ptsLbl+'</span>':'')
         :
           '<span style="font-size:.68rem;color:var(--muted);font-style:italic;">Sin apostar</span>'
@@ -6237,7 +6237,7 @@ function _renderQList(filter){
       '<div style="display:flex;gap:8px;">'+
         '<div style="flex:1;background:var(--bg);border-radius:10px;padding:9px;text-align:center;"><div style="font-size:.62rem;color:var(--muted);font-weight:600;">% EXACTO</div><div style="font-family:Bebas Neue,sans-serif;font-size:1.3rem;color:var(--gold);">'+pctExacto+'%</div></div>'+
         '<div style="flex:1;background:var(--bg);border-radius:10px;padding:9px;text-align:center;"><div style="font-size:.62rem;color:var(--muted);font-weight:600;">% ACIERTO</div><div style="font-family:Bebas Neue,sans-serif;font-size:1.3rem;color:var(--g);">'+pctOk+'%</div></div>'+
-        '<div style="flex:1;background:var(--bg);border-radius:10px;padding:9px;text-align:center;"><div style="font-size:.62rem;color:var(--muted);font-weight:600;">INVERSIÓN</div><div style="font-family:Bebas Neue,sans-serif;font-size:1.3rem;color:var(--blue);">€'+totalInv.toFixed(0)+'</div></div>'+
+        '<div style="flex:1;background:var(--bg);border-radius:10px;padding:9px;text-align:center;"><div style="font-size:.62rem;color:var(--muted);font-weight:600;">INVERSIÓN</div><div style="font-family:Bebas Neue,sans-serif;font-size:1.3rem;color:var(--blue);">🍎'+totalInv.toFixed(0)+'</div></div>'+
         '<div style="flex:1;background:var(--bg);border-radius:10px;padding:9px;text-align:center;"><div style="font-size:.62rem;color:var(--muted);font-weight:600;">PUNTOS</div><div style="font-family:Bebas Neue,sans-serif;font-size:1.3rem;color:var(--g);">'+totalPts+'</div></div>'+
       '</div>';
     hist.insertBefore(panel, hist.firstChild);
@@ -6454,7 +6454,7 @@ var I18N = {
     crearGrupo:'Crear grupo', unirseGrupo:'Unirse a grupo', ranking:'Ranking',
     quiniela:'Quiniela', miembros:'Miembros', chat:'Chat', ajustes:'Ajustes',
     resultado:'Resultado', marcador:'Marcador exacto', importe:'Importe',
-    apostarBtn:'⚡ Apostar', apostado:'Apostado', sinApostar:'Sin apostar',
+    apostarBtn:'⚡ Apostar', apostado:'Apostado', sinManzanas:'Sin apostar',
     grupos:'Todos los grupos', cerrado:'Cerrado', abierto:'Abierto',
     empate:'Empate', local:'Local', visitante:'Visitante',
     puntos:'pts', liga:'Liga', ayuda:'Ayuda',
@@ -6475,7 +6475,7 @@ var I18N = {
     crearGrupo:'Create group', unirseGrupo:'Join group', ranking:'Ranking',
     quiniela:'Quiniela', miembros:'Members', chat:'Chat', ajustes:'Settings',
     resultado:'Result', marcador:'Exact score', importe:'Amount',
-    apostarBtn:'⚡ Bet', apostado:'Bet placed', sinApostar:'Not bet',
+    apostarBtn:'⚡ Bet', apostado:'Bet placed', sinManzanas:'Not bet',
     grupos:'All groups', cerrado:'Closed', abierto:'Open',
     empate:'Draw', local:'Home', visitante:'Away',
     puntos:'pts', liga:'League', ayuda:'Help',
@@ -6496,7 +6496,7 @@ var I18N = {
     crearGrupo:'Créer groupe', unirseGrupo:'Rejoindre', ranking:'Classement',
     quiniela:'Quiniela', miembros:'Membres', chat:'Chat', ajustes:'Paramètres',
     resultado:'Résultat', marcador:'Score exact', importe:'Montant',
-    apostarBtn:'⚡ Parier', apostado:'Parié', sinApostar:'Non parié',
+    apostarBtn:'⚡ Parier', apostado:'Parié', sinManzanas:'Non parié',
     grupos:'Tous les groupes', cerrado:'Fermé', abierto:'Ouvert',
     empate:'Nul', local:'Domicile', visitante:'Extérieur',
     puntos:'pts', liga:'Ligue', ayuda:'Aide',
@@ -6517,7 +6517,7 @@ var I18N = {
     crearGrupo:'Criar grupo', unirseGrupo:'Entrar no grupo', ranking:'Classificação',
     quiniela:'Quiniela', miembros:'Membros', chat:'Chat', ajustes:'Ajustes',
     resultado:'Resultado', marcador:'Placar exato', importe:'Valor',
-    apostarBtn:'⚡ Apostar', apostado:'Apostado', sinApostar:'Sem aposta',
+    apostarBtn:'⚡ Apostar', apostado:'Apostado', sinManzanas:'Sem aposta',
     grupos:'Todos os grupos', cerrado:'Fechado', abierto:'Aberto',
     empate:'Empate', local:'Casa', visitante:'Fora',
     puntos:'pts', liga:'Liga', ayuda:'Ajuda',
@@ -6940,7 +6940,7 @@ function renderAcumSummary(){
     }).join('')+
     '<div style="display:flex;align-items:center;gap:8px;margin-top:8px;">'+
       '<div style="flex:1;"><div style="font-size:.62rem;opacity:.8;">Cuota combinada</div><div style="font-family:Bebas Neue,sans-serif;font-size:1.3rem;">×'+odds+'</div></div>'+
-      '<input type="number" id="acum-amount" placeholder="🪙" style="width:80px;padding:7px;border-radius:8px;border:none;background:rgba(255,255,255,.2);color:#fff;font-size:.84rem;font-weight:700;text-align:center;">'+
+      '<input type="number" id="acum-amount" placeholder="🍎" style="width:80px;padding:7px;border-radius:8px;border:none;background:rgba(255,255,255,.2);color:#fff;font-size:.84rem;font-weight:700;text-align:center;">'+
       '<button onclick="submitAcum()" style="padding:9px 14px;border-radius:10px;background:#fff;color:var(--gold);font-weight:800;font-size:.84rem;border:none;cursor:pointer;">APOSTAR</button>'+
     '</div>';
 }
@@ -7192,22 +7192,22 @@ function renderCoinBar(){
     var member=g.members.find(function(m){return m.id===u.id;});
     if(!member){ els.forEach(function(el){if(el)el.innerHTML='';}); return; }
     // Ensure member has coins initialized
-    if(member.coins===undefined||member.coins===null) member.coins=COINS_START;
+    if(member.coins===undefined||member.coins===null) member.coins=APPLES_START;
     var coins=getCoins(member);
     var avail=getAvailableCoins(g,u.id);
     var locked=coins-avail;
-    var pct=Math.round(coins/COINS_START*100);
+    var pct=Math.round(coins/APPLES_START*100);
     var rank=getCoinRanking(g);
     var pos=rank.findIndex(function(r){return r.id===u.id;})+1;
     var html=
       '<div class="coin-bar">'+
-        '<div class="coin-ico">🪙</div>'+
+        '<div class="coin-ico">🍎</div>'+
         '<div class="coin-info">'+
           '<div class="coin-bal">'+coins.toLocaleString()+' <span style="font-size:.75rem;font-weight:600;color:#b45309;">monedas</span></div>'+
           '<div class="coin-lbl">'+(locked>0?locked+' apostadas · ':'')+'#'+pos+' de '+g.members.length+' · '+pct+'% del inicial</div>'+
         '</div>'+
         '<div style="text-align:right;">'+
-          '<div style="font-family:Bebas Neue,sans-serif;font-size:1.1rem;color:'+(coins>=COINS_START?'#16a34a':'#dc2626')+';">'+(coins>=COINS_START?'+':'')+(coins-COINS_START)+'</div>'+
+          '<div style="font-family:Bebas Neue,sans-serif;font-size:1.1rem;color:'+(coins>=APPLES_START?'#16a34a':'#dc2626')+';">'+(coins>=APPLES_START?'+':'')+(coins-APPLES_START)+'</div>'+
           '<div style="font-size:.6rem;color:#b45309;font-weight:700;">vs inicio</div>'+
         '</div>'+
       '</div>';
@@ -7230,10 +7230,10 @@ window.renderCoinRanking = function(){
   var rank=getCoinRanking(g);
   var medals=['🥇','🥈','🥉'];
   el.innerHTML=rank.map(function(r,i){
-    var delta=r.coins-COINS_START;
+    var delta=r.coins-APPLES_START;
     var deltaStr=(delta>=0?'+':'')+delta;
     var deltaCol=delta>0?'#16a34a':delta<0?'#dc2626':'#6b7280';
-    var bar=Math.round(r.coins/COINS_START*100);
+    var bar=Math.round(r.coins/APPLES_START*100);
     return '<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);">'+
       '<div style="font-size:1.3rem;width:28px;text-align:center;">'+(medals[i]||'#'+(i+1))+'</div>'+
       '<div style="font-size:1.1rem;">'+r.emoji+'</div>'+
@@ -7244,7 +7244,7 @@ window.renderCoinRanking = function(){
         '</div>'+
       '</div>'+
       '<div style="text-align:right;flex-shrink:0;">'+
-        '<div style="font-family:Bebas Neue,sans-serif;font-size:1.2rem;color:#d97706;">'+r.coins.toLocaleString()+'🪙</div>'+
+        '<div style="font-family:Bebas Neue,sans-serif;font-size:1.2rem;color:#d97706;">'+r.coins.toLocaleString()+'🍎</div>'+
         '<div style="font-size:.65rem;font-weight:700;color:'+deltaCol+';">'+deltaStr+' vs inicio</div>'+
       '</div>'+
     '</div>';
@@ -7341,7 +7341,7 @@ window.executeDeleteGroup = async function(){
 
 // ===========================================================
 // 🔥 RACHA BONUS - Premia aciertos consecutivos
-// 3 aciertos → +50🪙 | 5 aciertos → +150🪙 | 10 → +500🪙
+// 3 aciertos → +50🍎 | 5 aciertos → +150🍎 | 10 → +500🍎
 // ===========================================================
 function calcStreak(group, userId){
   var bets = group.bets[userId] || {};
@@ -7368,7 +7368,7 @@ function applyRachaBonus(group, member){
     member.coins = (member.coins||1000) + bonus;
     if(!member.rachaBonus) member.rachaBonus = [];
     member.rachaBonus.push({streak:streak, bonus:bonus, ts:Date.now()});
-    toast('🔥', msg+' · +'+bonus+'🪙 bonus!', '#fef3c7');
+    toast('🔥', msg+' · +'+bonus+'🍎 bonus!', '#fef3c7');
     addNotif('🔥', msg+' - +'+bonus+' monedas de bonus');
   }
 }
@@ -7385,7 +7385,7 @@ window.contribuirBote = function(amount){
   var member = g.members.find(function(m){return m.id===u.id;});
   if(!member){ return; }
   var avail = getAvailableCoins(g, u.id);
-  if(amount > avail){ toast('🪙','No tienes suficientes monedas (disponibles: '+avail+')','#fca5a5'); return; }
+  if(amount > avail){ toast('🍎','No tienes suficientes monedas (disponibles: '+avail+')','#fca5a5'); return; }
   // Deduct from member
   member.coins = (member.coins||1000) - amount;
   // Add to group pot
@@ -7397,12 +7397,12 @@ window.contribuirBote = function(amount){
   if(typeof _fbConnected!=='undefined'&&_fbConnected&&_fbDB){
     try{ _fbDB.collection('groups').doc(g.code).set({coinPot:g.coinPot,coinContrib:g.coinContrib,members:g.members},{merge:true}); }catch(e){}
   }
-  toast('🏆','¡'+amount+'🪙 añadidas al bote final!','#fef3c7');
+  toast('🏆','¡'+amount+'🍎 añadidas al bote final!','#fef3c7');
   apBanner(); renderCoinBar&&renderCoinBar();
 };
 
 // ===========================================================
-// 🎰 RESCATE DE EMERGENCIA - 200🪙 si bajas de 100
+// 🎰 RESCATE DE EMERGENCIA - 200🍎 si bajas de 100
 // Solo una vez por jugador durante todo el Mundial
 // ===========================================================
 function checkRescate(group, member){
@@ -7410,7 +7410,7 @@ function checkRescate(group, member){
   if((member.coins||5000) < 500){
     member.coins = (member.coins||0) + 1000;
     member.rescateUsed = true;
-    toast('🎰','¡Rescate de emergencia! +1000🪙 (solo una vez)','#fef3c7');
+    toast('🎰','¡Rescate de emergencia! +1000🍎 (solo una vez)','#fef3c7');
     addNotif('🎰','Rescate de emergencia activado - +1000 monedas');
     apSaveGrp(group);
     if(typeof _fbConnected!=='undefined'&&_fbConnected&&_fbDB){
@@ -7451,7 +7451,7 @@ applyCoinResult = function(group, memberId, pid, real){
       var hasBet = g && u && g.bets && g.bets[u.id] && g.bets[u.id][p.id];
       var minLeft = Math.round(msLeft/60000);
       if(!hasBet){
-        toast('⏰','¡'+minLeft+' min! Sin apuesta: '+p.home.name+' vs '+p.away.name,'#fef3c7');
+        toast('⏰','¡'+minLeft+' min! Sin manzanas: '+p.home.name+' vs '+p.away.name,'#fef3c7');
         addNotif('⏰','Cierra en '+minLeft+' min: '+p.home.name+' vs '+p.away.name+' - ¡apuesta ya!');
       } else {
         toast('✅',p.home.name+' vs '+p.away.name+' - ¡tu apuesta está lista!','#dcfce7');
@@ -7460,7 +7460,7 @@ applyCoinResult = function(group, memberId, pid, real){
       if('Notification' in window && Notification.permission === 'granted'){
         try{
           new Notification('⚽ QuinielaFC', {
-            body: (hasBet?'✅ Tienes apuesta para ':'⚠️ Sin apuesta: ')+p.home.name+' vs '+p.away.name+' ('+minLeft+' min)',
+            body: (hasBet?'✅ Tienes apuesta para ':'⚠️ Sin manzanas: ')+p.home.name+' vs '+p.away.name+' ('+minLeft+' min)',
             icon: '⚽', tag: 'qfc-match-'+p.id
           });
         }catch(e){}
@@ -7478,7 +7478,7 @@ applyCoinResult = function(group, memberId, pid, real){
 
 
 // =======================================================
-// 🪙 HISTORIAL DE MONEDAS POR PARTIDO
+// 🍎 HISTORIAL DE MONEDAS POR PARTIDO
 // =======================================================
 window.renderCoinHistory = function(){
   var el = document.getElementById('coin-history-list');
@@ -7508,10 +7508,10 @@ window.renderCoinHistory = function(){
       '<div style="flex:1;min-width:0;">'+
         '<div style="font-weight:700;font-size:.82rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+match+'</div>'+
         '<div style="font-size:.68rem;color:var(--muted);">'+
-          'Aposté: 🪙'+b.coins+(exact?' · 🎯 Marcador exacto':'')+'</div>'+
+          'Aposté: 🍎'+b.coins+(exact?' · 🎯 Marcador exacto':'')+'</div>'+
       '</div>'+
       '<div style="font-family:Bebas Neue,sans-serif;font-size:1.1rem;color:'+col+';">'+
-        (delta>=0?'+':'')+delta+'🪙</div>'+
+        (delta>=0?'+':'')+delta+'🍎</div>'+
     '</div>';
   }).join('');
 };
@@ -7681,7 +7681,7 @@ function renderHomeDashboard(){
   if(staticGrid) staticGrid.style.display='none';
 
   var member = g.members.find(function(m){return m.id===u.id;}) || u;
-  var coins = member.coins || COINS_START;
+  var coins = member.coins || APPLES_START;
   var pts = member.pts || 0;
 
   // Ranking position
@@ -7755,7 +7755,7 @@ window.shareWhatsAppFull = function(){
   var g = apSt.group; var u = apSt.user;
   if(!g||!u){ toast('❗','Únete a un grupo primero'); return; }
   var member = g.members.find(function(m){return m.id===u.id;})||u;
-  var coins = member.coins || COINS_START;
+  var coins = member.coins || APPLES_START;
   var pts = member.pts || 0;
   var ranked = g.members.slice().sort(function(a,b){return (b.pts||0)-(a.pts||0);});
   var pos = ranked.findIndex(function(m){return m.id===u.id;})+1;
@@ -7766,7 +7766,7 @@ window.shareWhatsAppFull = function(){
   var pct = totalBets>0?Math.round(correct/totalBets*100):0;
   // Top 3
   var top3 = ranked.slice(0,3).map(function(m,i){
-    return ['🥇','🥈','🥉'][i]+' '+m.emoji+' '+m.name+' - '+( m.pts||0)+' pts · 🪙'+(m.coins||COINS_START).toLocaleString();
+    return ['🥇','🥈','🥉'][i]+' '+m.emoji+' '+m.name+' - '+( m.pts||0)+' pts · 🍎'+(m.coins||APPLES_START).toLocaleString();
   }).join('
 ');
 
@@ -7779,7 +7779,7 @@ window.shareWhatsAppFull = function(){
 '+
     '🏆 Puntos: '+pts+'
 '+
-    '🪙 Monedas: '+coins.toLocaleString()+'
+    '🍎 Monedas: '+coins.toLocaleString()+'
 '+
     (streak>0?'🔥 Racha: '+streak+' aciertos seguidos
 ':'')+
@@ -8171,7 +8171,7 @@ console.log('[v27] Liga + Idiomas + Chat reacciones + Standings + Acumulada + Av
         if(data.chat&&Array.isArray(data.chat)){var lc=typeof apGetChats==='function'?apGetChats():[];var remoteLastTs=(data.chat.length&&data.chat[data.chat.length-1].ts)||0;var localLastTs=(lc.length&&lc[lc.length-1].ts)||0;if(remoteLastTs>localLastTs||data.chat.length!==lc.length){if(typeof apSaveChats==='function')apSaveChats(data.chat);try{apRenderChat&&apRenderChat();}catch(ex){}try{_renderMGChat&&_renderMGChat();}catch(ex){}changed=true;}}
         if(data.coinPot!==undefined&&data.coinPot!==g.coinPot){g.coinPot=data.coinPot;changed=true;}
         if(!changed)return;
-        g.members.forEach(function(m){if(!m.coins)m.coins=window.COINS_START||5000;});
+        g.members.forEach(function(m){if(!m.coins)m.coins=window.APPLES_START||5000;});
         if(typeof apSaveGrp==='function')apSaveGrp(g);
         window.apSt.group=g;
         if(window.apSt.user){var me=g.members.find(function(m){return m.id===window.apSt.user.id;});if(me)window.apSt.user=me;}
@@ -8413,5 +8413,32 @@ console.log('[v27] Liga + Idiomas + Chat reacciones + Standings + Acumulada + Av
   document.addEventListener('visibilitychange',function(){
     if(!document.hidden) setTimeout(heartbeat,500);
   });
+})();
+</script>
+
+<div id="qfc-legal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99998;align-items:center;justify-content:center;padding:16px;">
+<div style="background:#fff;border-radius:14px;padding:22px;max-width:460px;width:100%;max-height:88vh;overflow-y:auto;">
+<div style="font-family:Bebas Neue,sans-serif;font-size:1.3rem;color:#15803d;margin-bottom:10px;">AVISO LEGAL</div>
+<p style="font-size:.82rem;color:#374151;line-height:1.65;margin-bottom:12px;">
+<strong>QuinielaFC</strong> es una herramienta de gestion estadistica y recreativa de uso privado entre amigos. Su proposito es exclusivamente el entretenimiento y la gestion de predicciones deportivas de forma informal.
+</p>
+<p style="font-size:.82rem;color:#374151;line-height:1.65;margin-bottom:12px;">
+Las <strong>manzanas</strong> son puntos virtuales recreativos <strong>sin valor economico real</strong>. La aplicacion <strong>no gestiona dinero real</strong>, no realiza transacciones financieras y no actua como casa de apuestas ni plataforma de juego regulada.
+</p>
+<p style="font-size:.82rem;color:#374151;line-height:1.65;margin-bottom:12px;">
+No esta sujeta a la Ley 13/2011 de Regulacion del Juego. Solo se almacena el apodo y emoji del usuario en Firebase (Google, europa). El desarrollador no se responsabiliza del uso que los usuarios hagan de la aplicacion. RDL 1/2007: 14 dias de desistimiento desde la compra.
+</p>
+<button onclick="document.getElementById('qfc-legal').style.display='none';localStorage.setItem('qfc_legal_ok','1');" style="width:100%;padding:12px;background:linear-gradient(135deg,#22c55e,#15803d);border:none;border-radius:10px;color:#fff;font-family:Bebas Neue,sans-serif;font-size:1rem;letter-spacing:2px;cursor:pointer;">ACEPTO - CONTINUAR</button>
+</div></div>
+<script>
+(function(){
+  if(!localStorage.getItem('qfc_legal_ok')){
+    window.addEventListener('load',function(){
+      setTimeout(function(){
+        var d=document.getElementById('qfc-legal');
+        if(d) d.style.display='flex';
+      },2500);
+    });
+  }
 })();
 </script>
