@@ -108,7 +108,7 @@ window.addEventListener('load', function(){
         }
       }
     }catch(e){ console.warn('[QFC] Auto-connect error:',e); }
-  }, 1500);
+  }, 300);
 });
 
 window.addEventListener('load',function(){
@@ -3171,7 +3171,7 @@ if(saved&&saved.code){
           console.log('[QFC] Firebase conectado tras reintento '+_retryCount);
         }
         if(_retryCount>=20) clearInterval(_retryInterval);
-      },500);
+      },200);
     }
   } else {
     // Group NOT in localStorage - try to restore from Firebase
