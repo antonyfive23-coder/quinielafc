@@ -821,7 +821,7 @@ window.installPWA = function(){
           <div style="font-size:0.72rem;color:var(--muted);margin-top:5px;font-weight:500;">Comparte este código con tus amigos para que se unan al grupo</div>
         </div>
         <!-- 🔐 SEGURIDAD — Cambiar contraseña de acceso -->
-      <div style="background:var(--bg);border:1.5px solid var(--border);border-radius:12px;padding:14px;margin-bottom:14px;">
+      <div style="id="admin-pw-panel" background:var(--bg);border:1.5px solid var(--border);border-radius:12px;padding:14px;margin-bottom:14px;">
         <div style="font-family:Bebas Neue,sans-serif;font-size:.9rem;letter-spacing:1.5px;color:var(--text2);margin-bottom:10px;">🔐 CONTRASEÑA DE ACCESO</div>
         <p style="font-size:.74rem;color:var(--muted);margin-bottom:10px;line-height:1.5;">Cambia la contraseña que los usuarios necesitan para entrar a la app. Compártela con tus jugadores.</p>
         <div style="margin-bottom:8px;">
@@ -842,7 +842,7 @@ window.installPWA = function(){
       </div>
 
       <!-- ⚠️ ZONA DE PELIGRO — oculta bajo 3 toques -->
-      <div style="margin-top:28px;text-align:center;">
+      <div id="admin-danger-wrap" style="margin-top:28px;text-align:center;">
         <div id="danger-trigger-wrap" onclick="dangerTap()" style="cursor:pointer;opacity:.25;user-select:none;padding:10px;">
           <div style="font-size:.55rem;color:var(--muted);letter-spacing:3px;text-transform:uppercase;">···</div>
         </div>
@@ -2365,7 +2365,7 @@ document.querySelectorAll('.tab-pane').forEach(function(s){s.classList.remove('a
 document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
 var el=document.getElementById('ap-'+tab);if(el)el.classList.add('active');if(btn)btn.classList.add('active');
 if(tab==='ranking')apRenderRanking();if(tab==='bizum')apRenderBizum();if(tab==='quiniela')apRenderQuiniela();
-if(tab==='ajustes')apRenderGrpMgmt();if(tab==='chat')apRenderChat();if(tab==='especiales')apRenderEsp();
+if(tab==='ajustes'){apRenderGrpMgmt();setTimeout(function(){var isA=apSt.user&&apSt.user.isCreator;var p=document.getElementById('admin-pw-panel');var d=document.getElementById('admin-danger-wrap');if(p)p.style.display=isA?'block':'none';if(d)d.style.display=isA?'block':'none';},100);}if(tab==='chat')apRenderChat();if(tab==='especiales')apRenderEsp();
 if(tab==='miembros')apRenderMembers();if(tab==='semanal')apRenderSemanal();if(tab==='supervivencia')apRenderSv();
 if(tab==='bracket')apRenderBracket();
 if(tab==='historial'){_histData=[];_histViewingId=null;apRenderHistorial();renderHistMemberBar();}
