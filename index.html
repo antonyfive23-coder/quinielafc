@@ -3158,6 +3158,21 @@ if(saved&&saved.code){
     /* FIX v2: start listener immediately if Firebase is already connected */
     if(_fbConnected && typeof fbListenGroup==='function') fbListenGroup(saved.code);
     if(_fbConnected && apSt.user) _fbMarkOnline(saved.code, saved.uid);
+    /* FIX v3: si Firebase no esta listo, reintentar cada segundo hasta 10s */
+    if(!_fbConnected){
+      var _retryCount=0;
+      var _retryInterval=setInterval(function(){
+        _retryCount++;
+        if(_fbConnected && typeof fbListenGroup==='function'){
+          fbListenGroup(saved.code);
+          if(apSt.user) _fbMarkOnline(saved.code, apSt.user.id);
+          if(typeof apBanner==='function') apBanner();
+          clearInterval(_retryInterval);
+          console.log('[QFC] Firebase conectado tras reintento '+_retryCount);
+        }
+        if(_retryCount>=20) clearInterval(_retryInterval);
+      },500);
+    }
   } else {
     // Group NOT in localStorage - try to restore from Firebase
     console.log('[QFC] Group not in localStorage, attempting Firebase restore...');
