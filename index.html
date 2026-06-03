@@ -102,8 +102,21 @@ window.addEventListener('load', function(){
         var cfg = JSON.parse(saved);
         if(cfg.apiKey && cfg.projectId && cfg.appId){
           if(typeof initFirebase==='function'){
-            initFirebase(cfg);
-            console.log('[QFC] Firebase auto-reconectado desde localStorage');
+            initFirebase(cfg.apiKey, cfg.projectId, cfg.appId).then(function(ok){
+              if(ok){
+                console.log('[QFC] Firebase auto-reconectado desde localStorage');
+                // Reconectar grupo si habia uno
+                setTimeout(function(){
+                  try{
+                    var grp=localStorage.getItem('wc26_ap');
+                    if(grp){
+                      var g=JSON.parse(grp);
+                      if(g&&g.code&&typeof fbListenGroup==='function') fbListenGroup(g.code);
+                    }
+                  }catch(e){}
+                },1000);
+              }
+            });
           }
         }
       }
@@ -182,7 +195,7 @@ window.addEventListener('load',function(){
       if(saved){
         var cfg=JSON.parse(saved);
         if(cfg.apiKey&&cfg.projectId&&cfg.appId&&typeof initFirebase==='function'){
-          initFirebase(cfg);
+          initFirebase(cfg.apiKey,cfg.projectId,cfg.appId);
           console.log('[QFC] Firebase auto-reconectado');
         }
       }
