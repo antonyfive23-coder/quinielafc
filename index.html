@@ -820,8 +820,8 @@ window.installPWA = function(){
           <div style="font-family:Bebas Neue,sans-serif;font-size:2rem;color:var(--g);letter-spacing:6px;background:var(--g5);display:inline-block;padding:8px 20px;border-radius:10px;border:2px solid var(--border2);" id="grp-code-disp">------</div>
           <div style="font-size:0.72rem;color:var(--muted);margin-top:5px;font-weight:500;">Comparte este código con tus amigos para que se unan al grupo</div>
         </div>
-        <!-- 🔐 SEGURIDAD — Cambiar contraseña de acceso -->
-      <div style="background:var(--bg);border:1.5px solid var(--border);border-radius:12px;padding:14px;margin-bottom:14px;">
+        <!-- 🔐 SEGURIDAD — Solo admin -->
+      <div id="admin-password-panel" style="background:var(--bg);border:1.5px solid var(--border);border-radius:12px;padding:14px;margin-bottom:14px;">
         <div style="font-family:Bebas Neue,sans-serif;font-size:.9rem;letter-spacing:1.5px;color:var(--text2);margin-bottom:10px;">🔐 CONTRASEÑA DE ACCESO</div>
         <p style="font-size:.74rem;color:var(--muted);margin-bottom:10px;line-height:1.5;">Cambia la contraseña que los usuarios necesitan para entrar a la app. Compártela con tus jugadores.</p>
         <div style="margin-bottom:8px;">
@@ -836,7 +836,7 @@ window.installPWA = function(){
       </div>
       <div style="display:flex;gap:7px;justify-content:center;flex-wrap:wrap;">
           <button onclick="apShareGrp()" class="g-btn" style="width:auto;padding:9px 16px;font-size:0.82rem;">📤 Compartir</button>
-          <button onclick="apChangePw()" class="g-btn outline" style="width:auto;padding:9px 16px;font-size:0.82rem;">🔑 Cambiar contraseña</button>
+          <span id="admin-changepw-btn"><button onclick="apChangePw()" class="g-btn outline" style="width:auto;padding:9px 16px;font-size:0.82rem;">🔑 Cambiar contraseña</button></span>
           <button onclick="apLeave()" class="g-btn danger" style="width:auto;padding:9px 16px;font-size:0.82rem;">🚪 Salir del grupo</button>
         </div>
       </div>
@@ -2366,6 +2366,13 @@ document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('ac
 var el=document.getElementById('ap-'+tab);if(el)el.classList.add('active');if(btn)btn.classList.add('active');
 if(tab==='ranking')apRenderRanking();if(tab==='bizum')apRenderBizum();if(tab==='quiniela')apRenderQuiniela();
 if(tab==='ajustes'){apRenderGrpMgmt();
+  var isAdmin=apSt.user&&apSt.user.isCreator;
+  var pp=document.getElementById('admin-password-panel');
+  var cp=document.getElementById('admin-changepw-btn');
+  var dz=document.getElementById('danger-zone-wrap');
+  if(pp) pp.style.display=isAdmin?'block':'none';
+  if(cp) cp.style.display=isAdmin?'inline':'none';
+  if(dz) dz.style.display=isAdmin?'block':'none';
   var dz=document.getElementById('danger-zone-wrap');
   if(dz) dz.style.display=(apSt.user&&apSt.user.isCreator)?'block':'none';
 }if(tab==='chat')apRenderChat();if(tab==='especiales')apRenderEsp();
