@@ -2638,7 +2638,10 @@ return '<div class="mem-row" data-member-id="'+m.id+'"><div class="mem-avi" styl
 ' <span class="lvl-badge '+lvl.cls+'">'+lvl.ico+' '+lvl.lbl+'</span>'+
 (streak>=3?' <span class="badge-item bi-red">🔥 Racha '+streak+'</span>':'')+
 '</div><div class="mem-det">'+nb+' apuestas · '+(m.pts||0)+' pts · Esta semana: '+wk+' pts</div></div>'+
-'<div class="'+(onl?'on-dot':'off-dot')+'" title="'+(onl?'En línea':'Sin conexión reciente')+'"></div></div>';
+'<div style="display:flex;align-items:center;gap:5px;">'+
+'<div class="'+(onl?'on-dot':'off-dot')+'" title="'+(onl?'En línea':'Sin conexión reciente')+'"></div>'+
+(u.isCreator&&m.id!==u.id?'<button data-mid="'+m.id+'" data-mname="'+m.name+'" onclick="apKickMember(this.dataset.mid,this.dataset.mname)" style="background:#fee2e2;border:1px solid #fca5a5;border-radius:5px;padding:2px 6px;font-size:.7rem;color:#dc2626;cursor:pointer;font-weight:700;">🚫</button>':'')+
+'</div></div>';
 }).join('');
 var lu=document.getElementById('mem-upd');if(lu)lu.textContent='Actualizado '+new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'});
 }
