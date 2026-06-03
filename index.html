@@ -8073,6 +8073,18 @@ console.log('[v27] Liga + Idiomas + Chat reacciones + Standings + Acumulada + Av
   var _lastAt=0;
   var _lastChatTs=0;
   function _poll(){
+    // Auto-reconectar Firebase si grupo esta en modo local
+    if(window.apSt&&window.apSt.group&&!window._fbConnected){
+      var cfg={apiKey:'AIzaSyBdBtQ1CEMkuq14T66RXCJaoBQDzQYdVtU',projectId:'quinielafc-50209',appId:'1:130848995431:web:452d3d2a857342540f7cc2'};
+      if(typeof initFirebase==='function') initFirebase(cfg.apiKey,cfg.projectId,cfg.appId).then(function(ok){
+        if(ok&&window.apSt.group&&typeof fbListenGroup==='function') fbListenGroup(window.apSt.group.code);
+      });
+      return;
+    }
+    // Si Firebase conectado pero sin listener, iniciarlo
+    if(window._fbConnected&&window._fbDB&&window.apSt&&window.apSt.group&&!window._fbUnsubscribe){
+      if(typeof fbListenGroup==='function') fbListenGroup(window.apSt.group.code);
+    }
     try{
       if(!window._fbConnected||!window._fbDB)return;
       if(!window.apSt||!window.apSt.group)return;
