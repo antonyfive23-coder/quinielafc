@@ -3176,7 +3176,7 @@ if(saved&&saved.code){
           clearInterval(_retryInterval);
           console.log('[QFC] Firebase conectado tras reintento '+_retryCount);
         }
-        if(_retryCount>=20) clearInterval(_retryInterval);
+        if(_retryCount>=150) clearInterval(_retryInterval);
       },200);
     }
   } else {
