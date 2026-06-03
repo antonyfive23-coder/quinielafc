@@ -34,12 +34,12 @@
 <!-- Firebase SDK (Firestore) -->
 <link rel="preconnect" href="https://www.gstatic.com">
 <link rel="dns-prefetch" href="https://www.gstatic.com">
-<link rel="preload" href="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js" as="script">
-<link rel="preload" href="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js" as="script">
+<link rel="preload" href="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js" as="script">
+<link rel="preload" href="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js" as="script">
 <link rel="preconnect" href="https://firestore.googleapis.com">
 <link rel="preconnect" href="https://www.googleapis.com">
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <script>var _fbConnected=false,_fbDB=null,_fbApp=null,_fbUnsubscribe=null;
 function _loadFBScript(src, cb){
 if(document.querySelector('script[src="'+src+'"]')){cb();return;}
@@ -64,9 +64,9 @@ resolve(true);
 if(typeof firebase!=='undefined'){
 tryInit();
 } else {
-_loadFBScript('https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js', function(e1){
+_loadFBScript('https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js', function(e1){
 if(e1){resolve(false);return;}
-_loadFBScript('https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js', function(e2){
+_loadFBScript('https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js', function(e2){
 if(e2){resolve(false);return;}
 tryInit();
 });

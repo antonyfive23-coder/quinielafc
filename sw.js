@@ -2,8 +2,8 @@
 const CACHE = 'qfc-v4';
 const ASSETS = [
   './index.html',
-  'https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js',
-  'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js',
+  'https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js',
+  'https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js',
   'https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap',
   'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'
 ];
