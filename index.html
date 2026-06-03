@@ -841,8 +841,8 @@ window.installPWA = function(){
         </div>
       </div>
 
-      <!-- ⚠️ ZONA DE PELIGRO — oculta bajo 3 toques -->
-      <div style="margin-top:28px;text-align:center;">
+      <!-- ⚠️ ZONA DE PELIGRO — solo admin -->
+      <div style="margin-top:28px;text-align:center;" id="danger-zone-wrap">
         <div id="danger-trigger-wrap" onclick="dangerTap()" style="cursor:pointer;opacity:.25;user-select:none;padding:10px;">
           <div style="font-size:.55rem;color:var(--muted);letter-spacing:3px;text-transform:uppercase;">···</div>
         </div>
@@ -2365,7 +2365,10 @@ document.querySelectorAll('.tab-pane').forEach(function(s){s.classList.remove('a
 document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
 var el=document.getElementById('ap-'+tab);if(el)el.classList.add('active');if(btn)btn.classList.add('active');
 if(tab==='ranking')apRenderRanking();if(tab==='bizum')apRenderBizum();if(tab==='quiniela')apRenderQuiniela();
-if(tab==='ajustes')apRenderGrpMgmt();if(tab==='chat')apRenderChat();if(tab==='especiales')apRenderEsp();
+if(tab==='ajustes'){apRenderGrpMgmt();
+  var dz=document.getElementById('danger-zone-wrap');
+  if(dz) dz.style.display=(apSt.user&&apSt.user.isCreator)?'block':'none';
+}if(tab==='chat')apRenderChat();if(tab==='especiales')apRenderEsp();
 if(tab==='miembros')apRenderMembers();if(tab==='semanal')apRenderSemanal();if(tab==='supervivencia')apRenderSv();
 if(tab==='bracket')apRenderBracket();
 if(tab==='historial'){_histData=[];_histViewingId=null;apRenderHistorial();renderHistMemberBar();}
@@ -2638,7 +2641,10 @@ return '<div class="mem-row" data-member-id="'+m.id+'"><div class="mem-avi" styl
 ' <span class="lvl-badge '+lvl.cls+'">'+lvl.ico+' '+lvl.lbl+'</span>'+
 (streak>=3?' <span class="badge-item bi-red">🔥 Racha '+streak+'</span>':'')+
 '</div><div class="mem-det">'+nb+' apuestas · '+(m.pts||0)+' pts · Esta semana: '+wk+' pts</div></div>'+
-'<div class="'+(onl?'on-dot':'off-dot')+'" title="'+(onl?'En línea':'Sin conexión reciente')+'"></div></div>';
+'<div style="display:flex;align-items:center;gap:6px;">'+
+'<div class="'+(onl?'on-dot':'off-dot')+'" title="'+(onl?'En línea':'Sin conexión reciente')+'"></div>'+
+(u.isCreator && m.id!==u.id ? '<button onclick="apKickMember(''+m.id+'',''+m.name+'')" style="background:#fee2e2;border:1px solid #fca5a5;border-radius:6px;padding:3px 7px;font-size:.7rem;color:#dc2626;cursor:pointer;font-weight:700;">🚫</button>' : '')+
+'</div></div>';
 }).join('');
 var lu=document.getElementById('mem-upd');if(lu)lu.textContent='Actualizado '+new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'});
 }
@@ -7276,7 +7282,26 @@ window.dangerTap = function(){
   }, 1500);
 };
 
+
+window.apKickMember = function(memberId, memberName){
+  var g=apSt.group; var u=apSt.user;
+  if(!g||!u||!u.isCreator){toast('❌','Solo el admin puede expulsar miembros');return;}
+  if(!confirm('¿Expulsar a '+memberName+' del grupo?')) return;
+  var updMembers=g.members.filter(function(m){return m.id!==memberId;});
+  g.members=updMembers;
+  apSt.group=g;
+  if(_fbConnected&&_fbDB){
+    _fbDB.collection('groups').doc(g.code).set({members:updMembers,updatedAt:Date.now()},{merge:true})
+      .then(function(){toast('✅',memberName+' expulsado del grupo');})
+      .catch(function(e){toast('❌','Error: '+e.message);});
+  }
+  apSaveGrp(g);
+  apRenderMembers();
+  apBanner();
+};
+
 window.confirmDeleteGroup = function(){
+  if(!apSt.user||!apSt.user.isCreator){toast('❌','Solo el admin puede eliminar el grupo');return;}
   var g = apSt.group;
   if(!g){ toast('❗','No hay grupo activo'); return; }
   // Only creator can delete
