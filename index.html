@@ -93,7 +93,22 @@ window.renderLigaView = window.renderLigaView || function(){};
 <meta name="apple-mobile-web-app-title" content="QuinielaFC">
 <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚽</text></svg>">
 <script>
-// AUTO-CONECTAR - ver bloque hardcodeado abajo
+// AUTO-CONECTAR FIREBASE AL ARRANCAR
+window.addEventListener('load', function(){
+  setTimeout(function(){
+    try{
+      var saved = localStorage.getItem('qfc_fb_config');
+      if(saved){
+        var cfg = JSON.parse(saved);
+        if(cfg.apiKey && cfg.projectId && cfg.appId){
+          if(typeof initFirebase==='function'){
+            initFirebase(cfg);
+            console.log('[QFC] Firebase auto-reconectado desde localStorage');
+          }
+        }
+      }
+    }catch(e){ console.warn('[QFC] Auto-connect error:',e); }
+  }, 1500);
 });
 
 window.addEventListener('load',function(){
@@ -160,7 +175,20 @@ window.addEventListener('load',function(){
   },1500);
 });
 
-
+window.addEventListener('load',function(){
+  setTimeout(function(){
+    try{
+      var saved=localStorage.getItem('qfc_fb_config');
+      if(saved){
+        var cfg=JSON.parse(saved);
+        if(cfg.apiKey&&cfg.projectId&&cfg.appId&&typeof initFirebase==='function'){
+          initFirebase(cfg);
+          console.log('[QFC] Firebase auto-reconectado');
+        }
+      }
+    }catch(e){}
+  },1500);
+});
 
 if('serviceWorker' in navigator){
   window.addEventListener('load', function(){
@@ -583,7 +611,7 @@ window.installPWA = function(){
       <button class="tab-btn" onclick="apTab('ranking',this)">🏆 Ranking</button>
       <button class="tab-btn" onclick="apTab('semanal',this)">📆 Semanal</button>
       <button class="tab-btn" onclick="apTab('supervivencia',this)">💀 Supervivencia</button>
-      <button class="tab-btn" onclick="apTab('zumo manzana',this)">📱 Zumo Manzana</button>
+      <button class="tab-btn" onclick="apTab('bizum',this)">📱 Bizum</button>
       <button class="tab-btn" onclick="apTab('especiales',this)">⭐ Especiales</button>
       <button class="tab-btn" onclick="apTab('bracket',this)">🏆 Bracket</button>
       <button class="tab-btn" onclick="apTab('estadisticas',this)">📊 Stats</button>
@@ -656,7 +684,7 @@ window.installPWA = function(){
     <div id="ap-quiniela" class="tab-pane">
       <div class="panel"><div class="ptitle"><span class="ico">📊</span> Quiniela colectiva — todos vs todos</div>
         <p style="font-size:0.76rem;color:var(--muted);margin-bottom:11px;font-weight:500;">🟡 Exacto · 🟢 Correcto · 🔴 Fallo · — Sin manzanas</p>
-        <div class="mx-wrap" id="quiniela-mx"><div class="nores">Sin manzanas aún.</div></div>
+        <div class="mx-wrap" id="quiniela-mx"><div class="nores">Sin manzanass aún.</div></div>
       </div>
     </div>
 
@@ -691,10 +719,10 @@ window.installPWA = function(){
     </div>
 
     <!-- BIZUM -->
-    <div id="ap-zumo manzana" class="tab-pane">
-      <div class="panel" style="margin-bottom:12px;"><div class="ptitle"><span class="ico">📱</span> Liquidación Zumo Manzana</div><div id="ap-biz-list"></div></div>
+    <div id="ap-bizum" class="tab-pane">
+      <div class="panel" style="margin-bottom:12px;"><div class="ptitle"><span class="ico">📱</span> Liquidación Bizum</div><div id="ap-biz-list"></div></div>
       <div class="panel"><div class="ptitle"><span class="ico">📋</span> Mi resumen</div>
-        <div class="summ-box" id="ap-summ">Sin manzanas aún.</div>
+        <div class="summ-box" id="ap-summ">Sin manzanass aún.</div>
         <div style="text-align:center;margin-bottom:7px;font-weight:800;font-size:0.82rem;color:var(--g);">COMPARTIR</div>
         <div class="share-row"><button class="share-btn wa" onclick="apShareWA()">💚 WhatsApp</button><button class="share-btn" onclick="apCopyMsg()">📋 Copiar</button><button class="share-btn tw" onclick="apShareTW()">🐦 Twitter</button></div>
       </div>
@@ -736,7 +764,7 @@ window.installPWA = function(){
         <div id="hist-member-bar" style="display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:8px;margin-bottom:10px;border-bottom:1px solid var(--border);"></div>
         <div class="hist-search-wrap"><i class="fas fa-search"></i><input type="text" class="hist-search" id="hist-q" placeholder="Buscar partido, equipo..." oninput="filterHist()"></div>
         <div id="hist-viewing-label" style="font-size:.7rem;color:var(--muted);font-weight:600;margin-bottom:8px;display:none;"></div>
-      <div id="ap-hist-list"><div class="nores">Sin manzanas.</div></div></div>
+      <div id="ap-hist-list"><div class="nores">Sin manzanass.</div></div></div>
       <div class="panel"><div class="ptitle"><span class="ico">🏅</span> Premios por categorías</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;" id="premios-grid"></div></div>
     </div>
 
@@ -2330,7 +2358,7 @@ window.apTab=function(tab,btn){
 document.querySelectorAll('.tab-pane').forEach(function(s){s.classList.remove('active');});
 document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
 var el=document.getElementById('ap-'+tab);if(el)el.classList.add('active');if(btn)btn.classList.add('active');
-if(tab==='ranking')apRenderRanking();if(tab==='zumoManzana')apRenderZumoManzana();if(tab==='quiniela')apRenderQuiniela();
+if(tab==='ranking')apRenderRanking();if(tab==='bizum')apRenderBizum();if(tab==='quiniela')apRenderQuiniela();
 if(tab==='ajustes')apRenderGrpMgmt();if(tab==='chat')apRenderChat();if(tab==='especiales')apRenderEsp();
 if(tab==='miembros')apRenderMembers();if(tab==='semanal')apRenderSemanal();if(tab==='supervivencia')apRenderSv();
 if(tab==='bracket')apRenderBracket();
@@ -2691,7 +2719,7 @@ return '<div class="sv-card"><div style="display:flex;align-items:center;gap:10p
 }).join('');
 }
 var _bizMsgs=[];
-function apRenderZumoManzana(){
+function apRenderBizum(){
 var g=apSt.group;var u=apSt.user;
 var bl=document.getElementById('ap-biz-list');var sb=document.getElementById('ap-summ');
 if(!g||!u){if(bl)bl.innerHTML='<div class="nores">Sin grupo activo</div>';if(sb)sb.textContent='Sin grupo.';return;}
@@ -2707,13 +2735,13 @@ _bizMsgs.push(msg);
 return '<div class="biz-card"><div class="biz-avi">'+m.emoji+'</div>'+
 '<div class="biz-info"><div class="biz-name">'+m.name+'</div><div class="biz-det">🍎'+m.totalAmt.toFixed(2)+' · '+m.pts+' pts</div></div>'+
 '<div class="biz-bal"><div class="biz-a '+bc+'">🍎'+Math.abs(bal).toFixed(2)+'</div><div class="biz-l">'+bl2+'</div></div>'+
-'<button class="biz-btn" data-idx="'+idx+'" onclick="apCopyBiz(this.dataset.idx)">📋 Zumo Manzana</button></div>';
+'<button class="biz-btn" data-idx="'+idx+'" onclick="apCopyBiz(this.dataset.idx)">📋 Bizum</button></div>';
 }).join('')||'<div class="nores">Eres el único miembro del grupo.</div>';
 var myB2=g.bets[u.id]||{};
 var fl=Object.entries(myB2).map(function(e){var p=PARTIDOS_AP.find(function(x){return x.id===e[0];});var rl=e[1].result==='1'?'Local':e[1].result==='X'?'Empate':'Visitante';return p?(p.home.name+' vs '+p.away.name+' - '+rl+' ('+e[1].homeGoals+'-'+e[1].awayGoals+') 🍎'+parseFloat(e[1].amount).toFixed(2)):'';}).filter(Boolean);
-if(sb){if(fl.length){sb.textContent='QUINIELAFC MUNDIAL 2026\n'+u.name+'\n========================\n'+fl.join('\n')+'\n========================\nTotal: 🍎'+me.totalAmt.toFixed(2)+'\nPuntos: '+(me.pts||0)+' · Nivel: '+calcLevel(me.pts||0).lbl+'\nGrupo: '+g.name+' ('+g.code+')';}else{sb.textContent='Sin manzanas aún.';}}
+if(sb){if(fl.length){sb.textContent='QUINIELAFC MUNDIAL 2026\n'+u.name+'\n========================\n'+fl.join('\n')+'\n========================\nTotal: 🍎'+me.totalAmt.toFixed(2)+'\nPuntos: '+(me.pts||0)+' · Nivel: '+calcLevel(me.pts||0).lbl+'\nGrupo: '+g.name+' ('+g.code+')';}else{sb.textContent='Sin manzanass aún.';}}
 }
-window.apCopyBiz=function(idx){var msg=_bizMsgs[parseInt(idx)];if(!msg)return;navigator.clipboard.writeText(msg).then(function(){toast('📋','Copiado para Zumo Manzana!');});};
+window.apCopyBiz=function(idx){var msg=_bizMsgs[parseInt(idx)];if(!msg)return;navigator.clipboard.writeText(msg).then(function(){toast('📋','Copiado para Bizum!');});};
 window.apCopyMsg=function(){var msg=(document.getElementById('ap-summ')||{}).textContent||'';navigator.clipboard.writeText(msg).then(function(){toast('📋','Resumen copiado');});};
 window.apShareWA=function(){var msg=(document.getElementById('ap-summ')||{}).textContent||'';window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');};
 window.apShareTW=function(){var g=apSt.group;if(!g)return;window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent('#Mundial2026 apostando con '+g.name+' en QuinielaFC!'),'_blank');};
@@ -2782,7 +2810,7 @@ var premios=[
 {ico:'🎯',name:'Rey del Exacto',desc:'Más exactos',val:'🏅 Insignia',crit:topEx&&topEx.exact>0?(topEx.emoji+' '+topEx.name+' ('+topEx.exact+')  '):'Sin exactos aún',col:'var(--gold)'},
 {ico:'🔥',name:'Rey de la Racha',desc:'Racha más larga',val:'🏅 Insignia',crit:topStr&&topStr.streak>0?(topStr.emoji+' '+topStr.name+' ('+topStr.streak+')  '):'Sin rachas',col:'#f97316'},
 {ico:'📆',name:'Premio Semanal',desc:'Mejor de la semana',val:'👑 Reconocimiento',crit:topWk&&topWk.weekPts>0?(topWk.emoji+' '+topWk.name+' ('+topWk.weekPts+' pts)'):'Sin puntos',col:'var(--blue)'},
-{ico:'🏟️',name:'Más Activo',desc:'Más apuestas',val:'🏅 Insignia',crit:(function(){var t=mems.slice().sort(function(a,b){return b.totalBets-a.totalBets;})[0];return t&&t.totalBets>0?(t.emoji+' '+t.name+' ('+t.totalBets+')  '):'Sin manzanas';})(),col:'var(--purple)'},
+{ico:'🏟️',name:'Más Activo',desc:'Más apuestas',val:'🏅 Insignia',crit:(function(){var t=mems.slice().sort(function(a,b){return b.totalBets-a.totalBets;})[0];return t&&t.totalBets>0?(t.emoji+' '+t.name+' ('+t.totalBets+')  '):'Sin manzanass';})(),col:'var(--purple)'},
 ];
 pg.innerHTML=premios.map(function(p){return '<div class="premio-card"><div class="premio-ico">'+p.ico+'</div><div class="premio-name">'+p.name+'</div><div class="premio-desc">'+p.desc+'</div><div class="premio-val" style="color:'+p.col+'">'+p.val+'</div><div class="premio-crit">'+p.crit+'</div></div>';}).join('');
 }
@@ -2832,7 +2860,7 @@ var premios=[
 {ico:'🎯',name:'Rey del Exacto',desc:'Más marcadores exactos',val:'🏅 Insignia',crit:topEx&&topEx.exact>0?(topEx.emoji+' '+topEx.name+' ('+topEx.exact+')'):'Sin exactos aún',col:'var(--gold)'},
 {ico:'🔥',name:'Rey de la Racha',desc:'Racha más larga',val:'🏅 Insignia',crit:topStr&&topStr.streak>0?(topStr.emoji+' '+topStr.name+' ('+topStr.streak+')'):'Sin rachas',col:'#f97316'},
 {ico:'📆',name:'Premio Semanal',desc:'Mejor de la semana',val:'👑 Reconocimiento',crit:topWk&&topWk.weekPts>0?(topWk.emoji+' '+topWk.name+' ('+topWk.weekPts+' pts)'):'Sin puntos esta semana',col:'var(--blue)'},
-{ico:'🏟️',name:'Más Activo',desc:'Más apuestas',val:'🏅 Insignia',crit:(function(){var t=mems.slice().sort(function(a,b){return b.totalBets-a.totalBets;})[0];return t&&t.totalBets>0?(t.emoji+' '+t.name+' ('+t.totalBets+')'):'Sin manzanas';})(),col:'var(--purple)'},
+{ico:'🏟️',name:'Más Activo',desc:'Más apuestas',val:'🏅 Insignia',crit:(function(){var t=mems.slice().sort(function(a,b){return b.totalBets-a.totalBets;})[0];return t&&t.totalBets>0?(t.emoji+' '+t.name+' ('+t.totalBets+')'):'Sin manzanass';})(),col:'var(--purple)'},
 ];
 pg.innerHTML=premios.map(function(p){return '<div class="premio-card"><div class="premio-ico">'+p.ico+'</div><div class="premio-name">'+p.name+'</div><div class="premio-desc">'+p.desc+'</div><div class="premio-val" style="color:'+p.col+'">'+p.val+'</div><div class="premio-crit">'+p.crit+'</div></div>';}).join('');
 }
@@ -3112,7 +3140,7 @@ apBanner();renderFeed();
 var active=document.querySelector('.tab-pane.active');
 if(active){var id=active.id.replace('ap-','');
 if(id==='partidos')apRenderAP();if(id==='miembros')apRenderMembers();if(id==='ranking')apRenderRanking();
-if(id==='quiniela')apRenderQuiniela();if(id==='zumoManzana')apRenderZumoManzana();if(id==='semanal')apRenderSemanal();
+if(id==='quiniela')apRenderQuiniela();if(id==='bizum')apRenderBizum();if(id==='semanal')apRenderSemanal();
 if(id==='supervivencia')apRenderSv();
 }
 }
@@ -3470,7 +3498,7 @@ return '<div style="display:flex;align-items:center;gap:8px;padding:7px 0;border
 (b.isDouble?'<span class="double-badge">×2</span>':'')+
 '<span style="font-family:Bebas Neue,sans-serif;font-size:.9rem;color:'+col+';">'+(pts!==null&&pts!==undefined?(pts>0?'+'+pts:'0'):'-')+'</span>'+
 '</div>';
-}).join('') : '<div class="nores" style="padding:10px;">Sin manzanas aún.</div>';
+}).join('') : '<div class="nores" style="padding:10px;">Sin manzanass aún.</div>';
 document.getElementById('player-modal').style.display = 'flex';
 };
 window.closePlayerModal = function(){document.getElementById('player-modal').style.display='none';};
@@ -3747,7 +3775,7 @@ document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('ac
 var el = document.getElementById('ap-'+tab); if(el)el.classList.add('active');
 if(btn)btn.classList.add('active');
 if(tab==='ranking')apRenderRanking();
-if(tab==='zumoManzana')apRenderZumoManzana();
+if(tab==='bizum')apRenderBizum();
 if(tab==='quiniela')apRenderQuiniela();
 if(tab==='ajustes'){apRenderGrpMgmt();updateAdminUI();if(typeof _initPassDisplay==='function')_initPassDisplay();}
 if(tab==='monedas'){
@@ -3800,17 +3828,7 @@ var fbTxt = document.getElementById('fb-stxt');
 var fbMsg = fbTxt ? fbTxt.textContent : '';
 fbEl.innerHTML = isConn
 ? '<span style="display:inline-flex;align-items:center;gap:5px;font-size:.65rem;font-weight:700;color:#15803d;background:#dcfce7;border:1px solid #86efac;border-radius:12px;padding:2px 8px;">🔥 Firebase ON · '+g.members.length+' jugadores en tiempo real</span>'
-: '<span onclick="window._autoReconnectFB&&window._autoReconnectFB()" style="display:inline-flex;align-items:center;gap:5px;font-size:.65rem;font-weight:700;color:#92400e;background:#fef3c7;border:1px solid #fcd34d;border-radius:12px;padding:2px 8px;cursor:pointer;">⚡ Solo local · Toca para activar Firebase</span>';
-// Si Firebase ya esta conectado, reconectar automaticamente
-if(!isConn && window._fbConnected && window._fbDB && g && g.code){
-  setTimeout(function(){
-    try{
-      if(typeof fbListenGroup==='function') fbListenGroup(g.code);
-      if(typeof _fbMarkOnline==='function'&&apSt.user) _fbMarkOnline(g.code,apSt.user.id);
-      if(typeof apBanner==='function') setTimeout(apBanner,1500);
-    }catch(e){}
-  },500);
-}
+: '<span style="display:inline-flex;align-items:center;gap:5px;font-size:.65rem;font-weight:700;color:#92400e;background:#fef3c7;border:1px solid #fcd34d;border-radius:12px;padding:2px 8px;cursor:pointer;">⚡ Solo local · Toca para activar Firebase</span>';
 }
 var gn = document.getElementById('ap-gname'); if(gn)gn.textContent='Grupo: '+g.name;
 var gi = document.getElementById('ap-ginfo');
@@ -3851,7 +3869,7 @@ if(id==='partidos')apRenderAP();
 if(id==='miembros')apRenderMembers();
 if(id==='ranking')apRenderRanking();
 if(id==='quiniela')apRenderQuiniela();
-if(id==='zumoManzana')apRenderZumoManzana();
+if(id==='bizum')apRenderBizum();
 if(id==='semanal')apRenderSemanal();
 if(id==='supervivencia')apRenderSv();
 if(id==='estadisticas')apRenderEstadisticas();
@@ -4909,7 +4927,7 @@ subMsg = '¡Empieza a apostar! <strong>'+openTotal+' partidos</strong> disponibl
 } else if(pending===0){
 subMsg = '🎉 ¡Quiniela completa! <strong>'+betCount+'/'+total+'</strong> partidos apostados';
 } else {
-subMsg = '<strong>'+betCount+'/'+total+'</strong> apostados · <strong>'+pending+'</strong> abiertos sin manzanas';
+subMsg = '<strong>'+betCount+'/'+total+'</strong> apostados · <strong>'+pending+'</strong> abiertos sin apuesta';
 }
 sub.innerHTML = subMsg;
 }
@@ -8073,18 +8091,6 @@ console.log('[v27] Liga + Idiomas + Chat reacciones + Standings + Acumulada + Av
   var _lastAt=0;
   var _lastChatTs=0;
   function _poll(){
-    // Auto-reconectar Firebase si grupo esta en modo local
-    if(window.apSt&&window.apSt.group&&!window._fbConnected){
-      var cfg={apiKey:'AIzaSyBdBtQ1CEMkuq14T66RXCJaoBQDzQYdVtU',projectId:'quinielafc-50209',appId:'1:130848995431:web:452d3d2a857342540f7cc2'};
-      if(typeof initFirebase==='function') initFirebase(cfg.apiKey,cfg.projectId,cfg.appId).then(function(ok){
-        if(ok&&window.apSt.group&&typeof fbListenGroup==='function') fbListenGroup(window.apSt.group.code);
-      });
-      return;
-    }
-    // Si Firebase conectado pero sin listener, iniciarlo
-    if(window._fbConnected&&window._fbDB&&window.apSt&&window.apSt.group&&!window._fbUnsubscribe){
-      if(typeof fbListenGroup==='function') fbListenGroup(window.apSt.group.code);
-    }
     try{
       if(!window._fbConnected||!window._fbDB)return;
       if(!window.apSt||!window.apSt.group)return;
@@ -8185,42 +8191,6 @@ console.log('[v27] Liga + Idiomas + Chat reacciones + Standings + Acumulada + Av
   window.addEventListener('load',function(){
     setTimeout(function(){
       setInterval(_poll,5000);
-      // Mantener Firebase vivo con ping cada 20s
-      setInterval(function(){
-        if(!window._fbConnected||!window._fbDB||!window.apSt||!window.apSt.group) return;
-        var code=window.apSt.group.code;
-        var uid=window.apSt.user&&window.apSt.user.id;
-        if(!code||!uid) return;
-        // Ping real a Firebase para mantener conexion
-        window._fbDB.collection('groups').doc(code).get()
-          .then(function(doc){
-            if(doc&&doc.exists){
-              console.log('[QFC] Firebase ping OK');
-              // Actualizar lastSeen sin sobreescribir members
-              var g=window.apSt.group;
-              var updated=false;
-              g.members=g.members.map(function(m){
-                if(m.id===uid){updated=true;return Object.assign({},m,{online:true,lastSeen:Date.now()});}
-                return m;
-              });
-              if(updated){
-                window.apSt.group=g;
-                window._fbDB.collection('groups').doc(code).update({
-                  members:g.members, updatedAt:Date.now()
-                }).catch(function(){});
-              }
-            }
-          })
-          .catch(function(e){
-            console.warn('[QFC] Firebase ping fallido, reconectando...',e.message);
-            window._fbConnected=false;
-            if(typeof initFirebase==='function'&&window._fbConfig){
-              initFirebase(window._fbConfig.apiKey,window._fbConfig.projectId,window._fbConfig.appId)
-                .then(function(ok){if(ok&&code)fbListenGroup&&fbListenGroup(code);});
-            }
-          });
-      },20000);
-
       // Reconectar Firebase cada 30s si es necesario
       setInterval(function(){
         if(window.apSt&&window.apSt.group&&window._fbConnected){
@@ -8347,7 +8317,7 @@ console.log('[v27] Liga + Idiomas + Chat reacciones + Standings + Acumulada + Av
 
       }).catch(function(e){ showIndicator('error','#dc2626'); });
 
-    }catch(e){ console.warn('[QFC Poll] excepcion:',e.message); }
+    }catch(e){ showIndicator('excepcion','#dc2626'); }
   }
 
   // Esperar a que todo cargue
@@ -8425,20 +8395,21 @@ console.log('[v27] Liga + Idiomas + Chat reacciones + Standings + Acumulada + Av
 })();
 </script>
 
-<div id="legal-disclaimer" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99998;align-items:center;justify-content:center;padding:16px;">
-<div style="background:#fff;border-radius:16px;padding:22px;max-width:480px;width:100%;max-height:88vh;overflow-y:auto;">
-<div style="font-family:Bebas Neue,sans-serif;font-size:1.3rem;color:#15803d;margin-bottom:10px;">AVISO LEGAL</div>
-<p style="font-size:.82rem;color:#374151;line-height:1.6;margin-bottom:10px;">QuinielaFC es una herramienta de gestion estadistica privada. No gestiona dinero real ni actua como casa de apuestas. Las manzanas son puntos virtuales sin valor economico. El desarrollador no se responsabiliza del uso de la app.</p>
-<p style="font-size:.75rem;color:#6b7280;margin-bottom:14px;">No sujeta a Ley 13/2011. Solo apodo y emoji se almacenan en Firebase. Derecho de supresion: abandona el grupo. RDL 1/2007: 14 dias desistimiento desde compra.</p>
-<button onclick="var d=document.getElementById('legal-disclaimer');d.style.display='none';localStorage.setItem('qfc_legal_ok','1');" style="width:100%;padding:12px;background:linear-gradient(135deg,#22c55e,#15803d);border:none;border-radius:10px;color:#fff;font-family:Bebas Neue,sans-serif;font-size:1rem;cursor:pointer;">ACEPTO - CONTINUAR</button>
+<div id="qfc-legal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99998;align-items:center;justify-content:center;padding:16px;">
+<div style="background:#fff;border-radius:14px;padding:20px;max-width:460px;width:100%;max-height:85vh;overflow-y:auto;">
+<div style="font-family:Bebas Neue,sans-serif;font-size:1.2rem;color:#15803d;margin-bottom:8px;">AVISO LEGAL</div>
+<p style="font-size:.8rem;color:#374151;line-height:1.6;margin-bottom:10px;">QuinielaFC es una herramienta de gestion estadistica privada. No gestiona dinero real. Las manzanas son puntos virtuales sin valor economico. El desarrollador no se responsabiliza del uso de la app. No sujeta a Ley 13/2011. Solo apodo y emoji se almacenan en Firebase. RDL 1/2007: 14 dias desistimiento.</p>
+<button onclick="document.getElementById('qfc-legal').style.display='none';localStorage.setItem('qfc_legal_ok','1');" style="width:100%;padding:11px;background:#15803d;border:none;border-radius:8px;color:#fff;font-family:Bebas Neue,sans-serif;font-size:1rem;cursor:pointer;">ACEPTO - CONTINUAR</button>
 </div></div>
 <script>
-window.addEventListener('load',function(){
-setTimeout(function(){
-if(!localStorage.getItem('qfc_legal_ok')){
-var d=document.getElementById('legal-disclaimer');
-if(d)d.style.display='flex';
-}
-},2000);
-});
+(function(){
+  if(!localStorage.getItem('qfc_legal_ok')){
+    window.addEventListener('load',function(){
+      setTimeout(function(){
+        var d=document.getElementById('qfc-legal');
+        if(d) d.style.display='flex';
+      },2000);
+    });
+  }
+})();
 </script>
