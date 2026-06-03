@@ -1,6 +1,12 @@
-// QuinielaFC Service Worker — v3
-const CACHE = 'qfc-v3';
-const ASSETS = ['./index.html'];
+// QuinielaFC Service Worker — v4
+const CACHE = 'qfc-v4';
+const ASSETS = [
+  './index.html',
+  'https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js',
+  'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js',
+  'https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap',
+  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'
+];
 
 self.addEventListener('install', function(e){
   e.waitUntil(
@@ -21,10 +27,25 @@ self.addEventListener('activate', function(e){
 });
 
 self.addEventListener('fetch', function(e){
-  if(e.request.url.includes('firestore') || e.request.url.includes('firebase') || e.request.url.includes('espn')){
+  // Firebase y ESPN siempre desde red
+  if(e.request.url.includes('firestore') || e.request.url.includes('googleapis.com/google.firestore') || e.request.url.includes('espn')){
     e.respondWith(fetch(e.request).catch(function(){ return caches.match(e.request); }));
     return;
   }
+  // SDK Firebase desde cache primero
+  if(e.request.url.includes('gstatic.com/firebasejs')){
+    e.respondWith(
+      caches.match(e.request).then(function(cached){
+        return cached || fetch(e.request).then(function(resp){
+          var clone=resp.clone();
+          caches.open(CACHE).then(function(cache){ cache.put(e.request,clone); });
+          return resp;
+        });
+      })
+    );
+    return;
+  }
+  // Resto: red primero, cache como fallback
   e.respondWith(
     fetch(e.request).then(function(resp){
       var clone = resp.clone();
