@@ -8335,7 +8335,7 @@ console.log('[v27] Liga + Idiomas + Chat reacciones + Standings + Acumulada + Av
 
       }).catch(function(e){ showIndicator('error','#dc2626'); });
 
-    }catch(e){ showIndicator('excepcion','#dc2626'); }
+    }catch(e){ console.warn('[QFC Poll] excepcion:',e.message); }
   }
 
   // Esperar a que todo cargue
