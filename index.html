@@ -8395,15 +8395,11 @@ console.log('[v27] Liga + Idiomas + Chat reacciones + Standings + Acumulada + Av
         var me=g.members.find(function(m){return m.id===uid;});
         if(me) window.apSt.user=me;
       }
-      // En Firebase solo actualizar el campo del usuario actual
+      // Actualizar members y updatedAt en Firebase
       _fbDB.collection('groups').doc(code).update({
-        ['members_'+uid+'_lastSeen']: Date.now()
-      }).catch(function(){
-        // Si falla usar set merge con members completos
-        _fbDB.collection('groups').doc(code).set({
-          members:g.members, updatedAt:Date.now()
-        },{merge:true}).catch(function(){});
-      });
+        members: g.members,
+        updatedAt: Date.now()
+      }).catch(function(){});
     }catch(e){}
   }
   // Arrancar cuando todo esté listo
