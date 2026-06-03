@@ -93,35 +93,7 @@ window.renderLigaView = window.renderLigaView || function(){};
 <meta name="apple-mobile-web-app-title" content="QuinielaFC">
 <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚽</text></svg>">
 <script>
-// AUTO-CONECTAR FIREBASE AL ARRANCAR
-window.addEventListener('load', function(){
-  setTimeout(function(){
-    try{
-      var saved = localStorage.getItem('qfc_fb_config');
-      if(saved){
-        var cfg = JSON.parse(saved);
-        if(cfg.apiKey && cfg.projectId && cfg.appId){
-          if(typeof initFirebase==='function'){
-            initFirebase(cfg.apiKey, cfg.projectId, cfg.appId).then(function(ok){
-              if(ok){
-                console.log('[QFC] Firebase auto-reconectado desde localStorage');
-                // Reconectar grupo si habia uno
-                setTimeout(function(){
-                  try{
-                    var grp=localStorage.getItem('wc26_ap');
-                    if(grp){
-                      var g=JSON.parse(grp);
-                      if(g&&g.code&&typeof fbListenGroup==='function') fbListenGroup(g.code);
-                    }
-                  }catch(e){}
-                },1000);
-              }
-            });
-          }
-        }
-      }
-    }catch(e){ console.warn('[QFC] Auto-connect error:',e); }
-  }, 1500);
+// AUTO-CONECTAR - ver bloque hardcodeado abajo
 });
 
 window.addEventListener('load',function(){
@@ -188,20 +160,7 @@ window.addEventListener('load',function(){
   },1500);
 });
 
-window.addEventListener('load',function(){
-  setTimeout(function(){
-    try{
-      var saved=localStorage.getItem('qfc_fb_config');
-      if(saved){
-        var cfg=JSON.parse(saved);
-        if(cfg.apiKey&&cfg.projectId&&cfg.appId&&typeof initFirebase==='function'){
-          initFirebase(cfg.apiKey,cfg.projectId,cfg.appId);
-          console.log('[QFC] Firebase auto-reconectado');
-        }
-      }
-    }catch(e){}
-  },1500);
-});
+
 
 if('serviceWorker' in navigator){
   window.addEventListener('load', function(){
