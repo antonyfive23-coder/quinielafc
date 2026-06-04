@@ -503,6 +503,10 @@ window.installPWA = function(){
           <p>Crea tu quiniela privada y comparte el código con tus amigos para que se unan.</p>
           <label class="f-lbl">Nombre del grupo</label>
           <input type="text" class="f-inp" id="gn-name" placeholder="Los Cracks del Barrio" maxlength="30">
+          <label class="f-lbl">Contraseña del grupo (opcional)</label>
+          <input type="password" class="f-inp" id="gn-grppass" placeholder="Deja vacio si no quieres contrasena" maxlength="20">
+          <label class="f-lbl">Contraseña del grupo (opcional)</label>
+          <input type="password" class="f-inp" id="gn-grppass" placeholder="Deja vacio si no quieres contrasena" maxlength="20">
           <label class="f-lbl">Inscripción por jugador (€)</label>
           <input type="number" class="f-inp" id="gn-inscr" placeholder="10" min="0" step="1" style="width:90px;">
           <label class="f-lbl">Tu apodo</label>
@@ -520,6 +524,8 @@ window.installPWA = function(){
           <input type="text" class="f-inp code-style" id="gj-code" placeholder="ABC123" maxlength="6" style="font-size:1.6rem;letter-spacing:6px;">
           <label class="f-lbl">Tu apodo</label>
           <input type="text" class="f-inp" id="gj-user" placeholder="El Mago" maxlength="20">
+          <label class="f-lbl">Contraseña del grupo (si tiene)</label>
+          <input type="password" class="f-inp" id="gj-grppass" placeholder="Dejar vacio si no tiene contrasena" maxlength="20">
           <div style="display:flex;gap:8px;align-items:flex-end;margin-bottom:12px;">
             <div style="flex:1;"><label class="f-lbl">Tu emoji</label><input type="text" class="f-inp emoji-inp" id="gj-emoji" placeholder="🎯" maxlength="2"></div>
           </div>
@@ -2894,6 +2900,7 @@ if(!_fbConnected && !window._fbWarnDismissed){
   return;
 }
 var gname=((document.getElementById('gn-name')||{}).value||'').trim();
+var grpPass=((document.getElementById("gn-grppass")||{}).value||"").trim();
 var uname=((document.getElementById('gn-user')||{}).value||'').trim();
 var emoji=(document.getElementById('gn-emoji')||{}).value||'⚽';
 var inscr=parseFloat((document.getElementById('gn-inscr')||{}).value)||0;
@@ -2901,7 +2908,7 @@ if(!gname||!uname){toast('❗','Rellena todos los campos','#fca5a5');return;}
 var code=apGenCode();var uid='u_'+Date.now();
 /* FIX v2: presence field 'online:true' added to creator from the start */
 var user={id:uid,name:uname,emoji:emoji,pts:0,coins:COINS_START,isCreator:true,lastSeen:Date.now(),online:true,coinsInit:COINS_START};
-var group={code:code,name:gname,inscripcion:inscr,members:[user],bets:{},specialBets:{},results:{},feed:[],created:Date.now()};
+var group={code:code,name:gname,password:grpPass,inscripcion:inscr,members:[user],bets:{},specialBets:{},results:{},feed:[],created:Date.now()};
 apSaveGrp(group);apSt.group=group;apSt.user=user;
 /* FIX v2: persist session with both code AND uid so reconnection works after clearing cache */
 apLSW('wc26_ap',{code:code,uid:uid,name:uname,emoji:emoji});
@@ -2931,6 +2938,7 @@ apTab('partidos',document.querySelector('.tab-btn'));
 };
 window.apUnirse=async function(){
 var code=((document.getElementById('gj-code')||{}).value||'').trim().toUpperCase();
+var grpPass=((document.getElementById("gj-grppass")||{}).value||"").trim();
 var uname=((document.getElementById('gj-user')||{}).value||'').trim();
 var emoji=(document.getElementById('gj-emoji')||{}).value||'🎯';
 if(!code||!uname){toast('❗','Rellena todos los campos','#fca5a5');return;}
@@ -2952,6 +2960,7 @@ group={code:code,name:d.name||'Grupo',inscripcion:d.inscripcion||0,
 members:d.members||[],bets:d.bets||{},specialBets:d.specialBets||{},
 results:d.results||{},feed:d.feed||[],created:d.created||Date.now()};
 apSaveGrp(group); // cache locally
+        if(group.password&&group.password!==grpPass){toast("❌","Contrasena del grupo incorrecta","#fca5a5");return;}
 }
 }catch(e){ console.warn('Firebase join lookup:', e); }
 }
