@@ -8162,7 +8162,7 @@ console.log('[v27] Liga + Idiomas + Chat reacciones + Standings + Acumulada + Av
         var changed=false;
         if(data.members&&Array.isArray(data.members)&&data.members.length>0){
           // Siempre sincronizar miembros desde Firebase
-          if(data.members.length!==g.members.length){
+          if(data.members.length!==g.members.length||data.members.some(function(fm){return !g.members.find(function(m){return m.id===fm.id;});;})||g.members.some(function(m){return !data.members.find(function(fm){return fm.id===m.id;});})){
             g.members=data.members;changed=true;
           } else {
             data.members.forEach(function(fm){
