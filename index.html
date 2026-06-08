@@ -32,14 +32,8 @@
 <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
 <!-- QRCode: loaded lazily via JS when needed -->
 <!-- Firebase SDK (Firestore) -->
-<link rel="preconnect" href="https://www.gstatic.com">
-<link rel="dns-prefetch" href="https://www.gstatic.com">
-<link rel="preload" href="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js" as="script">
-<link rel="preload" href="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js" as="script">
-<link rel="preconnect" href="https://firestore.googleapis.com">
-<link rel="preconnect" href="https://www.googleapis.com">
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 <script>var _fbConnected=false,_fbDB=null,_fbApp=null,_fbUnsubscribe=null;
 function _loadFBScript(src, cb){
 if(document.querySelector('script[src="'+src+'"]')){cb();return;}
@@ -64,9 +58,9 @@ resolve(true);
 if(typeof firebase!=='undefined'){
 tryInit();
 } else {
-_loadFBScript('https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js', function(e1){
+_loadFBScript('https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js', function(e1){
 if(e1){resolve(false);return;}
-_loadFBScript('https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js', function(e2){
+_loadFBScript('https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js', function(e2){
 if(e2){resolve(false);return;}
 tryInit();
 });
@@ -114,7 +108,7 @@ window.addEventListener('load', function(){
         }
       }
     }catch(e){ console.warn('[QFC] Auto-connect error:',e); }
-  }, 300);
+  }, 1500);
 });
 
 window.addEventListener('load',function(){
@@ -173,12 +167,12 @@ window.addEventListener('load',function(){
                   }
                 }
               }catch(e){}
-            },300);
+            },2000);
           }
         });
       }
     }catch(e){ console.warn('[QFC] Auto-connect error:',e); }
-  },0);
+  },1500);
 });
 
 window.addEventListener('load',function(){
@@ -193,7 +187,7 @@ window.addEventListener('load',function(){
         }
       }
     }catch(e){}
-  },0);
+  },1500);
 });
 
 if('serviceWorker' in navigator){
@@ -229,36 +223,6 @@ window.installPWA = function(){
 <body>
 
 <!-- LOGIN -->
-<!-- INTRO ANIMADA -->
-<div id="qfc-intro" style="position:fixed;inset:0;z-index:99999;background:linear-gradient(135deg,#052e16,#15803d,#22c55e);display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .8s ease;">
-  <style>
-    @keyframes ballBounce{0%,100%{transform:translateY(0) rotate(-10deg)}50%{transform:translateY(-30px) rotate(10deg)}}
-    @keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
-    @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
-    @keyframes loadBar{from{width:0}to{width:100%}}
-    .intro-ball{font-size:5rem;animation:ballBounce 1.2s ease-in-out infinite;}
-    .intro-title{font-family:Bebas Neue,sans-serif;font-size:3.5rem;color:#fff;letter-spacing:6px;animation:fadeInUp .8s ease .3s both;}
-    .intro-sub{font-size:1rem;color:rgba(255,255,255,.8);letter-spacing:3px;text-transform:uppercase;animation:fadeInUp .8s ease .6s both;margin-top:6px;}
-    .intro-mundial{font-size:.85rem;color:#bbf7d0;letter-spacing:2px;animation:fadeInUp .8s ease .9s both;margin-top:4px;}
-    .intro-bar-wrap{width:200px;height:4px;background:rgba(255,255,255,.2);border-radius:2px;margin-top:32px;overflow:hidden;animation:fadeInUp .8s ease 1s both;}
-    .intro-bar{height:100%;background:#fff;border-radius:2px;animation:loadBar 2.5s ease 1s both;}
-  </style>
-  <div class="intro-ball">⚽</div>
-  <div class="intro-title">QUINIELAFC</div>
-  <div class="intro-sub">Mundial FIFA 2026</div>
-  <div class="intro-mundial">48 equipos · 104 partidos · Tu quiniela privada</div>
-  <div class="intro-bar-wrap"><div class="intro-bar"></div></div>
-  <div style="color:rgba(255,255,255,.5);font-size:.65rem;margin-top:20px;letter-spacing:2px;animation:fadeInUp .8s ease 1.2s both;">AnthonyFC · © 2026</div>
-</div>
-<script>
-setTimeout(function(){
-  var intro=document.getElementById('qfc-intro');
-  if(intro){
-    intro.style.opacity='0';
-    setTimeout(function(){intro.style.display='none';},800);
-  }
-},3000);
-</script>
 <div id="ls">
   <div class="lbox">
     <!-- SELECTOR DE IDIOMA EN LOGIN -->
@@ -267,10 +231,6 @@ setTimeout(function(){
       <button onclick="setLoginLang('en')" id="llb-en" style="padding:5px 10px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);color:var(--muted);font-size:.8rem;font-weight:700;cursor:pointer;transition:all .2s;">🇬🇧 EN</button>
       <button onclick="setLoginLang('fr')" id="llb-fr" style="padding:5px 10px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);color:var(--muted);font-size:.8rem;font-weight:700;cursor:pointer;transition:all .2s;">🇫🇷 FR</button>
       <button onclick="setLoginLang('pt')" id="llb-pt" style="padding:5px 10px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);color:var(--muted);font-size:.8rem;font-weight:700;cursor:pointer;transition:all .2s;">🇧🇷 PT</button>
-      <button onclick="setLoginLang('de')" id="llb-de" style="padding:5px 10px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);color:var(--muted);font-size:.8rem;font-weight:700;cursor:pointer;transition:all .2s;">🇩🇪 DE</button>
-      <button onclick="setLoginLang('it')" id="llb-it" style="padding:5px 10px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);color:var(--muted);font-size:.8rem;font-weight:700;cursor:pointer;transition:all .2s;">🇮🇹 IT</button>
-      <button onclick="setLoginLang('ar')" id="llb-ar" style="padding:5px 10px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);color:var(--muted);font-size:.8rem;font-weight:700;cursor:pointer;transition:all .2s;">🇸🇦 AR</button>
-      <button onclick="setLoginLang('zh')" id="llb-zh" style="padding:5px 10px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);color:var(--muted);font-size:.8rem;font-weight:700;cursor:pointer;transition:all .2s;">🇨🇳 ZH</button>
     </div>
     <div class="lball-wrap"><div class="lball">⚽</div></div>
     <div class="ltitle">QUINIELAFC</div>
@@ -393,7 +353,6 @@ setTimeout(function(){
     <div class="panel" style="margin-bottom:13px;">
         <div class="ptitle"><span class="ico">📢</span> Feed del grupo <span style="margin-left:auto;font-size:0.6rem;color:var(--g);" id="feed-ts"></span>
           <button onclick="shareWhatsAppFull&&shareWhatsAppFull()" style="margin-left:8px;padding:3px 9px;background:#dcfce7;border:1.5px solid #86efac;border-radius:12px;color:#15803d;font-size:.65rem;font-weight:700;cursor:pointer;white-space:nowrap;">💚 Compartir</button>
-          <button onclick="apExportPDF&&apExportPDF()" style="margin-left:8px;padding:3px 9px;background:#dbeafe;border:1.5px solid #93c5fd;border-radius:12px;color:#1d4ed8;font-size:.65rem;font-weight:700;cursor:pointer;white-space:nowrap;">📄 Exportar</button>
         </div>
         <div id="home-feed"><div class="nores" style="padding:14px;">Únete a un grupo para ver el feed de actividad.</div></div>
       </div>
@@ -538,11 +497,7 @@ setTimeout(function(){
           <p>Crea tu quiniela privada y comparte el código con tus amigos para que se unan.</p>
           <label class="f-lbl">Nombre del grupo</label>
           <input type="text" class="f-inp" id="gn-name" placeholder="Los Cracks del Barrio" maxlength="30">
-          <label class="f-lbl">Contraseña del grupo (opcional)</label>
-          <input type="password" class="f-inp" id="gn-grppass" placeholder="Deja vacio si no quieres contrasena" maxlength="20">
-          <label class="f-lbl">Contraseña del grupo (opcional)</label>
-          <input type="password" class="f-inp" id="gn-grppass" placeholder="Deja vacio si no quieres contrasena" maxlength="20">
-          <label class="f-lbl">Inscripción por jugador (🪙)</label>
+          <label class="f-lbl">Inscripción por jugador (€)</label>
           <input type="number" class="f-inp" id="gn-inscr" placeholder="10" min="0" step="1" style="width:90px;">
           <label class="f-lbl">Tu apodo</label>
           <input type="text" class="f-inp" id="gn-user" placeholder="El Crack" maxlength="20">
@@ -559,8 +514,6 @@ setTimeout(function(){
           <input type="text" class="f-inp code-style" id="gj-code" placeholder="ABC123" maxlength="6" style="font-size:1.6rem;letter-spacing:6px;">
           <label class="f-lbl">Tu apodo</label>
           <input type="text" class="f-inp" id="gj-user" placeholder="El Mago" maxlength="20">
-          <label class="f-lbl">Contraseña del grupo (si tiene)</label>
-          <input type="password" class="f-inp" id="gj-grppass" placeholder="Dejar vacio si no tiene contrasena" maxlength="20">
           <div style="display:flex;gap:8px;align-items:flex-end;margin-bottom:12px;">
             <div style="flex:1;"><label class="f-lbl">Tu emoji</label><input type="text" class="f-inp emoji-inp" id="gj-emoji" placeholder="🎯" maxlength="2"></div>
           </div>
@@ -730,8 +683,8 @@ setTimeout(function(){
     <!-- QUINIELA -->
     <div id="ap-quiniela" class="tab-pane">
       <div class="panel"><div class="ptitle"><span class="ico">📊</span> Quiniela colectiva — todos vs todos</div>
-        <p style="font-size:0.76rem;color:var(--muted);margin-bottom:11px;font-weight:500;">🟡 Exacto · 🟢 Correcto · 🔴 Fallo · — Sin monedas</p>
-        <div class="mx-wrap" id="quiniela-mx"><div class="nores">Sin monedass aún.</div></div>
+        <p style="font-size:0.76rem;color:var(--muted);margin-bottom:11px;font-weight:500;">🟡 Exacto · 🟢 Correcto · 🔴 Fallo · — Sin apuesta</p>
+        <div class="mx-wrap" id="quiniela-mx"><div class="nores">Sin apuestas aún.</div></div>
       </div>
     </div>
 
@@ -741,7 +694,7 @@ setTimeout(function(){
         <div style="flex:1;min-width:80px;background:var(--g5);border-radius:9px;padding:11px;border:1.5px solid var(--border2);text-align:center;"><div style="font-size:0.85rem;">🎯</div><div style="font-family:Bebas Neue,sans-serif;font-size:1.5rem;color:var(--g);">5</div><div style="font-size:0.62rem;color:var(--muted);font-weight:700;">Exacto</div></div>
         <div style="flex:1;min-width:80px;background:#dbeafe;border-radius:9px;padding:11px;border:1.5px solid #93c5fd;text-align:center;"><div style="font-size:0.85rem;">✅</div><div style="font-family:Bebas Neue,sans-serif;font-size:1.5rem;color:var(--blue);">3-4</div><div style="font-size:0.62rem;color:var(--muted);font-weight:700;">Resultado</div></div>
         <div style="flex:1;min-width:80px;background:#fef3c7;border-radius:9px;padding:11px;border:1.5px solid #fcd34d;text-align:center;"><div style="font-size:0.85rem;">⭐</div><div style="font-family:Bebas Neue,sans-serif;font-size:1.5rem;color:var(--gold);">25</div><div style="font-size:0.62rem;color:var(--muted);font-weight:700;">Campeón</div></div>
-        <div style="flex:1;min-width:80px;background:#f3f4f6;border-radius:9px;padding:11px;border:1.5px solid #e5e7eb;text-align:center;"><div style="font-size:0.85rem;">💸</div><div style="font-family:Bebas Neue,sans-serif;font-size:1.5rem;color:var(--text);">🪙</div><div style="font-size:0.62rem;color:var(--muted);font-weight:700;">Bote</div></div>
+        <div style="flex:1;min-width:80px;background:#f3f4f6;border-radius:9px;padding:11px;border:1.5px solid #e5e7eb;text-align:center;"><div style="font-size:0.85rem;">💸</div><div style="font-family:Bebas Neue,sans-serif;font-size:1.5rem;color:var(--text);">€</div><div style="font-size:0.62rem;color:var(--muted);font-weight:700;">Bote</div></div>
       </div>
       <div class="g2">
         <div class="panel"><div class="ptitle"><span class="ico">🏆</span> Clasificación general <button onclick="openExport()" style="margin-left:auto;padding:3px 9px;border-radius:12px;border:1.5px solid var(--border2);background:var(--g5);color:var(--g2);font-size:.65rem;font-weight:700;cursor:pointer;">📋 Exportar</button></div><div id="ap-rank-list"></div></div>
@@ -769,7 +722,7 @@ setTimeout(function(){
     <div id="ap-bizum" class="tab-pane">
       <div class="panel" style="margin-bottom:12px;"><div class="ptitle"><span class="ico">📱</span> Liquidación Bizum</div><div id="ap-biz-list"></div></div>
       <div class="panel"><div class="ptitle"><span class="ico">📋</span> Mi resumen</div>
-        <div class="summ-box" id="ap-summ">Sin monedass aún.</div>
+        <div class="summ-box" id="ap-summ">Sin apuestas aún.</div>
         <div style="text-align:center;margin-bottom:7px;font-weight:800;font-size:0.82rem;color:var(--g);">COMPARTIR</div>
         <div class="share-row"><button class="share-btn wa" onclick="apShareWA()">💚 WhatsApp</button><button class="share-btn" onclick="apCopyMsg()">📋 Copiar</button><button class="share-btn tw" onclick="apShareTW()">🐦 Twitter</button></div>
       </div>
@@ -811,7 +764,7 @@ setTimeout(function(){
         <div id="hist-member-bar" style="display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:8px;margin-bottom:10px;border-bottom:1px solid var(--border);"></div>
         <div class="hist-search-wrap"><i class="fas fa-search"></i><input type="text" class="hist-search" id="hist-q" placeholder="Buscar partido, equipo..." oninput="filterHist()"></div>
         <div id="hist-viewing-label" style="font-size:.7rem;color:var(--muted);font-weight:600;margin-bottom:8px;display:none;"></div>
-      <div id="ap-hist-list"><div class="nores">Sin monedass.</div></div></div>
+      <div id="ap-hist-list"><div class="nores">Sin apuestas.</div></div></div>
       <div class="panel"><div class="ptitle"><span class="ico">🏅</span> Premios por categorías</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;" id="premios-grid"></div></div>
     </div>
 
@@ -862,7 +815,7 @@ setTimeout(function(){
           <div style="font-size:0.72rem;color:var(--muted);margin-top:5px;font-weight:500;">Comparte este código con tus amigos para que se unan al grupo</div>
         </div>
         <!-- 🔐 SEGURIDAD — Cambiar contraseña de acceso -->
-      <div style="id="admin-pw-panel" background:var(--bg);border:1.5px solid var(--border);border-radius:12px;padding:14px;margin-bottom:14px;">
+      <div style="background:var(--bg);border:1.5px solid var(--border);border-radius:12px;padding:14px;margin-bottom:14px;">
         <div style="font-family:Bebas Neue,sans-serif;font-size:.9rem;letter-spacing:1.5px;color:var(--text2);margin-bottom:10px;">🔐 CONTRASEÑA DE ACCESO</div>
         <p style="font-size:.74rem;color:var(--muted);margin-bottom:10px;line-height:1.5;">Cambia la contraseña que los usuarios necesitan para entrar a la app. Compártela con tus jugadores.</p>
         <div style="margin-bottom:8px;">
@@ -883,7 +836,7 @@ setTimeout(function(){
       </div>
 
       <!-- ⚠️ ZONA DE PELIGRO — oculta bajo 3 toques -->
-      <div id="admin-danger-wrap" style="margin-top:28px;text-align:center;">
+      <div style="margin-top:28px;text-align:center;">
         <div id="danger-trigger-wrap" onclick="dangerTap()" style="cursor:pointer;opacity:.25;user-select:none;padding:10px;">
           <div style="font-size:.55rem;color:var(--muted);letter-spacing:3px;text-transform:uppercase;">···</div>
         </div>
@@ -1119,7 +1072,7 @@ setTimeout(function(){
     <div class="confirm-row"><span class="confirm-lbl">Partido</span><span class="confirm-val" id="cm-match" style="font-size:.9rem;text-align:right;max-width:220px;"></span></div>
     <div class="confirm-row"><span class="confirm-lbl">Tu resultado</span><span class="confirm-val green" id="cm-result"></span></div>
     <div class="confirm-row"><span class="confirm-lbl">Marcador exacto</span><span class="confirm-val" id="cm-score"></span></div>
-    <!-- 🪙 importe removed -->
+    <!-- € importe removed -->
     <div class="confirm-double" id="confirm-double-toggle" onclick="toggleDouble()">
       <span style="font-size:1.2rem;">⚡</span>
       <div style="flex:1;">
@@ -1794,7 +1747,7 @@ matchDiv.appendChild(bb);
 }
 var vn=document.createElement('div');
 vn.style.cssText='font-size:.58rem;color:var(--muted);text-align:center;padding:3px 6px;font-weight:500;';
-vn.textContent=p.date+' · '+p.venue.split(' - ')[0]+(isOpen(p)?(' · <span style="color:#d97706;font-weight:700;">⏰ '+( timeToClose(p)||'Hoy')+'</span>'):' · <span style="color:#dc2626;font-size:.7rem;">🔒 Cerrado</span>');
+vn.textContent=p.date+' · '+p.venue.split(' - ')[0];
 matchDiv.appendChild(vn);
 matchesDiv.appendChild(matchDiv);
 });
@@ -2213,7 +2166,7 @@ c.innerHTML='<div class="perfil-header">'+
 '<div class="panel"><div class="ptitle"><span class="ico">📈</span> Estadísticas</div>'+
 '<div class="sbar"><div class="sbar-h"><span style="color:var(--muted);">Exactos</span><span style="font-weight:700;color:var(--gold);">'+exact+'</span></div><div class="sbar-bg"><div class="sbar-f" style="width:'+(nb?Math.round(exact/nb*100):0)+'%;background:var(--gold2);"></div></div></div>'+
 '<div class="sbar"><div class="sbar-h"><span style="color:var(--muted);">Acertados</span><span style="font-weight:700;color:var(--g);">'+ok+'</span></div><div class="sbar-bg"><div class="sbar-f" style="width:'+(nb?Math.round(ok/nb*100):0)+'%;background:var(--g3);"></div></div></div>'+
-'<div style="padding:8px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;font-size:0.82rem;font-weight:600;"><span style="color:var(--muted);">Total apostado</span><span style="color:var(--gold);">🪙'+totalAmt.toFixed(2)+'</span></div>'+
+'<div style="padding:8px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;font-size:0.82rem;font-weight:600;"><span style="color:var(--muted);">Total apostado</span><span style="color:var(--gold);">€'+totalAmt.toFixed(2)+'</span></div>'+
 '<div style="padding:8px 0;display:flex;justify-content:space-between;font-size:0.82rem;font-weight:600;"><span style="color:var(--muted);">Pts esta semana</span><span style="color:var(--g);">'+wk+' pts</span></div>'+
 '</div>'+
 '<div class="panel"><div class="ptitle"><span class="ico">🔥</span> Racha de aciertos</div>'+
@@ -2371,16 +2324,6 @@ function apGenCode(){var c='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';return Array.from(
 function apTotalPot(){var g=apSt.group;if(!g)return 0;return g.members.length*(g.inscripcion||0)+(g.coinPot||0);}
 function apFavs(){return apLS('wc26_favs')||{};}
 function apSaveFavs(f){apLSW('wc26_favs',f);}
-function timeToClose(p){
-  var diff=p.kickoff-LOCK_MINS*60000-Date.now();
-  if(diff<=0) return null;
-  var d=Math.floor(diff/86400000);
-  var h=Math.floor((diff%86400000)/3600000);
-  var m=Math.floor((diff%3600000)/60000);
-  if(d>0) return d+'d '+h+'h';
-  if(h>0) return h+'h '+m+'m';
-  return m+'m';
-}
 function isOpen(p){return Date.now()<(p.kickoff-LOCK_MINS*60000);}
 function lockMin(p){var r=Math.floor((p.kickoff-LOCK_MINS*60000-Date.now())/60000);return(r>0&&r<=90)?r:null;}
 function apShowMain(hasGroup){
@@ -2416,7 +2359,7 @@ document.querySelectorAll('.tab-pane').forEach(function(s){s.classList.remove('a
 document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
 var el=document.getElementById('ap-'+tab);if(el)el.classList.add('active');if(btn)btn.classList.add('active');
 if(tab==='ranking')apRenderRanking();if(tab==='bizum')apRenderBizum();if(tab==='quiniela')apRenderQuiniela();
-if(tab==='ajustes'){apRenderGrpMgmt();setTimeout(function(){var isA=apSt.user&&apSt.user.isCreator;var p=document.getElementById('admin-pw-panel');var d=document.getElementById('admin-danger-wrap');if(p)p.style.display=isA?'block':'none';if(d)d.style.display=isA?'block':'none';},100);}if(tab==='chat')apRenderChat();if(tab==='especiales')apRenderEsp();
+if(tab==='ajustes')apRenderGrpMgmt();if(tab==='chat')apRenderChat();if(tab==='especiales')apRenderEsp();
 if(tab==='miembros')apRenderMembers();if(tab==='semanal')apRenderSemanal();if(tab==='supervivencia')apRenderSv();
 if(tab==='bracket')apRenderBracket();
 if(tab==='historial'){_histData=[];_histViewingId=null;apRenderHistorial();renderHistMemberBar();}
@@ -2505,7 +2448,7 @@ function apFormHTML(pid){
 var pb=apSt.pending[pid]||{};
 var r1=pb.result==='1'?'active':'';var rx=pb.result==='X'?'active':'';var r2=pb.result==='2'?'active':'';
 var hv=pb.homeGoals!==undefined?pb.homeGoals:'';var av=pb.awayGoals!==undefined?pb.awayGoals:'';var amv=pb.amount||'';
-var qa=''; /* 🪙 buttons removed */
+var qa=''; /* € buttons removed */
 return '<div class="afrow">'+
 '<div class="afg"><div class="afl">Resultado</div><div class="rbtns">'+
 '<button class="rb r1 '+r1+'" data-pid="'+pid+'" data-r="1" onclick="apRes(this.dataset.pid,this.dataset.r,this)">1</button>'+
@@ -2517,7 +2460,7 @@ return '<div class="afrow">'+
 '<span class="sc-d"> - </span>'+
 '<input type="number" class="sc-in" id="sa-'+pid+'" data-pid="'+pid+'" min="0" max="20" value="'+av+'" placeholder="0" oninput="apSync(this.dataset.pid)">'+
 '</div></div>'+
-/* 🪙 importe removed */
+/* € importe removed */
 (function(){
 var g=apSt.group; var u=apSt.user;
 if(!g||!u) return '';
@@ -2610,7 +2553,7 @@ var pb=apSt.pending[pid]||{};
 var av=document.querySelector('.view.active');
 var h=parseInt((av?av.querySelector('#sh-'+pid):document.getElementById('sh-'+pid)||{}).value);
 var a=parseInt((av?av.querySelector('#sa-'+pid):document.getElementById('sa-'+pid)||{}).value);
-var amt=0; /* 🪙 removed - only coins */
+var amt=0; /* € removed - only coins */
 if(!pb.result){toast('❗','Elige 1 / X / 2 primero','#fca5a5');return;}
 if(isNaN(h)||isNaN(a)){toast('❗','Introduce el marcador (ej: 2-1)','#fca5a5');return;}
 /* amt validation removed */
@@ -2688,11 +2631,8 @@ return '<div class="mem-row" data-member-id="'+m.id+'"><div class="mem-avi" styl
 (m.isCreator?' <span style="font-size:0.58rem;">👑</span>':'')+
 ' <span class="lvl-badge '+lvl.cls+'">'+lvl.ico+' '+lvl.lbl+'</span>'+
 (streak>=3?' <span class="badge-item bi-red">🔥 Racha '+streak+'</span>':'')+
-'</div><div class="mem-det">'+nb+' apuestas · '+(m.pts||0)+' pts · '+Math.round(Object.values(b).filter(function(x){return x.pts>=3;}).length/Math.max(1,nb)*100)+'% aciertos · 🎯 '+Object.values(b).filter(function(x){return x.pts>=3;}).length+' exactos</div></div>'+
-'<div style="display:flex;align-items:center;gap:5px;">'+
-'<div class="'+(onl?'on-dot':'off-dot')+'" title="'+(onl?'En línea':'Sin conexión reciente')+'"></div>'+
-(u.isCreator&&m.id!==u.id?'<button data-mid="'+m.id+'" data-mname="'+m.name+'" onclick="apKickMember(this.dataset.mid,this.dataset.mname)" style="background:#fee2e2;border:1px solid #fca5a5;border-radius:5px;padding:2px 6px;font-size:.7rem;color:#dc2626;cursor:pointer;font-weight:700;">🚫</button>':'')+
-'</div></div>';
+'</div><div class="mem-det">'+nb+' apuestas · '+(m.pts||0)+' pts · Esta semana: '+wk+' pts</div></div>'+
+'<div class="'+(onl?'on-dot':'off-dot')+'" title="'+(onl?'En línea':'Sin conexión reciente')+'"></div></div>';
 }).join('');
 var lu=document.getElementById('mem-upd');if(lu)lu.textContent='Actualizado '+new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'});
 }
@@ -2749,12 +2689,12 @@ return '<div class="rank-row"><div class="rpos '+pc(i)+'">'+(i+1)+'</div><div cl
 var pot=apTotalPot();
 if(bp)bp.innerHTML='<div style="text-align:center;padding:13px 0 16px;">'+
 '<div style="font-size:0.65rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">Bote total del grupo</div>'+
-'<div style="font-family:Bebas Neue,sans-serif;font-size:2.8rem;color:var(--gold);line-height:1;">🪙'+pot.toFixed(2)+'</div>'+
-'<div style="font-size:0.7rem;color:var(--muted);margin-top:2px;font-weight:600;">'+apSt.group.members.length+' jugadores · 🪙'+(apSt.group.inscripcion||0)+' inscripción</div></div>'+
+'<div style="font-family:Bebas Neue,sans-serif;font-size:2.8rem;color:var(--gold);line-height:1;">€'+pot.toFixed(2)+'</div>'+
+'<div style="font-size:0.7rem;color:var(--muted);margin-top:2px;font-weight:600;">'+apSt.group.members.length+' jugadores · €'+(apSt.group.inscripcion||0)+' inscripción</div></div>'+
 '<div style="border-top:1px solid var(--border);padding-top:10px;font-size:0.78rem;font-weight:600;">'+
-'<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);"><span>🥇 1er puesto</span><span style="color:var(--gold);">50% = 🪙'+(pot*.5).toFixed(2)+'</span></div>'+
-'<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);"><span>🥈 2do puesto</span><span style="color:var(--muted);">30% = 🪙'+(pot*.3).toFixed(2)+'</span></div>'+
-'<div style="display:flex;justify-content:space-between;padding:6px 0;"><span>🥉 3er puesto</span><span style="color:var(--muted);">20% = 🪙'+(pot*.2).toFixed(2)+'</span></div></div>';
+'<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);"><span>🥇 1er puesto</span><span style="color:var(--gold);">50% = €'+(pot*.5).toFixed(2)+'</span></div>'+
+'<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);"><span>🥈 2do puesto</span><span style="color:var(--muted);">30% = €'+(pot*.3).toFixed(2)+'</span></div>'+
+'<div style="display:flex;justify-content:space-between;padding:6px 0;"><span>🥉 3er puesto</span><span style="color:var(--muted);">20% = €'+(pot*.2).toFixed(2)+'</span></div></div>';
 }
 function apRenderSemanal(){
 var g=apSt.group;var c=document.getElementById('ap-semanal-list');if(!c)return;
@@ -2789,53 +2729,20 @@ _bizMsgs=[];
 if(bl)bl.innerHTML=mems.filter(function(m){return m.id!==u.id;}).map(function(m,idx){
 var iB=m.pts>(me.pts||0);var bal=iB?-me.totalAmt:m.totalAmt;var bc=bal>0?'pos':bal<0?'neg':'zer';var bl2=bal>0?'Te debe':bal<0?'Le debes':'Ajustado';
 var myB=g.bets[u.id]||{};
-var lines=Object.entries(myB).map(function(e){var p=PARTIDOS_AP.find(function(x){return x.id===e[0];});return p?(p.home.name+' vs '+p.away.name+': '+e[1].result+' ('+e[1].homeGoals+'-'+e[1].awayGoals+') 🪙'+parseFloat(e[1].amount).toFixed(2)):'';}).filter(Boolean);
-var msg='QUINIELAFC MUNDIAL 2026\n'+u.name+'\n------\n'+lines.join('\n')+'\n------\nTotal: 🪙'+me.totalAmt.toFixed(2)+' | '+g.name+' ('+g.code+')';
+var lines=Object.entries(myB).map(function(e){var p=PARTIDOS_AP.find(function(x){return x.id===e[0];});return p?(p.home.name+' vs '+p.away.name+': '+e[1].result+' ('+e[1].homeGoals+'-'+e[1].awayGoals+') €'+parseFloat(e[1].amount).toFixed(2)):'';}).filter(Boolean);
+var msg='QUINIELAFC MUNDIAL 2026\n'+u.name+'\n------\n'+lines.join('\n')+'\n------\nTotal: €'+me.totalAmt.toFixed(2)+' | '+g.name+' ('+g.code+')';
 _bizMsgs.push(msg);
 return '<div class="biz-card"><div class="biz-avi">'+m.emoji+'</div>'+
-'<div class="biz-info"><div class="biz-name">'+m.name+'</div><div class="biz-det">🪙'+m.totalAmt.toFixed(2)+' · '+m.pts+' pts</div></div>'+
-'<div class="biz-bal"><div class="biz-a '+bc+'">🪙'+Math.abs(bal).toFixed(2)+'</div><div class="biz-l">'+bl2+'</div></div>'+
+'<div class="biz-info"><div class="biz-name">'+m.name+'</div><div class="biz-det">€'+m.totalAmt.toFixed(2)+' · '+m.pts+' pts</div></div>'+
+'<div class="biz-bal"><div class="biz-a '+bc+'">€'+Math.abs(bal).toFixed(2)+'</div><div class="biz-l">'+bl2+'</div></div>'+
 '<button class="biz-btn" data-idx="'+idx+'" onclick="apCopyBiz(this.dataset.idx)">📋 Bizum</button></div>';
 }).join('')||'<div class="nores">Eres el único miembro del grupo.</div>';
 var myB2=g.bets[u.id]||{};
-var fl=Object.entries(myB2).map(function(e){var p=PARTIDOS_AP.find(function(x){return x.id===e[0];});var rl=e[1].result==='1'?'Local':e[1].result==='X'?'Empate':'Visitante';return p?(p.home.name+' vs '+p.away.name+' - '+rl+' ('+e[1].homeGoals+'-'+e[1].awayGoals+') 🪙'+parseFloat(e[1].amount).toFixed(2)):'';}).filter(Boolean);
-if(sb){if(fl.length){sb.textContent='QUINIELAFC MUNDIAL 2026\n'+u.name+'\n========================\n'+fl.join('\n')+'\n========================\nTotal: 🪙'+me.totalAmt.toFixed(2)+'\nPuntos: '+(me.pts||0)+' · Nivel: '+calcLevel(me.pts||0).lbl+'\nGrupo: '+g.name+' ('+g.code+')';}else{sb.textContent='Sin monedass aún.';}}
+var fl=Object.entries(myB2).map(function(e){var p=PARTIDOS_AP.find(function(x){return x.id===e[0];});var rl=e[1].result==='1'?'Local':e[1].result==='X'?'Empate':'Visitante';return p?(p.home.name+' vs '+p.away.name+' - '+rl+' ('+e[1].homeGoals+'-'+e[1].awayGoals+') €'+parseFloat(e[1].amount).toFixed(2)):'';}).filter(Boolean);
+if(sb){if(fl.length){sb.textContent='QUINIELAFC MUNDIAL 2026\n'+u.name+'\n========================\n'+fl.join('\n')+'\n========================\nTotal: €'+me.totalAmt.toFixed(2)+'\nPuntos: '+(me.pts||0)+' · Nivel: '+calcLevel(me.pts||0).lbl+'\nGrupo: '+g.name+' ('+g.code+')';}else{sb.textContent='Sin apuestas aún.';}}
 }
 window.apCopyBiz=function(idx){var msg=_bizMsgs[parseInt(idx)];if(!msg)return;navigator.clipboard.writeText(msg).then(function(){toast('📋','Copiado para Bizum!');});};
 window.apCopyMsg=function(){var msg=(document.getElementById('ap-summ')||{}).textContent||'';navigator.clipboard.writeText(msg).then(function(){toast('📋','Resumen copiado');});};
-window.apExportPDF=function(){
-  var g=apSt.group; var u=apSt.user;
-  if(!g||!u){toast('❌','Sin grupo activo');return;}
-  var bets=g.bets[u.id]||{};
-  var lines=['QUINIELAFC - '+g.name.toUpperCase()];
-  lines.push('Jugador: '+u.emoji+' '+u.name);
-  lines.push('Puntos: '+(u.pts||0)+' pts | Monedas: '+(u.coins||0));
-  lines.push('Fecha: '+new Date().toLocaleDateString('es-ES'));
-  lines.push('-----------------------------------');
-  var partidos=Object.keys(bets).sort();
-  partidos.forEach(function(pid){
-    var b=bets[pid];
-    var p=PARTIDOS_AP.find(function(x){return x.id===pid;});
-    if(!p) return;
-    var res=b.result||'-';
-    var score=(b.homeGoals!==undefined?b.homeGoals+'-'+b.awayGoals:'-');
-    var pts=b.pts!==undefined?(' ['+b.pts+' pts]'):'';
-    lines.push(p.home.flag+p.home.name+' vs '+p.away.flag+p.away.name);
-    lines.push('  Apuesta: '+res+' ('+score+')'+pts);
-  });
-  lines.push('-----------------------------------');
-  lines.push('Total: '+partidos.length+' apuestas');
-  lines.push('quinielafc.anthonyfc © 2026');
-  var txt=lines.join('
-');
-  var blob=new Blob([txt],{type:'text/plain'});
-  var a=document.createElement('a');
-  a.href=URL.createObjectURL(blob);
-  a.download='quiniela_'+u.name+'_'+g.name+'.txt';
-  a.click();
-  toast('📄','Quiniela exportada','#dcfce7');
-};
-
 window.apShareWA=function(){var msg=(document.getElementById('ap-summ')||{}).textContent||'';window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');};
 window.apShareTW=function(){var g=apSt.group;if(!g)return;window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent('#Mundial2026 apostando con '+g.name+' en QuinielaFC!'),'_blank');};
 function apRenderEsp(){
@@ -2898,12 +2805,12 @@ var topEx=mems.slice().sort(function(a,b){return b.exact-a.exact;})[0];
 var topStr=mems.slice().sort(function(a,b){return b.streak-a.streak;})[0];
 var topWk=mems.slice().sort(function(a,b){return b.weekPts-a.weekPts;})[0];
 var premios=[
-{ico:'🏆',name:'Gran Premio',desc:'Mayor bote',val:'🪙'+(pot*.5).toFixed(2),crit:topPts?(topPts.emoji+' '+topPts.name+' ('+topPts.pts+' pts)'):'Sin datos',col:'var(--gold)'},
-{ico:'🥈',name:'Segundo Premio',desc:'2do clasificado',val:'🪙'+(pot*.3).toFixed(2),crit:'Distribución 50/30/20%',col:'#9ca3af'},
+{ico:'🏆',name:'Gran Premio',desc:'Mayor bote',val:'€'+(pot*.5).toFixed(2),crit:topPts?(topPts.emoji+' '+topPts.name+' ('+topPts.pts+' pts)'):'Sin datos',col:'var(--gold)'},
+{ico:'🥈',name:'Segundo Premio',desc:'2do clasificado',val:'€'+(pot*.3).toFixed(2),crit:'Distribución 50/30/20%',col:'#9ca3af'},
 {ico:'🎯',name:'Rey del Exacto',desc:'Más exactos',val:'🏅 Insignia',crit:topEx&&topEx.exact>0?(topEx.emoji+' '+topEx.name+' ('+topEx.exact+')  '):'Sin exactos aún',col:'var(--gold)'},
 {ico:'🔥',name:'Rey de la Racha',desc:'Racha más larga',val:'🏅 Insignia',crit:topStr&&topStr.streak>0?(topStr.emoji+' '+topStr.name+' ('+topStr.streak+')  '):'Sin rachas',col:'#f97316'},
 {ico:'📆',name:'Premio Semanal',desc:'Mejor de la semana',val:'👑 Reconocimiento',crit:topWk&&topWk.weekPts>0?(topWk.emoji+' '+topWk.name+' ('+topWk.weekPts+' pts)'):'Sin puntos',col:'var(--blue)'},
-{ico:'🏟️',name:'Más Activo',desc:'Más apuestas',val:'🏅 Insignia',crit:(function(){var t=mems.slice().sort(function(a,b){return b.totalBets-a.totalBets;})[0];return t&&t.totalBets>0?(t.emoji+' '+t.name+' ('+t.totalBets+')  '):'Sin monedass';})(),col:'var(--purple)'},
+{ico:'🏟️',name:'Más Activo',desc:'Más apuestas',val:'🏅 Insignia',crit:(function(){var t=mems.slice().sort(function(a,b){return b.totalBets-a.totalBets;})[0];return t&&t.totalBets>0?(t.emoji+' '+t.name+' ('+t.totalBets+')  '):'Sin apuestas';})(),col:'var(--purple)'},
 ];
 pg.innerHTML=premios.map(function(p){return '<div class="premio-card"><div class="premio-ico">'+p.ico+'</div><div class="premio-name">'+p.name+'</div><div class="premio-desc">'+p.desc+'</div><div class="premio-val" style="color:'+p.col+'">'+p.val+'</div><div class="premio-crit">'+p.crit+'</div></div>';}).join('');
 }
@@ -2923,7 +2830,7 @@ var ok=entries.filter(function(e){return e.bet.pts>0&&e.bet.pts<5;}).length;
 var fail=entries.filter(function(e){return e.bet.pts===0;}).length;
 var pend=entries.filter(function(e){return e.bet.pts===null||e.bet.pts===undefined;}).length;
 var summ='<div style="display:flex;gap:8px;margin-bottom:12px;padding:12px;background:var(--g5);border-radius:9px;border:1.5px solid var(--border2);flex-wrap:wrap;">'+
-[{v:entries.length,l:'Total',c:'var(--g)'},{v:exact,l:'Exactos',c:'var(--gold)'},{v:ok,l:'Acertados',c:'var(--g)'},{v:fail,l:'Fallos',c:'var(--red)'},{v:pend,l:'Pendientes',c:'var(--muted)'},{v:totalPts,l:'Pts',c:'var(--g)'},{v:'🪙'+totalAmt.toFixed(0),l:'Apostado',c:'var(--gold)'}]
+[{v:entries.length,l:'Total',c:'var(--g)'},{v:exact,l:'Exactos',c:'var(--gold)'},{v:ok,l:'Acertados',c:'var(--g)'},{v:fail,l:'Fallos',c:'var(--red)'},{v:pend,l:'Pendientes',c:'var(--muted)'},{v:totalPts,l:'Pts',c:'var(--g)'},{v:'€'+totalAmt.toFixed(0),l:'Apostado',c:'var(--gold)'}]
 .map(function(s){return '<div style="text-align:center;flex:1;min-width:50px;"><div style="font-family:Bebas Neue,sans-serif;font-size:1.4rem;color:'+s.c+';">'+s.v+'</div><div style="font-size:0.6rem;color:var(--muted);font-weight:700;text-transform:uppercase;">'+s.l+'</div></div>';}).join('')+'</div>';
 var rows=entries.map(function(e){
 var pts=e.bet.pts;var confirmed=pts!==null&&pts!==undefined;
@@ -2948,12 +2855,12 @@ var topEx=mems.slice().sort(function(a,b){return b.exact-a.exact;})[0];
 var topStr=mems.slice().sort(function(a,b){return b.streak-a.streak;})[0];
 var topWk=mems.slice().sort(function(a,b){return b.weekPts-a.weekPts;})[0];
 var premios=[
-{ico:'🏆',name:'Gran Premio',desc:'Mayor bote',val:'🪙'+(pot*.5).toFixed(2),crit:topPts?(topPts.emoji+' '+topPts.name+' ('+topPts.pts+' pts)'):'Sin datos',col:'var(--gold)'},
-{ico:'🥈',name:'Segundo Premio',desc:'2do clasificado',val:'🪙'+(pot*.3).toFixed(2),crit:'Distribución 50/30/20% del bote',col:'#9ca3af'},
+{ico:'🏆',name:'Gran Premio',desc:'Mayor bote',val:'€'+(pot*.5).toFixed(2),crit:topPts?(topPts.emoji+' '+topPts.name+' ('+topPts.pts+' pts)'):'Sin datos',col:'var(--gold)'},
+{ico:'🥈',name:'Segundo Premio',desc:'2do clasificado',val:'€'+(pot*.3).toFixed(2),crit:'Distribución 50/30/20% del bote',col:'#9ca3af'},
 {ico:'🎯',name:'Rey del Exacto',desc:'Más marcadores exactos',val:'🏅 Insignia',crit:topEx&&topEx.exact>0?(topEx.emoji+' '+topEx.name+' ('+topEx.exact+')'):'Sin exactos aún',col:'var(--gold)'},
 {ico:'🔥',name:'Rey de la Racha',desc:'Racha más larga',val:'🏅 Insignia',crit:topStr&&topStr.streak>0?(topStr.emoji+' '+topStr.name+' ('+topStr.streak+')'):'Sin rachas',col:'#f97316'},
 {ico:'📆',name:'Premio Semanal',desc:'Mejor de la semana',val:'👑 Reconocimiento',crit:topWk&&topWk.weekPts>0?(topWk.emoji+' '+topWk.name+' ('+topWk.weekPts+' pts)'):'Sin puntos esta semana',col:'var(--blue)'},
-{ico:'🏟️',name:'Más Activo',desc:'Más apuestas',val:'🏅 Insignia',crit:(function(){var t=mems.slice().sort(function(a,b){return b.totalBets-a.totalBets;})[0];return t&&t.totalBets>0?(t.emoji+' '+t.name+' ('+t.totalBets+')'):'Sin monedass';})(),col:'var(--purple)'},
+{ico:'🏟️',name:'Más Activo',desc:'Más apuestas',val:'🏅 Insignia',crit:(function(){var t=mems.slice().sort(function(a,b){return b.totalBets-a.totalBets;})[0];return t&&t.totalBets>0?(t.emoji+' '+t.name+' ('+t.totalBets+')'):'Sin apuestas';})(),col:'var(--purple)'},
 ];
 pg.innerHTML=premios.map(function(p){return '<div class="premio-card"><div class="premio-ico">'+p.ico+'</div><div class="premio-name">'+p.name+'</div><div class="premio-desc">'+p.desc+'</div><div class="premio-val" style="color:'+p.col+'">'+p.val+'</div><div class="premio-crit">'+p.crit+'</div></div>';}).join('');
 }
@@ -2978,7 +2885,6 @@ if(!_fbConnected && !window._fbWarnDismissed){
   return;
 }
 var gname=((document.getElementById('gn-name')||{}).value||'').trim();
-var grpPass=((document.getElementById("gn-grppass")||{}).value||"").trim();
 var uname=((document.getElementById('gn-user')||{}).value||'').trim();
 var emoji=(document.getElementById('gn-emoji')||{}).value||'⚽';
 var inscr=parseFloat((document.getElementById('gn-inscr')||{}).value)||0;
@@ -2986,7 +2892,7 @@ if(!gname||!uname){toast('❗','Rellena todos los campos','#fca5a5');return;}
 var code=apGenCode();var uid='u_'+Date.now();
 /* FIX v2: presence field 'online:true' added to creator from the start */
 var user={id:uid,name:uname,emoji:emoji,pts:0,coins:COINS_START,isCreator:true,lastSeen:Date.now(),online:true,coinsInit:COINS_START};
-var group={code:code,name:gname,password:grpPass,inscripcion:inscr,members:[user],bets:{},specialBets:{},results:{},feed:[],created:Date.now()};
+var group={code:code,name:gname,inscripcion:inscr,members:[user],bets:{},specialBets:{},results:{},feed:[],created:Date.now()};
 apSaveGrp(group);apSt.group=group;apSt.user=user;
 /* FIX v2: persist session with both code AND uid so reconnection works after clearing cache */
 apLSW('wc26_ap',{code:code,uid:uid,name:uname,emoji:emoji});
@@ -3016,7 +2922,6 @@ apTab('partidos',document.querySelector('.tab-btn'));
 };
 window.apUnirse=async function(){
 var code=((document.getElementById('gj-code')||{}).value||'').trim().toUpperCase();
-var grpPass=((document.getElementById("gj-grppass")||{}).value||"").trim();
 var uname=((document.getElementById('gj-user')||{}).value||'').trim();
 var emoji=(document.getElementById('gj-emoji')||{}).value||'🎯';
 if(!code||!uname){toast('❗','Rellena todos los campos','#fca5a5');return;}
@@ -3038,7 +2943,6 @@ group={code:code,name:d.name||'Grupo',inscripcion:d.inscripcion||0,
 members:d.members||[],bets:d.bets||{},specialBets:d.specialBets||{},
 results:d.results||{},feed:d.feed||[],created:d.created||Date.now()};
 apSaveGrp(group); // cache locally
-        if(group.password&&group.password!==grpPass){toast("❌","Contrasena del grupo incorrecta","#fca5a5");return;}
 }
 }catch(e){ console.warn('Firebase join lookup:', e); }
 }
@@ -3221,7 +3125,7 @@ else if(np!==null){toast('❗','Mínimo 4 caracteres');}
 };
 window.apShareGrp=function(){
 var g=apSt.group;if(!g)return;
-var msg='¡Únete a mi quiniela del Mundial 2026!\n\nGrupo: '+g.name+'\nCódigo: '+g.code+'\nInscripción: 🪙'+g.inscripcion+'\n\n⚽ QuinielaFC - Apuesta con tus amigos';
+var msg='¡Únete a mi quiniela del Mundial 2026!\n\nGrupo: '+g.name+'\nCódigo: '+g.code+'\nInscripción: €'+g.inscripcion+'\n\n⚽ QuinielaFC - Apuesta con tus amigos';
 if(navigator.share){navigator.share({title:'QuinielaFC',text:msg});}
 else{navigator.clipboard.writeText(msg).then(function(){toast('📤','Mensaje copiado al portapapeles');});}
 };
@@ -3254,21 +3158,6 @@ if(saved&&saved.code){
     /* FIX v2: start listener immediately if Firebase is already connected */
     if(_fbConnected && typeof fbListenGroup==='function') fbListenGroup(saved.code);
     if(_fbConnected && apSt.user) _fbMarkOnline(saved.code, saved.uid);
-    /* FIX v3: si Firebase no esta listo, reintentar cada segundo hasta 10s */
-    if(!_fbConnected){
-      var _retryCount=0;
-      var _retryInterval=setInterval(function(){
-        _retryCount++;
-        if(_fbConnected && typeof fbListenGroup==='function'){
-          fbListenGroup(saved.code);
-          if(apSt.user) _fbMarkOnline(saved.code, apSt.user.id);
-          if(typeof apBanner==='function') apBanner();
-          clearInterval(_retryInterval);
-          console.log('[QFC] Firebase conectado tras reintento '+_retryCount);
-        }
-        if(_retryCount>=150) clearInterval(_retryInterval);
-      },200);
-    }
   } else {
     // Group NOT in localStorage - try to restore from Firebase
     console.log('[QFC] Group not in localStorage, attempting Firebase restore...');
@@ -3302,7 +3191,7 @@ if(saved&&saved.code){
           try{localStorage.removeItem('wc26_ap');}catch(e){}
         }
       }catch(e){ console.warn('[QFC] Firebase restore error:',e.message); }
-    }, 0); // Wait for Firebase to connect first
+    }, 3000); // Wait for Firebase to connect first
   }
 }
 }catch(e){}
@@ -3609,7 +3498,7 @@ return '<div style="display:flex;align-items:center;gap:8px;padding:7px 0;border
 (b.isDouble?'<span class="double-badge">×2</span>':'')+
 '<span style="font-family:Bebas Neue,sans-serif;font-size:.9rem;color:'+col+';">'+(pts!==null&&pts!==undefined?(pts>0?'+'+pts:'0'):'-')+'</span>'+
 '</div>';
-}).join('') : '<div class="nores" style="padding:10px;">Sin monedass aún.</div>';
+}).join('') : '<div class="nores" style="padding:10px;">Sin apuestas aún.</div>';
 document.getElementById('player-modal').style.display = 'flex';
 };
 window.closePlayerModal = function(){document.getElementById('player-modal').style.display='none';};
@@ -3624,7 +3513,7 @@ return Object.assign({},m,{exact:ex,totalBets:nb,totalAmt:amt,pts:m.pts||0});
 }).sort(function(a,b){return b.pts-a.pts;});
 var pot = apTotalPot();
 var pos = ['🥇','🥈','🥉'];
-var tbl = '<table class="export-table"><thead><tr><th>#</th><th>Jugador</th><th>Pts</th><th>Exactos</th><th>Apuestas</th><th>🪙 Apostado</th></tr></thead><tbody>'+
+var tbl = '<table class="export-table"><thead><tr><th>#</th><th>Jugador</th><th>Pts</th><th>Exactos</th><th>Apuestas</th><th>€ Apostado</th></tr></thead><tbody>'+
 mems.map(function(m,i){
 var cls = i===0?'pos1':i===1?'pos2':i===2?'pos3':'';
 return '<tr><td class="'+cls+'">'+(pos[i]||i+1)+'</td>'+
@@ -3632,9 +3521,9 @@ return '<tr><td class="'+cls+'">'+(pos[i]||i+1)+'</td>'+
 '<td style="font-family:Bebas Neue,sans-serif;font-size:1rem;color:var(--g);">'+m.pts+'</td>'+
 '<td style="color:var(--gold);font-weight:700;">'+m.exact+'</td>'+
 '<td>'+m.totalBets+'</td>'+
-'<td style="color:var(--gold);">🪙'+m.totalAmt.toFixed(2)+'</td></tr>';
+'<td style="color:var(--gold);">€'+m.totalAmt.toFixed(2)+'</td></tr>';
 }).join('')+'</tbody></table>';
-var header = '<div style="text-align:center;margin-bottom:10px;"><div style="font-family:Bebas Neue,sans-serif;font-size:1.2rem;letter-spacing:2px;color:var(--g);">'+g.name+'</div><div style="font-size:.72rem;color:var(--muted);font-weight:500;">Bote: 🪙'+pot.toFixed(2)+' · 1º 🪙'+(pot*.5).toFixed(2)+' · 2º 🪙'+(pot*.3).toFixed(2)+' · 3º 🪙'+(pot*.2).toFixed(2)+'</div></div>';
+var header = '<div style="text-align:center;margin-bottom:10px;"><div style="font-family:Bebas Neue,sans-serif;font-size:1.2rem;letter-spacing:2px;color:var(--g);">'+g.name+'</div><div style="font-size:.72rem;color:var(--muted);font-weight:500;">Bote: €'+pot.toFixed(2)+' · 1º €'+(pot*.5).toFixed(2)+' · 2º €'+(pot*.3).toFixed(2)+' · 3º €'+(pot*.2).toFixed(2)+'</div></div>';
 document.getElementById('export-table-wrap').innerHTML = header+tbl;
 document.getElementById('export-modal').style.display = 'flex';
 };
@@ -3645,14 +3534,14 @@ var mems = g.members.map(function(m){return Object.assign({},m,{pts:m.pts||0});}
 var pot = apTotalPot();
 var txt = '🏆 QUINIELA FC - '+g.name+'\n'+'='.repeat(32)+'\n'+
 mems.map(function(m,i){return (i+1)+'. '+m.emoji+' '+m.name.padEnd(15)+' '+String(m.pts||0).padStart(4)+' pts';}).join('\n')+
-'\n'+'-'.repeat(32)+'\nBote: 🪙'+pot.toFixed(2)+' · 🥇 🪙'+(pot*.5).toFixed(2)+' 🥈 🪙'+(pot*.3).toFixed(2)+' 🥉 🪙'+(pot*.2).toFixed(2)+'\n#Mundial2026 #QuinielaFC';
+'\n'+'-'.repeat(32)+'\nBote: €'+pot.toFixed(2)+' · 🥇 €'+(pot*.5).toFixed(2)+' 🥈 €'+(pot*.3).toFixed(2)+' 🥉 €'+(pot*.2).toFixed(2)+'\n#Mundial2026 #QuinielaFC';
 navigator.clipboard.writeText(txt).then(function(){toast('📋','Clasificación copiada');});
 };
 window.exportShare = function(){
 var g = apSt.group; if(!g) return;
 var mems = g.members.map(function(m){return Object.assign({},m,{pts:m.pts||0});}).sort(function(a,b){return b.pts-a.pts;});
 var pot = apTotalPot();
-var txt = '🏆 '+g.name+' · QuinielaFC\n'+mems.slice(0,3).map(function(m,i){return ['🥇','🥈','🥉'][i]+' '+m.emoji+' '+m.name+' - '+(m.pts||0)+' pts';}).join('\n')+'\nBote: 🪙'+pot.toFixed(2)+' #Mundial2026';
+var txt = '🏆 '+g.name+' · QuinielaFC\n'+mems.slice(0,3).map(function(m,i){return ['🥇','🥈','🥉'][i]+' '+m.emoji+' '+m.name+' - '+(m.pts||0)+' pts';}).join('\n')+'\nBote: €'+pot.toFixed(2)+' #Mundial2026';
 if(navigator.share) navigator.share({text:txt});
 else navigator.clipboard.writeText(txt).then(function(){toast('📋','Texto copiado');});
 };
@@ -3687,7 +3576,7 @@ if(grid) grid.innerHTML = [
 {v:avgPts+'pts', l:'Media puntos', c:'var(--blue)'},
 {v:pctExact+'%', l:'% de exactos', c:'var(--gold)'},
 {v:g.members.length, l:'Jugadores', c:'var(--g)'},
-{v:'🪙'+pot.toFixed(0), l:'Bote total', c:'var(--gold)'},
+{v:'€'+pot.toFixed(0), l:'Bote total', c:'var(--gold)'},
 ].map(function(s){return '<div class="group-stat"><div class="group-stat-val" style="color:'+s.c+'">'+s.v+'</div><div class="group-stat-lbl">'+s.l+'</div></div>';}).join('');
 var sorted = memberStats.slice().sort(function(a,b){return b.pts-a.pts;});
 if(detail) detail.innerHTML = '<div class="ptitle" style="margin-top:13px;"><span class="ico">🏅</span> Detalle por jugador <span style="margin-left:auto;font-size:.65rem;color:var(--g);cursor:pointer;" onclick="openExport()">📋 Exportar</span></div>'+
@@ -3773,7 +3662,7 @@ g.name = name; g.inscripcion = inscr;
 apSaveGrp(g); apSt.group = g;
 apBanner(); apRenderRanking();
 document.getElementById('edit-group-form').style.display = 'none';
-toast('✅','Grupo actualizado: '+name+' · 🪙'+inscr);
+toast('✅','Grupo actualizado: '+name+' · €'+inscr);
 };
 window.apKickMember = function(){
 var g = apSt.group; var u = apSt.user;
@@ -3828,7 +3717,7 @@ if(p&&!isOpen(p)){toast('🔒','Apuestas cerradas - partido próximo','#fcd34d')
 var pb = apSt.pending[pid]||{};
 var h = parseInt((document.getElementById('sh-'+pid)||{}).value);
 var a = parseInt((document.getElementById('sa-'+pid)||{}).value);
-var amt = 0; /* 🪙 field removed */
+var amt = 0; /* € field removed */
 if(!pb.result){toast('❗','Elige 1 / X / 2','#fca5a5');return;}
 if(isNaN(h)||isNaN(a)){toast('❗','Introduce el marcador','#fca5a5');return;}
 /* amt validation removed */
@@ -3939,7 +3828,7 @@ var fbTxt = document.getElementById('fb-stxt');
 var fbMsg = fbTxt ? fbTxt.textContent : '';
 fbEl.innerHTML = isConn
 ? '<span style="display:inline-flex;align-items:center;gap:5px;font-size:.65rem;font-weight:700;color:#15803d;background:#dcfce7;border:1px solid #86efac;border-radius:12px;padding:2px 8px;">🔥 Firebase ON · '+g.members.length+' jugadores en tiempo real</span>'
-: '<span style="display:inline-flex;align-items:center;gap:5px;font-size:.65rem;font-weight:700;color:#92400e;background:#fef3c7;border:1px solid #fcd34d;border-radius:12px;padding:2px 8px;cursor:pointer;">⏳ Conectando Firebase... <span id="fb-conn-secs">0</span>s · toca para forzar</span>';
+: '<span style="display:inline-flex;align-items:center;gap:5px;font-size:.65rem;font-weight:700;color:#92400e;background:#fef3c7;border:1px solid #fcd34d;border-radius:12px;padding:2px 8px;cursor:pointer;">⚡ Solo local · Toca para activar Firebase</span>';
 }
 var gn = document.getElementById('ap-gname'); if(gn)gn.textContent='Grupo: '+g.name;
 var gi = document.getElementById('ap-ginfo');
@@ -4309,7 +4198,7 @@ list.innerHTML = publicGroups.map(function(g2,i){
 return '<div class="global-row">'+
 '<div class="rpos '+(i===0?'p1':i===1?'p2':i===2?'p3':'')+'">'+(i+1)+'</div>'+
 '<div style="flex:1;"><div style="font-weight:700;font-size:.84rem;">'+g2.name+(g2.isMe?' <span class="global-tag">(el tuyo)</span>':'')+'</div>'+
-'<div style="font-size:.68rem;color:var(--muted);font-weight:500;">'+g2.members+' jugadores · '+g2.totalBets+' apuestas · 🪙'+g2.pot.toFixed(0)+' bote</div></div>'+
+'<div style="font-size:.68rem;color:var(--muted);font-weight:500;">'+g2.members+' jugadores · '+g2.totalBets+' apuestas · €'+g2.pot.toFixed(0)+' bote</div></div>'+
 '<div class="rpts"><div class="v">'+g2.avg+'</div><div class="l">pts/jug</div></div>'+
 '</div>';
 }).join('');
@@ -4671,11 +4560,7 @@ fbSt('conn','Firebase conectado - sync en tiempo real activo');
 fbMsg('ok','Conectado con '+pi+'. Los grupos se sincronizan en todos los dispositivos.');
 if(typeof toast==='function')toast('🔥','Firebase conectado!');
 try{ localStorage.setItem('qfc_fb_config', JSON.stringify({apiKey:apiKey,projectId:projectId,appId:appId})); }catch(e){};
-if(apSt.group&&typeof fbListenGroup==='function'){
-  fbListenGroup(apSt.group.code);
-  if(apSt.user&&typeof _fbMarkOnline==='function') _fbMarkOnline(apSt.group.code,apSt.user.id);
-  setTimeout(function(){if(typeof apBanner==='function')apBanner();},1000);
-}
+if(apSt.group&&typeof fbListenGroup==='function')fbListenGroup(apSt.group.code);
 }else{
 fbSt('err','Error al conectar');
 fbMsg('fail','No se pudo conectar. Verifica los datos y que Firestore este en modo prueba.');
@@ -5812,7 +5697,7 @@ function _renderMGStats(){
   grid.innerHTML=
     '<div class="mg-stat"><div class="mg-stat-v">'+myRank+'º</div><div class="mg-stat-l">Posición</div></div>'+
     '<div class="mg-stat"><div class="mg-stat-v">'+(u.pts||0)+'</div><div class="mg-stat-l">Mis pts</div></div>'+
-    '<div class="mg-stat"><div class="mg-stat-v">🪙'+pot.toFixed(0)+'</div><div class="mg-stat-l">Bote</div></div>';
+    '<div class="mg-stat"><div class="mg-stat-v">€'+pot.toFixed(0)+'</div><div class="mg-stat-l">Bote</div></div>';
 }
 
 function _renderMGProgress(){
@@ -5861,7 +5746,7 @@ function _renderMGRanking(){
   if(bote&&pot>0) bote.innerHTML=
     '<div style="background:linear-gradient(135deg,rgba(217,119,6,.1),rgba(245,158,11,.1));border:1px solid rgba(217,119,6,.3);border-radius:12px;padding:13px;margin-top:12px;text-align:center;">'+
     '<div style="font-size:.65rem;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">💰 Bote total</div>'+
-    '<div style="font-family:Bebas Neue,sans-serif;font-size:2.5rem;color:var(--gold);">🪙'+pot.toFixed(2)+'</div>'+
+    '<div style="font-family:Bebas Neue,sans-serif;font-size:2.5rem;color:var(--gold);">€'+pot.toFixed(2)+'</div>'+
     '<div style="font-size:.65rem;color:var(--muted);margin-top:4px;">🥇 50% · 🥈 30% · 🥉 20%</div>'+
     '</div>';
 }
@@ -5988,7 +5873,7 @@ function _renderMGAjustes(){
   var html=
     '<div style="background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:13px;margin-bottom:12px;">'+
       '<div style="font-weight:800;font-size:.9rem;margin-bottom:4px;">'+g.name+' <span style="font-size:.7rem;color:var(--muted);">'+g.code+'</span></div>'+
-      '<div style="font-size:.7rem;color:var(--muted);">'+g.members.length+' jugadores · 🪙'+((g.members.length*(g.inscripcion||0)).toFixed(0))+' bote · Inscripción: 🪙'+(g.inscripcion||0)+'</div>'+
+      '<div style="font-size:.7rem;color:var(--muted);">'+g.members.length+' jugadores · €'+((g.members.length*(g.inscripcion||0)).toFixed(0))+' bote · Inscripción: €'+(g.inscripcion||0)+'</div>'+
     '</div>'+
     '<div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px;">'+
       '<button onclick="apCopyCode()" style="padding:11px;border-radius:10px;background:var(--g5);border:1.5px solid var(--border2);color:var(--g2);font-weight:700;font-size:.84rem;cursor:pointer;text-align:left;">📋 Copiar código · '+g.code+'</button>'+
@@ -6327,7 +6212,7 @@ function _renderQList(filter){
       '<div style="display:flex;gap:8px;">'+
         '<div style="flex:1;background:var(--bg);border-radius:10px;padding:9px;text-align:center;"><div style="font-size:.62rem;color:var(--muted);font-weight:600;">% EXACTO</div><div style="font-family:Bebas Neue,sans-serif;font-size:1.3rem;color:var(--gold);">'+pctExacto+'%</div></div>'+
         '<div style="flex:1;background:var(--bg);border-radius:10px;padding:9px;text-align:center;"><div style="font-size:.62rem;color:var(--muted);font-weight:600;">% ACIERTO</div><div style="font-family:Bebas Neue,sans-serif;font-size:1.3rem;color:var(--g);">'+pctOk+'%</div></div>'+
-        '<div style="flex:1;background:var(--bg);border-radius:10px;padding:9px;text-align:center;"><div style="font-size:.62rem;color:var(--muted);font-weight:600;">INVERSIÓN</div><div style="font-family:Bebas Neue,sans-serif;font-size:1.3rem;color:var(--blue);">🪙'+totalInv.toFixed(0)+'</div></div>'+
+        '<div style="flex:1;background:var(--bg);border-radius:10px;padding:9px;text-align:center;"><div style="font-size:.62rem;color:var(--muted);font-weight:600;">INVERSIÓN</div><div style="font-family:Bebas Neue,sans-serif;font-size:1.3rem;color:var(--blue);">€'+totalInv.toFixed(0)+'</div></div>'+
         '<div style="flex:1;background:var(--bg);border-radius:10px;padding:9px;text-align:center;"><div style="font-size:.62rem;color:var(--muted);font-weight:600;">PUNTOS</div><div style="font-family:Bebas Neue,sans-serif;font-size:1.3rem;color:var(--g);">'+totalPts+'</div></div>'+
       '</div>';
     hist.insertBefore(panel, hist.firstChild);
@@ -6544,7 +6429,7 @@ var I18N = {
     crearGrupo:'Crear grupo', unirseGrupo:'Unirse a grupo', ranking:'Ranking',
     quiniela:'Quiniela', miembros:'Miembros', chat:'Chat', ajustes:'Ajustes',
     resultado:'Resultado', marcador:'Marcador exacto', importe:'Importe',
-    apostarBtn:'⚡ Apostar', apostado:'Apostado', sinMonedas:'Sin apostar',
+    apostarBtn:'⚡ Apostar', apostado:'Apostado', sinApostar:'Sin apostar',
     grupos:'Todos los grupos', cerrado:'Cerrado', abierto:'Abierto',
     empate:'Empate', local:'Local', visitante:'Visitante',
     puntos:'pts', liga:'Liga', ayuda:'Ayuda',
@@ -6565,7 +6450,7 @@ var I18N = {
     crearGrupo:'Create group', unirseGrupo:'Join group', ranking:'Ranking',
     quiniela:'Quiniela', miembros:'Members', chat:'Chat', ajustes:'Settings',
     resultado:'Result', marcador:'Exact score', importe:'Amount',
-    apostarBtn:'⚡ Bet', apostado:'Bet placed', sinMonedas:'Not bet',
+    apostarBtn:'⚡ Bet', apostado:'Bet placed', sinApostar:'Not bet',
     grupos:'All groups', cerrado:'Closed', abierto:'Open',
     empate:'Draw', local:'Home', visitante:'Away',
     puntos:'pts', liga:'League', ayuda:'Help',
@@ -6586,7 +6471,7 @@ var I18N = {
     crearGrupo:'Créer groupe', unirseGrupo:'Rejoindre', ranking:'Classement',
     quiniela:'Quiniela', miembros:'Membres', chat:'Chat', ajustes:'Paramètres',
     resultado:'Résultat', marcador:'Score exact', importe:'Montant',
-    apostarBtn:'⚡ Parier', apostado:'Parié', sinMonedas:'Non parié',
+    apostarBtn:'⚡ Parier', apostado:'Parié', sinApostar:'Non parié',
     grupos:'Tous les groupes', cerrado:'Fermé', abierto:'Ouvert',
     empate:'Nul', local:'Domicile', visitante:'Extérieur',
     puntos:'pts', liga:'Ligue', ayuda:'Aide',
@@ -6607,7 +6492,7 @@ var I18N = {
     crearGrupo:'Criar grupo', unirseGrupo:'Entrar no grupo', ranking:'Classificação',
     quiniela:'Quiniela', miembros:'Membros', chat:'Chat', ajustes:'Ajustes',
     resultado:'Resultado', marcador:'Placar exato', importe:'Valor',
-    apostarBtn:'⚡ Apostar', apostado:'Apostado', sinMonedas:'Sem aposta',
+    apostarBtn:'⚡ Apostar', apostado:'Apostado', sinApostar:'Sem aposta',
     grupos:'Todos os grupos', cerrado:'Fechado', abierto:'Aberto',
     empate:'Empate', local:'Casa', visitante:'Fora',
     puntos:'pts', liga:'Liga', ayuda:'Ajuda',
@@ -6631,7 +6516,7 @@ window.setLoginLang = function(lang) {
   // Persist choice (shared with main setLang)
   localStorage.setItem('qfc_lang', lang);
   // Update button highlight
-  ['es','en','fr','pt','de','it','ar','zh'].forEach(function(l) {
+  ['es','en','fr','pt'].forEach(function(l) {
     var btn = document.getElementById('llb-'+l);
     if (!btn) return;
     if (l === lang) {
@@ -7541,7 +7426,7 @@ applyCoinResult = function(group, memberId, pid, real){
       var hasBet = g && u && g.bets && g.bets[u.id] && g.bets[u.id][p.id];
       var minLeft = Math.round(msLeft/60000);
       if(!hasBet){
-        toast('⏰','¡'+minLeft+' min! Sin monedas: '+p.home.name+' vs '+p.away.name,'#fef3c7');
+        toast('⏰','¡'+minLeft+' min! Sin apuesta: '+p.home.name+' vs '+p.away.name,'#fef3c7');
         addNotif('⏰','Cierra en '+minLeft+' min: '+p.home.name+' vs '+p.away.name+' - ¡apuesta ya!');
       } else {
         toast('✅',p.home.name+' vs '+p.away.name+' - ¡tu apuesta está lista!','#dcfce7');
@@ -7550,7 +7435,7 @@ applyCoinResult = function(group, memberId, pid, real){
       if('Notification' in window && Notification.permission === 'granted'){
         try{
           new Notification('⚽ QuinielaFC', {
-            body: (hasBet?'✅ Tienes apuesta para ':'⚠️ Sin monedas: ')+p.home.name+' vs '+p.away.name+' ('+minLeft+' min)',
+            body: (hasBet?'✅ Tienes apuesta para ':'⚠️ Sin apuesta: ')+p.home.name+' vs '+p.away.name+' ('+minLeft+' min)',
             icon: '⚽', tag: 'qfc-match-'+p.id
           });
         }catch(e){}
@@ -8240,7 +8125,7 @@ console.log('[v27] Liga + Idiomas + Chat reacciones + Standings + Acumulada + Av
         var changed=false;
         if(data.members&&Array.isArray(data.members)&&data.members.length>0){
           // Siempre sincronizar miembros desde Firebase
-          if(data.members.length!==g.members.length||data.members.some(function(fm){return !g.members.find(function(m){return m.id===fm.id;});;})||g.members.some(function(m){return !data.members.find(function(fm){return fm.id===m.id;});})){
+          if(data.members.length!==g.members.length){
             g.members=data.members;changed=true;
           } else {
             data.members.forEach(function(fm){
@@ -8485,11 +8370,15 @@ console.log('[v27] Liga + Idiomas + Chat reacciones + Standings + Acumulada + Av
         var me=g.members.find(function(m){return m.id===uid;});
         if(me) window.apSt.user=me;
       }
-      // Actualizar members y updatedAt en Firebase
+      // En Firebase solo actualizar el campo del usuario actual
       _fbDB.collection('groups').doc(code).update({
-        members: g.members,
-        updatedAt: Date.now()
-      }).catch(function(){});
+        ['members_'+uid+'_lastSeen']: Date.now()
+      }).catch(function(){
+        // Si falla usar set merge con members completos
+        _fbDB.collection('groups').doc(code).set({
+          members:g.members, updatedAt:Date.now()
+        },{merge:true}).catch(function(){});
+      });
     }catch(e){}
   }
   // Arrancar cuando todo esté listo
@@ -8503,28 +8392,5 @@ console.log('[v27] Liga + Idiomas + Chat reacciones + Standings + Acumulada + Av
   document.addEventListener('visibilitychange',function(){
     if(!document.hidden) setTimeout(heartbeat,500);
   });
-})();
-</script>
-
-<div id="qfc-legal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:99999;align-items:center;justify-content:center;padding:16px;">
-<div style="background:#fff;border-radius:16px;padding:22px;max-width:460px;width:100%;max-height:88vh;overflow-y:auto;">
-<div style="font-family:Bebas Neue,sans-serif;font-size:1.4rem;color:#15803d;margin-bottom:8px;letter-spacing:2px;">AVISO IMPORTANTE</div>
-<div style="background:#f0fdf4;border:1.5px solid #86efac;border-radius:8px;padding:10px 12px;margin-bottom:12px;font-size:.82rem;color:#15803d;font-weight:700;">Esta aplicacion es una herramienta recreativa y estadistica privada.</div>
-<p style="font-size:.82rem;color:#374151;line-height:1.65;margin-bottom:10px;"><strong>Lo que ES:</strong> Una herramienta de entretenimiento privado entre amigos para hacer predicciones deportivas del Mundial 2026.</p>
-<p style="font-size:.82rem;color:#374151;line-height:1.65;margin-bottom:10px;"><strong>Lo que NO ES:</strong> No es una casa de apuestas, no gestiona dinero real y no esta sujeta a la Ley 13/2011 de Regulacion del Juego.</p>
-<p style="font-size:.82rem;color:#374151;line-height:1.65;margin-bottom:10px;">Los <strong>monedas</strong> son puntos virtuales recreativos sin ningun valor economico real. No se pueden canjear por dinero.</p>
-<p style="font-size:.75rem;color:#6b7280;line-height:1.5;margin-bottom:14px;">Solo se almacena tu apodo y emoji. RDL 1/2007: 14 dias de desistimiento desde la compra. Al continuar confirmas que eres mayor de 18 anos.</p>
-<button onclick="document.getElementById('qfc-legal').style.display='none';localStorage.setItem('qfc_legal_ok','1');" style="width:100%;padding:13px;background:linear-gradient(135deg,#22c55e,#15803d);border:none;border-radius:10px;color:#fff;font-family:Bebas Neue,sans-serif;font-size:1.1rem;letter-spacing:2px;cursor:pointer;">ENTENDIDO - SOY MAYOR DE 18 ANOS</button>
-</div></div>
-<script>
-(function(){
-if(!localStorage.getItem('qfc_legal_ok')){
-window.addEventListener('load',function(){
-setTimeout(function(){
-var d=document.getElementById('qfc-legal');
-if(d) d.style.display='flex';
-},1500);
-});
-}
 })();
 </script>
