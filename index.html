@@ -231,6 +231,10 @@ window.installPWA = function(){
       <button onclick="setLoginLang('en')" id="llb-en" style="padding:5px 10px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);color:var(--muted);font-size:.8rem;font-weight:700;cursor:pointer;transition:all .2s;">🇬🇧 EN</button>
       <button onclick="setLoginLang('fr')" id="llb-fr" style="padding:5px 10px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);color:var(--muted);font-size:.8rem;font-weight:700;cursor:pointer;transition:all .2s;">🇫🇷 FR</button>
       <button onclick="setLoginLang('pt')" id="llb-pt" style="padding:5px 10px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);color:var(--muted);font-size:.8rem;font-weight:700;cursor:pointer;transition:all .2s;">🇧🇷 PT</button>
+      <button onclick="setLoginLang('de')" id="llb-de" style="padding:5px 10px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);color:var(--muted);font-size:.8rem;font-weight:700;cursor:pointer;transition:all .2s;">🇩🇪 DE</button>
+      <button onclick="setLoginLang('it')" id="llb-it" style="padding:5px 10px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);color:var(--muted);font-size:.8rem;font-weight:700;cursor:pointer;transition:all .2s;">🇮🇹 IT</button>
+      <button onclick="setLoginLang('ar')" id="llb-ar" style="padding:5px 10px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);color:var(--muted);font-size:.8rem;font-weight:700;cursor:pointer;transition:all .2s;">🇸🇦 AR</button>
+      <button onclick="setLoginLang('zh')" id="llb-zh" style="padding:5px 10px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);color:var(--muted);font-size:.8rem;font-weight:700;cursor:pointer;transition:all .2s;">🇨🇳 ZH</button>
     </div>
     <div class="lball-wrap"><div class="lball">⚽</div></div>
     <div class="ltitle">QUINIELAFC</div>
@@ -6532,6 +6536,40 @@ var I18N = {
     loginLocked:'Muitas tentativas. Aguarde',
     loginErrWrong:'Senha incorreta'
   }
+,
+de: {
+    apostar:'Wetten', inicio:'Start', migrupo:'Meine Gruppe', partidos:'Spiele', mas:'Mehr',
+    crearGrupo:'Gruppe erstellen', unirseGrupo:'Gruppe beitreten', ranking:'Rangliste',
+    quiniela:'Tippspiel', miembros:'Mitglieder', chat:'Chat', ajustes:'Einstellungen',
+    resultado:'Ergebnis', marcador:'Genaues Ergebnis', importe:'Einsatz',
+    apostarBtn:'⚡ Wetten', apostado:'Getippt', sinApostar:'Nicht getippt',
+    grupos:'Alle Gruppen', cerrado:'Geschlossen', abierto:'Offen',
+    empate:'Unentschieden', local:'Heimteam', visitante:'Auswärtsteam',
+    puntos:'Pkt', liga:'Liga', ayuda:'Hilfe',
+    bienvenido:'Willkommen bei QuinielaFC', descripcion:'WM 2026 Tippspiel'
+  },
+  ar: {
+    apostar:'راهن', inicio:'الرئيسية', migrupo:'مجموعتي', partidos:'المباريات', mas:'المزيد',
+    crearGrupo:'انشاء مجموعة', unirseGrupo:'انضم للمجموعة', ranking:'الترتيب',
+    quiniela:'التوقعات', miembros:'الاعضاء', chat:'الدردشة', ajustes:'الاعدادات',
+    resultado:'النتيجة', marcador:'النتيجة الدقيقة', importe:'الرهان',
+    apostarBtn:'راهن', apostado:'تم الرهان', sinApostar:'لم يتم الرهان',
+    grupos:'كل المجموعات', cerrado:'مغلق', abierto:'مفتوح',
+    empate:'تعادل', local:'المضيف', visitante:'الضيف',
+    puntos:'نقاط', liga:'دوري', ayuda:'مساعدة',
+    bienvenido:'مرحبا في QuinielaFC', descripcion:'توقعات كاس العالم 2026'
+  },
+  zh: {
+    apostar:'下注', inicio:'主页', migrupo:'我的小组', partidos:'比赛', mas:'更多',
+    crearGrupo:'创建小组', unirseGrupo:'加入小组', ranking:'排名',
+    quiniela:'预测', miembros:'成员', chat:'聊天', ajustes:'设置',
+    resultado:'结果', marcador:'精确比分', importe:'金额',
+    apostarBtn:'下注', apostado:'已下注', sinApostar:'未下注',
+    grupos:'所有小组', cerrado:'已关闭', abierto:'开放',
+    empate:'平局', local:'主队', visitante:'客队',
+    puntos:'分', liga:'联赛', ayuda:'帮助',
+    bienvenido:'欢迎来到QuinielaFC', descripcion:'2026世界杯竞猜'
+  }
 };
 
 // Login language switcher — runs before full I18N/setLang is available
@@ -6540,7 +6578,7 @@ window.setLoginLang = function(lang) {
   // Persist choice (shared with main setLang)
   localStorage.setItem('qfc_lang', lang);
   // Update button highlight
-  ['es','en','fr','pt'].forEach(function(l) {
+  ['es','en','fr','pt','de','it','ar','zh'].forEach(function(l) {
     var btn = document.getElementById('llb-'+l);
     if (!btn) return;
     if (l === lang) {
