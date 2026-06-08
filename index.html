@@ -257,16 +257,33 @@ setTimeout(function(){
 function setLoginLang(lang){
   var langs=['es','en','fr','pt','de','it','ar','zh'];
   localStorage.setItem('qfc_lang',lang);
+  // Actualizar botones
   langs.forEach(function(l){
     var b=document.getElementById('llb-'+l);
     if(!b) return;
     if(l===lang){b.style.background='var(--g)';b.style.color='#fff';b.style.borderColor='var(--g)';}
     else{b.style.background='var(--bg)';b.style.color='var(--muted)';b.style.borderColor='var(--border)';}
   });
+  // Actualizar textos del login si I18N esta disponible
+  if(typeof I18N!=='undefined'&&I18N[lang]){
+    var d=I18N[lang];
+    var sub=document.getElementById('lsub-txt');
+    var lbl=document.getElementById('llbl-txt');
+    var inp=document.getElementById('lpass');
+    var btn=document.getElementById('lbtn-txt');
+    if(sub&&d.loginSub) sub.textContent=d.loginSub;
+    if(lbl&&d.loginLabel) lbl.textContent=d.loginLabel;
+    if(inp&&d.loginPlaceholder) inp.placeholder=d.loginPlaceholder;
+    if(btn&&d.loginBtn) btn.textContent=d.loginBtn;
+  }
   if(typeof window.setLang==='function') window.setLang(lang);
 }
-// Aplicar idioma guardado
-(function(){var s=localStorage.getItem('qfc_lang');if(s) setTimeout(function(){setLoginLang(s);},100);})();
+// Aplicar idioma guardado al cargar
+(function(){
+  var s=localStorage.getItem('qfc_lang')||(navigator.language||'es').substring(0,2);
+  if(['es','en','fr','pt','de','it','ar','zh'].indexOf(s)===-1) s='es';
+  setTimeout(function(){setLoginLang(s);},300);
+})();
 </script>
       <button onclick="setLoginLang('es')" id="llb-es" style="padding:5px 10px;border-radius:8px;border:1.5px solid var(--border);background:var(--g);color:#fff;font-size:.8rem;font-weight:700;cursor:pointer;transition:all .2s;">🇪🇸 ES</button>
       <button onclick="setLoginLang('en')" id="llb-en" style="padding:5px 10px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);color:var(--muted);font-size:.8rem;font-weight:700;cursor:pointer;transition:all .2s;">🇬🇧 EN</button>
