@@ -255,6 +255,12 @@ setTimeout(function(){
     <div id="login-lang-bar" style="display:flex;justify-content:center;gap:6px;margin-bottom:18px;">
 <script>
 function setLoginLang(lang){
+  // Si el usuario pulsa manualmente, guardar y recargar
+  if(typeof I18N==='undefined'||!I18N[lang]||!I18N[lang].loginSub){
+    localStorage.setItem('qfc_lang',lang);
+    location.reload();
+    return;
+  }
   var langs=['es','en','fr','pt','de','it','ar','zh'];
   localStorage.setItem('qfc_lang',lang);
   // Actualizar botones
