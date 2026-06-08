@@ -6767,23 +6767,46 @@ window.setLang = function(lang){
   if(!I18N[lang]) return;
   _lang = lang;
   localStorage.setItem('qfc_lang', lang);
-  // Update nav labels
+  var d = I18N[lang];
+
+  // Nav labels
   var navMap = {home:'inicio', apostar:'apostar', migrupo:'migrupo', partidos:'partidos'};
   document.querySelectorAll('.mb .mb-lbl, .mb span').forEach(function(el){
     var mb = el.closest('.mb'); if(!mb) return;
     var v = mb.dataset.v;
-    if(v && navMap[v] && I18N[_lang][navMap[v]]) el.textContent = t(navMap[v]);
+    if(v && navMap[v] && d[navMap[v]]) el.textContent = d[navMap[v]];
   });
-  // Update page title
-  document.title = '⚽ QuinielaFC · ' + t('bienvenido').split(' ').pop();
+
+  // Traducir elementos con data-i18n
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    var key=el.dataset.i18n;
+    if(d[key]) el.textContent=d[key];
+  });
+
+  // Login screen
+  var lsub=document.getElementById('lsub-txt');
+  var llbl=document.getElementById('llbl-txt');
+  var lpass=document.getElementById('lpass');
+  var lbtn=document.getElementById('lbtn-txt');
+  if(lsub&&d.loginSub) lsub.textContent=d.loginSub;
+  if(llbl&&d.loginLabel) llbl.textContent=d.loginLabel;
+  if(lpass&&d.loginPlaceholder) lpass.placeholder=d.loginPlaceholder;
+  if(lbtn&&d.loginBtn) lbtn.textContent=d.loginBtn;
+
+  // Page title
+  document.title = 'QuinielaFC · ' + (d.bienvenido||'Mundial 2026');
+
+  // Selector de idioma
+  if(typeof renderLangSelector==='function') renderLangSelector();
+
   toast('🌐', 'Idioma: '+lang.toUpperCase());
 };
 
 // Language selector HTML
 function renderLangSelector(){
   var cont = document.getElementById('lang-selector'); if(!cont) return;
-  cont.innerHTML = ['es','en','fr','pt'].map(function(l){
-    var flags = {es:'🇪🇸',en:'🇬🇧',fr:'🇫🇷',pt:'🇧🇷'};
+  cont.innerHTML = ['es','en','fr','pt','de','it','ar','zh'].map(function(l){
+    var flags = {es:'🇪🇸',en:'🇬🇧',fr:'🇫🇷',pt:'🇵🇹',de:'🇩🇪',it:'🇮🇹',ar:'🇸🇦',zh:'🇨🇳'};
     return '<button onclick="setLang(\''+l+'\')" style="padding:6px 10px;border-radius:8px;background:'+(l===_lang?'var(--g)':'var(--bg)')+';border:1.5px solid '+(l===_lang?'var(--g)':'var(--border)')+';color:'+(l===_lang?'#fff':'var(--text)')+';font-size:.78rem;font-weight:700;cursor:pointer;">'+flags[l]+' '+l.toUpperCase()+'</button>';
   }).join('');
 }
