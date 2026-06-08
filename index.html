@@ -227,6 +227,21 @@ window.installPWA = function(){
   <div class="lbox">
     <!-- SELECTOR DE IDIOMA EN LOGIN -->
     <div id="login-lang-bar" style="display:flex;justify-content:center;gap:6px;margin-bottom:18px;">
+<script>
+function setLoginLang(lang){
+  var langs=['es','en','fr','pt','de','it','ar','zh'];
+  localStorage.setItem('qfc_lang',lang);
+  langs.forEach(function(l){
+    var b=document.getElementById('llb-'+l);
+    if(!b) return;
+    if(l===lang){b.style.background='var(--g)';b.style.color='#fff';b.style.borderColor='var(--g)';}
+    else{b.style.background='var(--bg)';b.style.color='var(--muted)';b.style.borderColor='var(--border)';}
+  });
+  if(typeof window.setLang==='function') window.setLang(lang);
+}
+// Aplicar idioma guardado
+(function(){var s=localStorage.getItem('qfc_lang');if(s) setTimeout(function(){setLoginLang(s);},100);})();
+</script>
       <button onclick="setLoginLang('es')" id="llb-es" style="padding:5px 10px;border-radius:8px;border:1.5px solid var(--border);background:var(--g);color:#fff;font-size:.8rem;font-weight:700;cursor:pointer;transition:all .2s;">🇪🇸 ES</button>
       <button onclick="setLoginLang('en')" id="llb-en" style="padding:5px 10px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);color:var(--muted);font-size:.8rem;font-weight:700;cursor:pointer;transition:all .2s;">🇬🇧 EN</button>
       <button onclick="setLoginLang('fr')" id="llb-fr" style="padding:5px 10px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);color:var(--muted);font-size:.8rem;font-weight:700;cursor:pointer;transition:all .2s;">🇫🇷 FR</button>
