@@ -1789,7 +1789,7 @@ matchDiv.appendChild(bb);
 }
 var vn=document.createElement('div');
 vn.style.cssText='font-size:.58rem;color:var(--muted);text-align:center;padding:3px 6px;font-weight:500;';
-vn.textContent=p.date+' · '+p.venue.split(' - ')[0];
+vn.textContent=p.date+' · '+p.venue.split(' - ')[0]+(isOpen(p)?(' · <span style="color:#d97706;font-weight:700;">⏰ '+( timeToClose(p)||'Hoy')+'</span>'):' · <span style="color:#dc2626;font-size:.7rem;">🔒 Cerrado</span>');
 matchDiv.appendChild(vn);
 matchesDiv.appendChild(matchDiv);
 });
@@ -2366,6 +2366,16 @@ function apGenCode(){var c='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';return Array.from(
 function apTotalPot(){var g=apSt.group;if(!g)return 0;return g.members.length*(g.inscripcion||0)+(g.coinPot||0);}
 function apFavs(){return apLS('wc26_favs')||{};}
 function apSaveFavs(f){apLSW('wc26_favs',f);}
+function timeToClose(p){
+  var diff=p.kickoff-LOCK_MINS*60000-Date.now();
+  if(diff<=0) return null;
+  var d=Math.floor(diff/86400000);
+  var h=Math.floor((diff%86400000)/3600000);
+  var m=Math.floor((diff%3600000)/60000);
+  if(d>0) return d+'d '+h+'h';
+  if(h>0) return h+'h '+m+'m';
+  return m+'m';
+}
 function isOpen(p){return Date.now()<(p.kickoff-LOCK_MINS*60000);}
 function lockMin(p){var r=Math.floor((p.kickoff-LOCK_MINS*60000-Date.now())/60000);return(r>0&&r<=90)?r:null;}
 function apShowMain(hasGroup){
