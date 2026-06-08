@@ -389,6 +389,7 @@ setTimeout(function(){
     <div class="panel" style="margin-bottom:13px;">
         <div class="ptitle"><span class="ico">📢</span> Feed del grupo <span style="margin-left:auto;font-size:0.6rem;color:var(--g);" id="feed-ts"></span>
           <button onclick="shareWhatsAppFull&&shareWhatsAppFull()" style="margin-left:8px;padding:3px 9px;background:#dcfce7;border:1.5px solid #86efac;border-radius:12px;color:#15803d;font-size:.65rem;font-weight:700;cursor:pointer;white-space:nowrap;">💚 Compartir</button>
+          <button onclick="apExportPDF&&apExportPDF()" style="margin-left:8px;padding:3px 9px;background:#dbeafe;border:1.5px solid #93c5fd;border-radius:12px;color:#1d4ed8;font-size:.65rem;font-weight:700;cursor:pointer;white-space:nowrap;">📄 Exportar</button>
         </div>
         <div id="home-feed"><div class="nores" style="padding:14px;">Únete a un grupo para ver el feed de actividad.</div></div>
       </div>
@@ -2798,6 +2799,39 @@ if(sb){if(fl.length){sb.textContent='QUINIELAFC MUNDIAL 2026\n'+u.name+'\n======
 }
 window.apCopyBiz=function(idx){var msg=_bizMsgs[parseInt(idx)];if(!msg)return;navigator.clipboard.writeText(msg).then(function(){toast('📋','Copiado para Bizum!');});};
 window.apCopyMsg=function(){var msg=(document.getElementById('ap-summ')||{}).textContent||'';navigator.clipboard.writeText(msg).then(function(){toast('📋','Resumen copiado');});};
+window.apExportPDF=function(){
+  var g=apSt.group; var u=apSt.user;
+  if(!g||!u){toast('❌','Sin grupo activo');return;}
+  var bets=g.bets[u.id]||{};
+  var lines=['QUINIELAFC - '+g.name.toUpperCase()];
+  lines.push('Jugador: '+u.emoji+' '+u.name);
+  lines.push('Puntos: '+(u.pts||0)+' pts | Monedas: '+(u.coins||0));
+  lines.push('Fecha: '+new Date().toLocaleDateString('es-ES'));
+  lines.push('-----------------------------------');
+  var partidos=Object.keys(bets).sort();
+  partidos.forEach(function(pid){
+    var b=bets[pid];
+    var p=PARTIDOS_AP.find(function(x){return x.id===pid;});
+    if(!p) return;
+    var res=b.result||'-';
+    var score=(b.homeGoals!==undefined?b.homeGoals+'-'+b.awayGoals:'-');
+    var pts=b.pts!==undefined?(' ['+b.pts+' pts]'):'';
+    lines.push(p.home.flag+p.home.name+' vs '+p.away.flag+p.away.name);
+    lines.push('  Apuesta: '+res+' ('+score+')'+pts);
+  });
+  lines.push('-----------------------------------');
+  lines.push('Total: '+partidos.length+' apuestas');
+  lines.push('quinielafc.anthonyfc © 2026');
+  var txt=lines.join('
+');
+  var blob=new Blob([txt],{type:'text/plain'});
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='quiniela_'+u.name+'_'+g.name+'.txt';
+  a.click();
+  toast('📄','Quiniela exportada','#dcfce7');
+};
+
 window.apShareWA=function(){var msg=(document.getElementById('ap-summ')||{}).textContent||'';window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');};
 window.apShareTW=function(){var g=apSt.group;if(!g)return;window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent('#Mundial2026 apostando con '+g.name+' en QuinielaFC!'),'_blank');};
 function apRenderEsp(){
