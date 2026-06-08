@@ -229,6 +229,36 @@ window.installPWA = function(){
 <body>
 
 <!-- LOGIN -->
+<!-- INTRO ANIMADA -->
+<div id="qfc-intro" style="position:fixed;inset:0;z-index:99999;background:linear-gradient(135deg,#052e16,#15803d,#22c55e);display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .8s ease;">
+  <style>
+    @keyframes ballBounce{0%,100%{transform:translateY(0) rotate(-10deg)}50%{transform:translateY(-30px) rotate(10deg)}}
+    @keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+    @keyframes loadBar{from{width:0}to{width:100%}}
+    .intro-ball{font-size:5rem;animation:ballBounce 1.2s ease-in-out infinite;}
+    .intro-title{font-family:Bebas Neue,sans-serif;font-size:3.5rem;color:#fff;letter-spacing:6px;animation:fadeInUp .8s ease .3s both;}
+    .intro-sub{font-size:1rem;color:rgba(255,255,255,.8);letter-spacing:3px;text-transform:uppercase;animation:fadeInUp .8s ease .6s both;margin-top:6px;}
+    .intro-mundial{font-size:.85rem;color:#bbf7d0;letter-spacing:2px;animation:fadeInUp .8s ease .9s both;margin-top:4px;}
+    .intro-bar-wrap{width:200px;height:4px;background:rgba(255,255,255,.2);border-radius:2px;margin-top:32px;overflow:hidden;animation:fadeInUp .8s ease 1s both;}
+    .intro-bar{height:100%;background:#fff;border-radius:2px;animation:loadBar 2.5s ease 1s both;}
+  </style>
+  <div class="intro-ball">⚽</div>
+  <div class="intro-title">QUINIELAFC</div>
+  <div class="intro-sub">Mundial FIFA 2026</div>
+  <div class="intro-mundial">48 equipos · 104 partidos · Tu quiniela privada</div>
+  <div class="intro-bar-wrap"><div class="intro-bar"></div></div>
+  <div style="color:rgba(255,255,255,.5);font-size:.65rem;margin-top:20px;letter-spacing:2px;animation:fadeInUp .8s ease 1.2s both;">AnthonyFC · © 2026</div>
+</div>
+<script>
+setTimeout(function(){
+  var intro=document.getElementById('qfc-intro');
+  if(intro){
+    intro.style.opacity='0';
+    setTimeout(function(){intro.style.display='none';},800);
+  }
+},3000);
+</script>
 <div id="ls">
   <div class="lbox">
     <!-- SELECTOR DE IDIOMA EN LOGIN -->
