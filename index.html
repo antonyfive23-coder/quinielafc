@@ -267,6 +267,10 @@ setTimeout(function(){
       <button onclick="setLoginLang('en')" id="llb-en" style="padding:5px 10px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);color:var(--muted);font-size:.8rem;font-weight:700;cursor:pointer;transition:all .2s;">🇬🇧 EN</button>
       <button onclick="setLoginLang('fr')" id="llb-fr" style="padding:5px 10px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);color:var(--muted);font-size:.8rem;font-weight:700;cursor:pointer;transition:all .2s;">🇫🇷 FR</button>
       <button onclick="setLoginLang('pt')" id="llb-pt" style="padding:5px 10px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);color:var(--muted);font-size:.8rem;font-weight:700;cursor:pointer;transition:all .2s;">🇧🇷 PT</button>
+      <button onclick="setLoginLang('de')" id="llb-de" style="padding:5px 10px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);color:var(--muted);font-size:.8rem;font-weight:700;cursor:pointer;transition:all .2s;">🇩🇪 DE</button>
+      <button onclick="setLoginLang('it')" id="llb-it" style="padding:5px 10px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);color:var(--muted);font-size:.8rem;font-weight:700;cursor:pointer;transition:all .2s;">🇮🇹 IT</button>
+      <button onclick="setLoginLang('ar')" id="llb-ar" style="padding:5px 10px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);color:var(--muted);font-size:.8rem;font-weight:700;cursor:pointer;transition:all .2s;">🇸🇦 AR</button>
+      <button onclick="setLoginLang('zh')" id="llb-zh" style="padding:5px 10px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);color:var(--muted);font-size:.8rem;font-weight:700;cursor:pointer;transition:all .2s;">🇨🇳 ZH</button>
     </div>
     <div class="lball-wrap"><div class="lball">⚽</div></div>
     <div class="ltitle">QUINIELAFC</div>
@@ -6627,7 +6631,7 @@ window.setLoginLang = function(lang) {
   // Persist choice (shared with main setLang)
   localStorage.setItem('qfc_lang', lang);
   // Update button highlight
-  ['es','en','fr','pt'].forEach(function(l) {
+  ['es','en','fr','pt','de','it','ar','zh'].forEach(function(l) {
     var btn = document.getElementById('llb-'+l);
     if (!btn) return;
     if (l === lang) {
