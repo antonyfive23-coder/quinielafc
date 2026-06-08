@@ -255,6 +255,54 @@ setTimeout(function(){
     <div id="login-lang-bar" style="display:flex;justify-content:center;gap:6px;margin-bottom:18px;">
 <script>
 function setLoginLang(lang){
+  localStorage.setItem('qfc_lang',lang);
+  // Test directo - cambiar texto del boton
+  var btn=document.getElementById('lbtn-txt');
+  if(btn) btn.textContent='LANG:'+lang;
+  var sub=document.getElementById('lsub-txt');
+  if(sub) sub.textContent='IDIOMA SELECCIONADO: '+lang.toUpperCase();
+  // Actualizar botones highlight
+  ['es','en','fr','pt','de','it','ar','zh'].forEach(function(l){
+    var b=document.getElementById('llb-'+l);
+    if(!b) return;
+    if(l===lang){b.style.background='var(--g)';b.style.color='#fff';}
+    else{b.style.background='';b.style.color='';}
+  });
+  if(typeof I18N!=='undefined'&&I18N[lang]&&I18N[lang].loginSub){
+    var d=I18N[lang];
+    if(btn&&d.loginBtn) btn.textContent=d.loginBtn;
+    if(sub&&d.loginSub) sub.textContent=d.loginSub;
+    var lbl=document.getElementById('llbl-txt');
+    var inp=document.getElementById('lpass');
+    if(lbl&&d.loginLabel) lbl.textContent=d.loginLabel;
+    if(inp&&d.loginPlaceholder) inp.placeholder=d.loginPlaceholder;
+  }
+  if(typeof window.setLang==='function') window.setLang(lang);
+  return;
+  localStorage.setItem('qfc_lang',lang);
+  // Test directo - cambiar texto del boton
+  var btn=document.getElementById('lbtn-txt');
+  if(btn) btn.textContent='LANG:'+lang;
+  var sub=document.getElementById('lsub-txt');
+  if(sub) sub.textContent='IDIOMA SELECCIONADO: '+lang.toUpperCase();
+  // Actualizar botones highlight
+  ['es','en','fr','pt','de','it','ar','zh'].forEach(function(l){
+    var b=document.getElementById('llb-'+l);
+    if(!b) return;
+    if(l===lang){b.style.background='var(--g)';b.style.color='#fff';}
+    else{b.style.background='';b.style.color='';}
+  });
+  if(typeof I18N!=='undefined'&&I18N[lang]&&I18N[lang].loginSub){
+    var d=I18N[lang];
+    if(btn&&d.loginBtn) btn.textContent=d.loginBtn;
+    if(sub&&d.loginSub) sub.textContent=d.loginSub;
+    var lbl=document.getElementById('llbl-txt');
+    var inp=document.getElementById('lpass');
+    if(lbl&&d.loginLabel) lbl.textContent=d.loginLabel;
+    if(inp&&d.loginPlaceholder) inp.placeholder=d.loginPlaceholder;
+  }
+  if(typeof window.setLang==='function') window.setLang(lang);
+  return;
   // Si el usuario pulsa manualmente, guardar y recargar
   if(typeof I18N==='undefined'||!I18N[lang]||!I18N[lang].loginSub){
     localStorage.setItem('qfc_lang',lang);
