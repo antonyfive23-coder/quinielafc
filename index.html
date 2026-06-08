@@ -264,19 +264,31 @@ function setLoginLang(lang){
     if(l===lang){b.style.background='var(--g)';b.style.color='#fff';b.style.borderColor='var(--g)';}
     else{b.style.background='var(--bg)';b.style.color='var(--muted)';b.style.borderColor='var(--border)';}
   });
-  // Actualizar textos del login si I18N esta disponible
-  if(typeof I18N!=='undefined'&&I18N[lang]){
-    var d=I18N[lang];
-    var sub=document.getElementById('lsub-txt');
-    var lbl=document.getElementById('llbl-txt');
-    var inp=document.getElementById('lpass');
-    var btn=document.getElementById('lbtn-txt');
-    if(sub&&d.loginSub) sub.textContent=d.loginSub;
-    if(lbl&&d.loginLabel) lbl.textContent=d.loginLabel;
-    if(inp&&d.loginPlaceholder) inp.placeholder=d.loginPlaceholder;
-    if(btn&&d.loginBtn) btn.textContent=d.loginBtn;
+  // Intentar traducir inmediatamente
+  function applyLang(){
+    if(typeof I18N!=='undefined'&&I18N[lang]){
+      var d=I18N[lang];
+      var sub=document.getElementById('lsub-txt');
+      var lbl=document.getElementById('llbl-txt');
+      var inp=document.getElementById('lpass');
+      var btn=document.getElementById('lbtn-txt');
+      if(sub&&d.loginSub) sub.textContent=d.loginSub;
+      if(lbl&&d.loginLabel) lbl.textContent=d.loginLabel;
+      if(inp&&d.loginPlaceholder) inp.placeholder=d.loginPlaceholder;
+      if(btn&&d.loginBtn) btn.textContent=d.loginBtn;
+      if(typeof window.setLang==='function') window.setLang(lang);
+      return true;
+    }
+    return false;
   }
-  if(typeof window.setLang==='function') window.setLang(lang);
+  // Si I18N no esta listo, reintentar cada 200ms
+  if(!applyLang()){
+    var tries=0;
+    var retry=setInterval(function(){
+      tries++;
+      if(applyLang()||tries>20) clearInterval(retry);
+    },200);
+  }
 }
 // Aplicar idioma guardado al cargar
 (function(){
