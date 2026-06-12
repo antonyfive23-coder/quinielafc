@@ -8007,97 +8007,59 @@ window.apShareWA = function(){
 // 📺 RESULTADOS EN VIVO - Pestaña dedicada
 // =======================================================
 window.renderResultsTab = function(){
-  var el = document.getElementById("live-results-list");
+  var el = document.getElementById('live-results-list');
   if(!el) return;
-  // Esperar a que PARTIDOS_AP este disponible
-  if(!window.PARTIDOS_AP||!window.PARTIDOS_AP.length){
-    el.innerHTML="<div class=nores>Cargando partidos...</div>";
-    setTimeout(function(){if(typeof renderResultsTab==="function")renderResultsTab();},1000);
+  var allP = (window.PARTIDOS_AP||[]).concat(window.KNOCKOUT_AP||[]);
+  if(!allP.length){
+    el.innerHTML='<div class="nores">Cargando...</div>';
+    setTimeout(function(){if(typeof renderResultsTab==='function')renderResultsTab();},800);
     return;
   }
-  var allP = (window.PARTIDOS_AP||[]).concat(window.KNOCKOUT_AP||[]);
   var now = Date.now();
-  // Split into: live, today, recent, upcoming
-  var live=[], today=[], recent=[], upcoming=[];
+  var live=[],today=[],recent=[],upcoming=[];
   allP.forEach(function(p){
     if(!p.kickoff) return;
-    var diff = now - p.kickoff;
-    if(diff>0 && diff<120*60*1000) live.push(p);         // en curso (<2h)
-    else if(diff>0 && diff<24*60*60*1000) recent.push(p); // últimas 24h
-    else if(diff<0 && diff>-24*60*60*1000) today.push(p); // próximas 24h
-    else if(diff<0) upcoming.push(p);                      // futuros
+    var diff=now-p.kickoff;
+    if(diff>0&&diff<120*60*1000) live.push(p);
+    else if(diff>0&&diff<48*60*60*1000) recent.push(p);
+    else if(diff<0&&diff>-24*60*60*1000) today.push(p);
+    else if(diff<0) upcoming.push(p);
   });
-  upcoming = upcoming.slice(0,10);
-  // Si no hay nada hoy, mostrar proximos 5 partidos
-  if(!live.length&&!today.length&&!recent.length&&!upcoming.length){
-    upcoming=(window.PARTIDOS_AP||[]).filter(function(p){return p.kickoff>Date.now();}).slice(0,10);
-  }
-  // Añadir siempre los recientes aunque sean de ayer
-  if(!recent.length){
-    var yesterday=Date.now()-48*60*60*1000;
-    recent=(window.PARTIDOS_AP||[]).filter(function(p){return p.kickoff>yesterday&&p.kickoff<Date.now();}).slice(0,5);
-  }
+  upcoming=upcoming.slice(0,10);
 
-  function matchCard(p, status){
-    var res = (apSt.group&&apSt.group.results&&apSt.group.results[p.id]);
-    var espnLive = window._espnLive && window._espnLive[p.id];
-    var scoreHtml = '';
+  function matchCard(p,status){
+    var res=(apSt.group&&apSt.group.results&&apSt.group.results[p.id]);
+    var espnLive=window._espnLive&&window._espnLive[p.id];
+    var scoreHtml='';
     if(espnLive){
-      scoreHtml = '<div style="font-family:Bebas Neue,sans-serif;font-size:1.6rem;color:'+(status==='live'?'#dc2626':'var(--g)')+';letter-spacing:3px;">'+espnLive.homeScore+' - '+espnLive.awayScore+'</div>'+
-        (espnLive.clock&&status==='live'?'<div style="font-size:.62rem;color:#dc2626;font-weight:700;animation:urgpulse 1s infinite;">⏱ '+espnLive.clock+'</div>':'');
+      scoreHtml='<div style="font-family:Bebas Neue,sans-serif;font-size:1.4rem;color:'+(status==='live'?'#dc2626':'var(--g)')+';letter-spacing:2px;">'+espnLive.homeScore+' - '+espnLive.awayScore+'</div>';
     } else if(res){
-      scoreHtml = '<div style="font-family:Bebas Neue,sans-serif;font-size:1.6rem;color:var(--g);letter-spacing:3px;">'+res.homeGoals+' - '+res.awayGoals+'</div>';
+      scoreHtml='<div style="font-family:Bebas Neue,sans-serif;font-size:1.4rem;color:var(--g);letter-spacing:2px;">'+res.homeGoals+' - '+res.awayGoals+'</div>';
     } else if(status==='upcoming'||status==='today'){
       var d=new Date(p.kickoff);
-      scoreHtml = '<div style="font-size:.76rem;color:var(--muted);font-weight:700;">'+d.toLocaleTimeString('es',{hour:'2-digit',minute:'2-digit'})+' ET</div>';
+      scoreHtml='<div style="font-size:.76rem;color:var(--muted);font-weight:700;">'+d.toLocaleTimeString('es',{hour:'2-digit',minute:'2-digit'})+'</div>';
     } else {
-      scoreHtml = '<div style="font-size:.76rem;color:var(--muted);">Sin resultado</div>';
+      scoreHtml='<div style="font-size:.76rem;color:var(--muted);">Pendiente</div>';
     }
-    var borderCol = status==='live'?'#fca5a5':status==='recent'?'var(--border2)':'var(--border)';
-    var bgCol = status==='live'?'linear-gradient(135deg,#fef2f2,#fee2e2)':status==='today'?'linear-gradient(135deg,#ecfdf5,#f0fdf4)':'var(--panel)';
-    return '<div style="background:'+bgCol+';border:1.5px solid '+borderCol+';border-radius:12px;padding:12px;margin-bottom:8px;">'+
-      (status==='live'?'<div style="display:inline-flex;align-items:center;gap:4px;background:#dc2626;color:#fff;border-radius:20px;padding:2px 8px;font-size:.6rem;font-weight:700;margin-bottom:6px;"><span style="width:5px;height:5px;border-radius:50%;background:#fff;animation:urgpulse 1s infinite;display:inline-block;"></span>EN VIVO</div><br>':'')+
-      '<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">'+
-        '<div style="flex:1;text-align:left;">'+
-          '<div style="font-weight:700;font-size:.84rem;">'+p.home.flag+' '+p.home.name+'</div>'+
-        '</div>'+
-        '<div style="text-align:center;padding:0 8px;">'+scoreHtml+'</div>'+
-        '<div style="flex:1;text-align:right;">'+
-          '<div style="font-weight:700;font-size:.84rem;">'+p.away.name+' '+p.away.flag+'</div>'+
-        '</div>'+
+    var bg=status==='live'?'#fee2e2':status==='today'?'#f0fdf4':'#fff';
+    var border=status==='live'?'#fca5a5':'var(--border)';
+    return '<div style="background:'+bg+';border:1.5px solid '+border+';border-radius:12px;padding:12px;margin-bottom:8px;">'+
+      '<div style="display:flex;align-items:center;justify-content:space-between;">'+
+        '<div style="flex:1;"><div style="font-weight:700;font-size:.84rem;">'+p.home.flag+' '+p.home.name+'</div></div>'+
+        '<div style="text-align:center;padding:0 10px;">'+scoreHtml+'</div>'+
+        '<div style="flex:1;text-align:right;"><div style="font-weight:700;font-size:.84rem;">'+p.away.name+' '+p.away.flag+'</div></div>'+
       '</div>'+
-      '<div style="font-size:.62rem;color:var(--muted);text-align:center;margin-top:4px;font-weight:500;">'+p.venue+'</div>'+
+      '<div style="font-size:.62rem;color:var(--muted);text-align:center;margin-top:4px;">'+p.date+' · '+p.venue.split(' - ')[0]+'</div>'+
     '</div>';
   }
 
-  console.log("[Results] live:",live.length,"today:",today.length,"recent:",recent.length,"upcoming:",upcoming.length,"allP:",allP.length);
-  var html = '';
-  if(live.length){
-    html += '<div style="font-family:Bebas Neue,sans-serif;font-size:.9rem;letter-spacing:2px;color:#dc2626;margin:8px 0 6px;display:flex;align-items:center;gap:6px;"><span style="width:8px;height:8px;border-radius:50%;background:#dc2626;animation:urgpulse 1s infinite;display:inline-block;"></span>EN VIVO</div>';
-    html += live.map(function(p){return matchCard(p,'live');}).join('');
-  }
-  if(today.length){
-    html += '<div style="font-family:Bebas Neue,sans-serif;font-size:.9rem;letter-spacing:2px;color:var(--g2);margin:12px 0 6px;">⏰ HOY - PRÓXIMOS</div>';
-    html += today.map(function(p){return matchCard(p,'today');}).join('');
-  }
-  if(recent.length){
-    html += '<div style="font-family:Bebas Neue,sans-serif;font-size:.9rem;letter-spacing:2px;color:var(--g2);margin:12px 0 6px;">✅ RECIENTES</div>';
-    html += recent.map(function(p){return matchCard(p,'recent');}).join('');
-  }
-  if(upcoming.length){
-    html += '<div style="font-family:Bebas Neue,sans-serif;font-size:.9rem;letter-spacing:2px;color:var(--muted);margin:12px 0 6px;">📅 PRÓXIMOS</div>';
-    html += upcoming.map(function(p){return matchCard(p,'upcoming');}).join('');
-  }
-  if(!html){
-    var showAll=(window.PARTIDOS_AP||[]).slice(0,15);
-    if(showAll.length){
-      html='<div style="font-family:Bebas Neue,sans-serif;font-size:.9rem;letter-spacing:2px;color:var(--muted);margin:8px 0 6px;">PARTIDOS DEL MUNDIAL</div>';
-      html+=showAll.map(function(p){return matchCard(p,'upcoming');}).join('');
-    } else {
-      html='<div class="nores">Sin partidos disponibles</div>';
-    }
-  }
-  el.innerHTML = html;
+  var html='';
+  if(live.length){html+='<div style="font-family:Bebas Neue,sans-serif;font-size:.85rem;color:#dc2626;margin:8px 0 4px;">EN VIVO</div>';html+=live.map(function(p){return matchCard(p,'live');}).join('');}
+  if(today.length){html+='<div style="font-family:Bebas Neue,sans-serif;font-size:.85rem;color:var(--g);margin:8px 0 4px;">HOY</div>';html+=today.map(function(p){return matchCard(p,'today');}).join('');}
+  if(recent.length){html+='<div style="font-family:Bebas Neue,sans-serif;font-size:.85rem;color:var(--muted);margin:8px 0 4px;">RECIENTES</div>';html+=recent.map(function(p){return matchCard(p,'recent');}).join('');}
+  if(upcoming.length){html+='<div style="font-family:Bebas Neue,sans-serif;font-size:.85rem;color:var(--muted);margin:8px 0 4px;">PROXIMOS</div>';html+=upcoming.map(function(p){return matchCard(p,'upcoming');}).join('');}
+  if(!html){html='<div style="font-family:Bebas Neue,sans-serif;font-size:.85rem;color:var(--muted);margin:8px 0 4px;">TODOS LOS PARTIDOS</div>';html+=(window.PARTIDOS_AP||[]).slice(0,15).map(function(p){return matchCard(p,'upcoming');}).join('');}
+  el.innerHTML=html;
 };
 
 // ===============================================================
