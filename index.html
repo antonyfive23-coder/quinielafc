@@ -8010,56 +8010,42 @@ window.apShareWA = function(){
 window.renderResultsTab = function(){
   var el = document.getElementById('live-results-list');
   if(!el) return;
-  var allP = (window.PARTIDOS_AP||[]).concat(window.KNOCKOUT_AP||[]);
-  if(!allP.length){
-    el.innerHTML='<div class="nores">Cargando...</div>';
-    setTimeout(function(){if(typeof renderResultsTab==='function')renderResultsTab();},800);
-    return;
-  }
+  var allP = [];
+  try{ allP = PARTIDOS_AP.concat(window.KNOCKOUT_AP||[]); }catch(e){ allP = window.PARTIDOS_AP||[]; }
+  if(!allP.length){ el.innerHTML='<div class="nores">Sin partidos</div>'; return; }
+  
   var now = Date.now();
-  var live=[],today=[],recent=[],upcoming=[];
+  var sections = {live:[],today:[],recent:[],upcoming:[]};
   allP.forEach(function(p){
     if(!p.kickoff) return;
-    var diff=now-p.kickoff;
-    if(diff>0&&diff<120*60*1000) live.push(p);
-    else if(diff>0&&diff<48*60*60*1000) recent.push(p);
-    else if(diff<0&&diff>-24*60*60*1000) today.push(p);
-    else if(diff<0) upcoming.push(p);
+    var diff = now - p.kickoff;
+    if(diff>0 && diff<120*60*1000) sections.live.push(p);
+    else if(diff>0 && diff<48*60*60*1000) sections.recent.push(p);
+    else if(diff<0 && diff>-24*60*60*1000) sections.today.push(p);
+    else if(diff<0) sections.upcoming.push(p);
   });
-  upcoming=upcoming.slice(0,10);
+  sections.upcoming = sections.upcoming.slice(0,10);
 
-  function matchCard(p,status){
-    var res=(apSt.group&&apSt.group.results&&apSt.group.results[p.id]);
-    var espnLive=window._espnLive&&window._espnLive[p.id];
-    var scoreHtml='';
-    if(espnLive){
-      scoreHtml='<div style="font-family:Bebas Neue,sans-serif;font-size:1.4rem;color:'+(status==='live'?'#dc2626':'var(--g)')+';letter-spacing:2px;">'+espnLive.homeScore+' - '+espnLive.awayScore+'</div>';
-    } else if(res){
-      scoreHtml='<div style="font-family:Bebas Neue,sans-serif;font-size:1.4rem;color:var(--g);letter-spacing:2px;">'+res.homeGoals+' - '+res.awayGoals+'</div>';
-    } else if(status==='upcoming'||status==='today'){
-      var d=new Date(p.kickoff);
-      scoreHtml='<div style="font-size:.76rem;color:var(--muted);font-weight:700;">'+d.toLocaleTimeString('es',{hour:'2-digit',minute:'2-digit'})+'</div>';
-    } else {
-      scoreHtml='<div style="font-size:.76rem;color:var(--muted);">Pendiente</div>';
-    }
-    var bg=status==='live'?'#fee2e2':status==='today'?'#f0fdf4':'#fff';
-    var border=status==='live'?'#fca5a5':'var(--border)';
-    return '<div style="background:'+bg+';border:1.5px solid '+border+';border-radius:12px;padding:12px;margin-bottom:8px;">'+
-      '<div style="display:flex;align-items:center;justify-content:space-between;">'+
-        '<div style="flex:1;"><div style="font-weight:700;font-size:.84rem;">'+p.home.flag+' '+p.home.name+'</div></div>'+
-        '<div style="text-align:center;padding:0 10px;">'+scoreHtml+'</div>'+
-        '<div style="flex:1;text-align:right;"><div style="font-weight:700;font-size:.84rem;">'+p.away.name+' '+p.away.flag+'</div></div>'+
-      '</div>'+
-      '<div style="font-size:.62rem;color:var(--muted);text-align:center;margin-top:4px;">'+p.date+' · '+p.venue.split(' - ')[0]+'</div>'+
+  function card(p,st){
+    var res=(window.apSt&&window.apSt.group&&window.apSt.group.results&&window.apSt.group.results[p.id]);
+    var lv=window._espnLive&&window._espnLive[p.id];
+    var sc='';
+    if(lv) sc='<b style="font-size:1.2rem;color:'+(st==='live'?'#dc2626':'#16a34a')+';">'+lv.homeScore+'-'+lv.awayScore+'</b>';
+    else if(res) sc='<b style="font-size:1.2rem;color:#16a34a;">'+res.homeGoals+'-'+res.awayGoals+'</b>';
+    else sc='<span style="font-size:.75rem;color:#6b7280;">'+new Date(p.kickoff).toLocaleTimeString('es',{hour:'2-digit',minute:'2-digit'})+'</span>';
+    return '<div style="background:#fff;border:1px solid #d1fae5;border-radius:10px;padding:10px;margin-bottom:6px;display:flex;align-items:center;justify-content:space-between;">'+
+      '<span style="font-size:.82rem;font-weight:700;">'+p.home.flag+' '+p.home.name+'</span>'+
+      '<span style="text-align:center;">'+sc+'</span>'+
+      '<span style="font-size:.82rem;font-weight:700;text-align:right;">'+p.away.name+' '+p.away.flag+'</span>'+
     '</div>';
   }
 
   var html='';
-  if(live.length){html+='<div style="font-family:Bebas Neue,sans-serif;font-size:.85rem;color:#dc2626;margin:8px 0 4px;">EN VIVO</div>';html+=live.map(function(p){return matchCard(p,'live');}).join('');}
-  if(today.length){html+='<div style="font-family:Bebas Neue,sans-serif;font-size:.85rem;color:var(--g);margin:8px 0 4px;">HOY</div>';html+=today.map(function(p){return matchCard(p,'today');}).join('');}
-  if(recent.length){html+='<div style="font-family:Bebas Neue,sans-serif;font-size:.85rem;color:var(--muted);margin:8px 0 4px;">RECIENTES</div>';html+=recent.map(function(p){return matchCard(p,'recent');}).join('');}
-  if(upcoming.length){html+='<div style="font-family:Bebas Neue,sans-serif;font-size:.85rem;color:var(--muted);margin:8px 0 4px;">PROXIMOS</div>';html+=upcoming.map(function(p){return matchCard(p,'upcoming');}).join('');}
-  if(!html){html='<div style="font-family:Bebas Neue,sans-serif;font-size:.85rem;color:var(--muted);margin:8px 0 4px;">TODOS LOS PARTIDOS</div>';html+=(window.PARTIDOS_AP||[]).slice(0,15).map(function(p){return matchCard(p,'upcoming');}).join('');}
+  if(sections.live.length) html+='<div style="font-weight:800;color:#dc2626;margin:8px 0 4px;font-size:.8rem;">🔴 EN VIVO</div>'+sections.live.map(function(p){return card(p,'live');}).join('');
+  if(sections.today.length) html+='<div style="font-weight:800;color:#16a34a;margin:8px 0 4px;font-size:.8rem;">⏰ HOY</div>'+sections.today.map(function(p){return card(p,'today');}).join('');
+  if(sections.recent.length) html+='<div style="font-weight:800;color:#6b7280;margin:8px 0 4px;font-size:.8rem;">✅ RECIENTES</div>'+sections.recent.map(function(p){return card(p,'recent');}).join('');
+  if(sections.upcoming.length) html+='<div style="font-weight:800;color:#6b7280;margin:8px 0 4px;font-size:.8rem;">📅 PRÓXIMOS</div>'+sections.upcoming.map(function(p){return card(p,'upcoming');}).join('');
+  if(!html) html='<div style="font-weight:800;color:#6b7280;margin:8px 0 4px;font-size:.8rem;">⚽ PARTIDOS</div>'+allP.slice(0,15).map(function(p){return card(p,'upcoming');}).join('');
   el.innerHTML=html;
 };
 
