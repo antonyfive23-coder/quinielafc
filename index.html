@@ -8079,7 +8079,15 @@ window.renderResultsTab = function(){
     html += '<div style="font-family:Bebas Neue,sans-serif;font-size:.9rem;letter-spacing:2px;color:var(--muted);margin:12px 0 6px;">📅 PRÓXIMOS</div>';
     html += upcoming.map(function(p){return matchCard(p,'upcoming');}).join('');
   }
-  if(!html) html = '<div class="nores">No hay partidos disponibles</div>';
+  if(!html){
+    var showAll=(window.PARTIDOS_AP||[]).slice(0,15);
+    if(showAll.length){
+      html='<div style="font-family:Bebas Neue,sans-serif;font-size:.9rem;letter-spacing:2px;color:var(--muted);margin:8px 0 6px;">PARTIDOS DEL MUNDIAL</div>';
+      html+=showAll.map(function(p){return matchCard(p,'upcoming');}).join('');
+    } else {
+      html='<div class="nores">Sin partidos disponibles</div>';
+    }
+  }
   el.innerHTML = html;
 };
 
