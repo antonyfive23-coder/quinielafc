@@ -8007,8 +8007,14 @@ window.apShareWA = function(){
 // 📺 RESULTADOS EN VIVO - Pestaña dedicada
 // =======================================================
 window.renderResultsTab = function(){
-  var el = document.getElementById('live-results-list');
+  var el = document.getElementById("live-results-list");
   if(!el) return;
+  // Esperar a que PARTIDOS_AP este disponible
+  if(!window.PARTIDOS_AP||!window.PARTIDOS_AP.length){
+    el.innerHTML="<div class=nores>Cargando partidos...</div>";
+    setTimeout(function(){if(typeof renderResultsTab==="function")renderResultsTab();},1000);
+    return;
+  }
   var allP = (window.PARTIDOS_AP||[]).concat(window.KNOCKOUT_AP||[]);
   var now = Date.now();
   // Split into: live, today, recent, upcoming
