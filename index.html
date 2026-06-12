@@ -8711,7 +8711,15 @@ if(d) d.style.display='flex';
           if(!m.score||!m.score.ft) return;
           var p=findPartido(m.team1,m.team2);
           if(!p) return;
-          var hg=m.score.ft[0], ag=m.score.ft[1];
+          var n1=NAME_MAP[m.team1]||m.team1;
+          var hg,ag;
+          // Si el equipo local de openfootball coincide con home del partido
+          if(p.home.name===n1){
+            hg=m.score.ft[0]; ag=m.score.ft[1];
+          } else {
+            // Equipos invertidos - invertir goles
+            hg=m.score.ft[1]; ag=m.score.ft[0];
+          }
           if(!window._espnLive) window._espnLive={};
           window._espnLive[p.id]={homeScore:hg,awayScore:ag,status:'FT',homeName:m.team1,awayName:m.team2,clock:'FT'};
           if(typeof apConfResCore==='function'&&window.apSt&&window.apSt.group){
