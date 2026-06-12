@@ -8151,6 +8151,44 @@ window.renderResultsTab = function(){
   }
 
   // Procesa respuesta de ESPN y aplica resultados
+
+  function _processSportsDB(data){
+    var events=(data&&(data.events||data.results))||[];
+    if(!Array.isArray(events)) return false;
+    var updated=0;
+    events.forEach(function(ev){
+      try{
+        if(!ev.strHomeTeam||!ev.strAwayTeam) return;
+        var status=ev.strStatus||'';
+        var finished=(status==='Match Finished'||status==='FT'||status==='AET'||status==='PEN');
+        var live=(status==='1H'||status==='HT'||status==='2H'||status==='ET'||status==='P');
+        if(!finished&&!live) return;
+        var homeScore=parseInt(ev.intHomeScore||0);
+        var awayScore=parseInt(ev.intAwayScore||0);
+        if(isNaN(homeScore)||isNaN(awayScore)) return;
+        var partido=_findPartido(ev.strHomeTeam,ev.strAwayTeam);
+        if(!partido) return;
+        if(!window._espnLive) window._espnLive={};
+        window._espnLive[partido.id]={
+          homeScore:homeScore,awayScore:awayScore,
+          status:status,homeName:ev.strHomeTeam,awayName:ev.strAwayTeam,
+          clock:ev.strProgress||''
+        };
+        if(finished&&typeof apConfResCore==='function'&&window.apSt&&window.apSt.group){
+          var existing=(window.apSt.group.results||{})[partido.id];
+          if(!existing||existing.homeGoals!==homeScore||existing.awayGoals!==awayScore){
+            var _t=window.toast;window.toast=function(){};
+            apConfResCore(partido.id,homeScore,awayScore);
+            window.toast=_t;
+            updated++;
+          }
+        }
+      }catch(e){}
+    });
+    console.log('[SportsDB] Procesados:',events.length,'actualizados:',updated);
+    return events.length>0;
+  }
+
   function _processESPN(data){
     var events = (data && data.events) || [];
     var updated = 0;
@@ -8211,11 +8249,26 @@ window.renderResultsTab = function(){
   // Fetch desde ESPN API
   async function _espnFetch(){
     var URLS = [
+      'https://www.thesportsdb.com/api/v1/json/3/eventsnextleague.php?id=722',
+      'https://www.thesportsdb.com/api/v1/json/3/eventspastleague.php?id=722',
       'https://corsproxy.io/?https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard',
-      'https://api.allorigins.win/raw?url=https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard',
-      'https://proxy.cors.sh/https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard',
-      'https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard'
+      'https://api.allorigins.win/raw?url=https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard'
     ];
+    // TheSportsDB URLs
+    var SDB_URLS=[
+      'https://www.thesportsdb.com/api/v1/json/3/eventsnextleague.php?id=722',
+      'https://www.thesportsdb.com/api/v1/json/3/eventspastleague.php?id=722',
+      'https://www.thesportsdb.com/api/v1/json/3/eventslast.php?id=722'
+    ];
+    for(var s=0;s<SDB_URLS.length;s++){
+      try{
+        var sr=await fetch(SDB_URLS[s]);
+        if(!sr.ok) continue;
+        var sd=await sr.json();
+        if(_processSportsDB(sd)){_espnUpdateStatus('ok','TheSportsDB OK');renderResultsTab&&renderResultsTab();return true;}
+      }catch(e){console.warn('[SportsDB] Error:',e.message);}
+    }
+    // Fallback ESPN
     for(var i=0; i<URLS.length; i++){
       try{
         var resp = await fetch(URLS[i]);
