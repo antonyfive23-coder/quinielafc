@@ -8731,13 +8731,15 @@ if(d) d.style.display='flex';
           if(typeof apRenderRanking==='function') apRenderRanking();
         }
         console.log('[OFB] Partidos con resultado:',matches.filter(function(m){return m.score;}).length);
+        // Actualizar la vista de resultados con los nuevos datos
+        if(typeof renderResultsTab==='function') renderResultsTab();
       })
       .catch(function(e){console.warn('[OFB] Error:',e.message);});
   }
 
   // Ejecutar al arrancar y cada 5 minutos
   window.addEventListener('load',function(){
-    setTimeout(syncOFB, 5000);
+    setTimeout(syncOFB, 1000);
     setInterval(syncOFB, 5*60*1000);
   });
   window.syncOFB=syncOFB;
