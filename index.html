@@ -2171,6 +2171,7 @@ function nav(id,btn){
 document.querySelectorAll('.view').forEach(function(v){v.classList.remove('active');});
 document.querySelectorAll('.nb,.mb').forEach(function(b){b.classList.remove('active');});
 var v=document.getElementById('view-'+id);if(v)v.classList.add('active');
+if(id==='resultados'&&typeof renderResultsTab==='function') setTimeout(function(){renderResultsTab();},50);
 document.querySelectorAll('[data-v="'+id+'"]').forEach(function(b){b.classList.add('active');});
 var mt=document.getElementById('mhdr-t');if(mt)mt.textContent=V_TITLES[id]||id.toUpperCase();
 var ct=document.getElementById('content');if(ct)ct.scrollTo({top:0,behavior:'smooth'});
