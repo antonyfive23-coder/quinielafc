@@ -8671,3 +8671,73 @@ if(d) d.style.display='flex';
 }
 })();
 </script>
+
+// Auto-sync resultados desde openfootball (gratuito, sin API key)
+(function(){
+  var OFB_URL='https://raw.githubusercontent.com/openfootball/worldcup.json/master/2026/worldcup.json';
+  var NAME_MAP={
+    'Mexico':'Mexico','South Africa':'Sudafrica','South Korea':'Corea del Sur',
+    'Czech Republic':'Chequia','Czechia':'Chequia','Canada':'Canada',
+    'Bosnia and Herzegovina':'Bosnia','Bosnia':'Bosnia','Qatar':'Qatar',
+    'Switzerland':'Suiza','United States':'Estados Unidos','USA':'Estados Unidos',
+    'Paraguay':'Paraguay','Australia':'Australia','Turkey':'Turquia',
+    'Senegal':'Senegal','Netherlands':'Holanda','Ecuador':'Ecuador',
+    'England':'Inglaterra','Iran':'Iran','Wales':'Gales','Argentina':'Argentina',
+    'Saudi Arabia':'Arabia Saudi','Poland':'Polonia','France':'Francia',
+    'Denmark':'Dinamarca','Tunisia':'Tunez','Spain':'Espana','Costa Rica':'Costa Rica',
+    'Germany':'Alemania','Japan':'Japon','Belgium':'Belgica','Morocco':'Marruecos',
+    'Croatia':'Croacia','Brazil':'Brasil','Serbia':'Serbia','Switzerland':'Suiza',
+    'Cameroon':'Camerun','Portugal':'Portugal','Ghana':'Ghana','Uruguay':'Uruguay',
+    'Korea Republic':'Corea del Sur','IR Iran':'Iran','United States':'Estados Unidos'
+  };
+
+  function findPartido(t1,t2){
+    var n1=NAME_MAP[t1]||t1;
+    var n2=NAME_MAP[t2]||t2;
+    var all=(window.PARTIDOS_AP||[]).concat(window.KNOCKOUT_AP||[]);
+    return all.find(function(p){
+      return (p.home.name===n1&&p.away.name===n2)||(p.home.name===n2&&p.away.name===n1);
+    });
+  }
+
+  function syncOFB(){
+    fetch(OFB_URL)
+      .then(function(r){return r.json();})
+      .then(function(data){
+        var matches=data.matches||[];
+        var updated=0;
+        matches.forEach(function(m){
+          if(!m.score||!m.score.ft) return;
+          var p=findPartido(m.team1,m.team2);
+          if(!p) return;
+          var hg=m.score.ft[0], ag=m.score.ft[1];
+          if(!window._espnLive) window._espnLive={};
+          window._espnLive[p.id]={homeScore:hg,awayScore:ag,status:'FT',homeName:m.team1,awayName:m.team2,clock:'FT'};
+          if(typeof apConfResCore==='function'&&window.apSt&&window.apSt.group){
+            var ex=(window.apSt.group.results||{})[p.id];
+            if(!ex||ex.homeGoals!==hg||ex.awayGoals!==ag){
+              var _t=window.toast;window.toast=function(){};
+              apConfResCore(p.id,hg,ag);
+              window.toast=_t;
+              updated++;
+            }
+          }
+        });
+        if(updated>0){
+          console.log('[OFB] Resultados actualizados:',updated);
+          if(typeof apBanner==='function') apBanner();
+          if(typeof renderResultsTab==='function') renderResultsTab();
+          if(typeof apRenderRanking==='function') apRenderRanking();
+        }
+        console.log('[OFB] Partidos con resultado:',matches.filter(function(m){return m.score;}).length);
+      })
+      .catch(function(e){console.warn('[OFB] Error:',e.message);});
+  }
+
+  // Ejecutar al arrancar y cada 5 minutos
+  window.addEventListener('load',function(){
+    setTimeout(syncOFB, 5000);
+    setInterval(syncOFB, 5*60*1000);
+  });
+  window.syncOFB=syncOFB;
+})();
