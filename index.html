@@ -8008,7 +8008,7 @@ window.apShareWA = function(){
 // 📺 RESULTADOS EN VIVO - Pestaña dedicada
 // =======================================================
 window.renderResultsTab = function(){
-  var el = document.getElementById('live-results-list');
+  var el=document.getElementById("live-results-list");if(el)el.innerHTML="<h2>TEST FUNCIONA</h2>";return;
   if(!el) return;
   var allP = [];
   try{ allP = PARTIDOS_AP.concat(window.KNOCKOUT_AP||[]); }catch(e){ allP = window.PARTIDOS_AP||[]; }
