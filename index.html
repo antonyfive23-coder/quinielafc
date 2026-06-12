@@ -8197,7 +8197,9 @@ window.renderResultsTab = function(){
   async function _espnFetch(){
     var URLS = [
       'https://corsproxy.io/?https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard',
-      'https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?limit=200'
+      'https://api.allorigins.win/raw?url=https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard',
+      'https://proxy.cors.sh/https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard',
+      'https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard'
     ];
     for(var i=0; i<URLS.length; i++){
       try{
