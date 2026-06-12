@@ -8028,6 +8028,15 @@ window.renderResultsTab = function(){
     else if(diff<0) upcoming.push(p);                      // futuros
   });
   upcoming = upcoming.slice(0,10);
+  // Si no hay nada hoy, mostrar proximos 5 partidos
+  if(!live.length&&!today.length&&!recent.length&&!upcoming.length){
+    upcoming=(window.PARTIDOS_AP||[]).filter(function(p){return p.kickoff>Date.now();}).slice(0,10);
+  }
+  // Añadir siempre los recientes aunque sean de ayer
+  if(!recent.length){
+    var yesterday=Date.now()-48*60*60*1000;
+    recent=(window.PARTIDOS_AP||[]).filter(function(p){return p.kickoff>yesterday&&p.kickoff<Date.now();}).slice(0,5);
+  }
 
   function matchCard(p, status){
     var res = (apSt.group&&apSt.group.results&&apSt.group.results[p.id]);
