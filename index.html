@@ -6102,20 +6102,7 @@ window._admConfirm=function(pid){
 // -- Patch apConfResCore para también guardar en Firebase --
 (function(){
   var _origCore=window.apConfResCore;
-  window.apConfResCore=function(pid,rh,ra){
-    try{_origCore&&_origCore(pid,rh,ra);}catch(e){}
-    // Save to Firebase automatically
-    if(typeof fbSaveResult==='function'&&apSt.group){
-      safeRun(function(){ fbSaveResult(apSt.group.code,pid,rh,ra); },'fbSaveRes');
-    }
-    // Update knockout
-    if(typeof updateKnockoutTeams==='function'){
-      safeRun(updateKnockoutTeams,'confCoreKO');
-    }
-    // Refresh Apostar view if active
-    var av=document.querySelector('.view.active');
-    if(av&&av.id==='view-apostar') setTimeout(function(){safeRun(_renderApostarList,'confCoreAp');},300);
-  };
+  // apConfResCore handled by V18
 })();
 
 console.log('[v26] OK - vistas Apostar + Mi Grupo independientes');
