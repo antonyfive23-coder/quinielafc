@@ -7996,45 +7996,91 @@ window.apShareWA = function(){
 // 📺 RESULTADOS EN VIVO - Pestaña dedicada
 // =======================================================
 window.renderResultsTab = function(){
-  var el=document.getElementById("live-results-list");
+  var el = document.getElementById('live-results-list');
   if(!el) return;
-  var allP = [];
-  try{ allP = PARTIDOS_AP.concat(window.KNOCKOUT_AP||[]); }catch(e){ allP = window.PARTIDOS_AP||[]; }
-  if(!allP.length){ el.innerHTML='<div class="nores">Sin partidos</div>'; return; }
-  
-  var now = Date.now();
-  var sections = {live:[],today:[],recent:[],upcoming:[]};
-  allP.forEach(function(p){
-    if(!p.kickoff) return;
-    var diff = now - p.kickoff;
-    if(diff>0 && diff<120*60*1000) sections.live.push(p);
-    else if(diff>0 && diff<48*60*60*1000) sections.recent.push(p);
-    else if(diff<0 && diff>-24*60*60*1000) sections.today.push(p);
-    else if(diff<0) sections.upcoming.push(p);
-  });
-  sections.upcoming = sections.upcoming.slice(0,10);
 
-  function card(p,st){
-    var res=(window.apSt&&window.apSt.group&&window.apSt.group.results&&window.apSt.group.results[p.id]);
-    var lv=window._espnLive&&window._espnLive[p.id];
-    var sc='';
-    if(lv) sc='<b style="font-size:1.2rem;color:'+(st==='live'?'#dc2626':'#16a34a')+';">'+lv.homeScore+'-'+lv.awayScore+'</b>';
-    else if(res) sc='<b style="font-size:1.2rem;color:#16a34a;">'+res.homeGoals+'-'+res.awayGoals+'</b>';
-    else sc='<span style="font-size:.75rem;color:#6b7280;">'+new Date(p.kickoff).toLocaleTimeString('es',{hour:'2-digit',minute:'2-digit'})+'</span>';
-    return '<div style="background:#fff;border:1px solid #d1fae5;border-radius:10px;padding:10px;margin-bottom:6px;display:flex;align-items:center;justify-content:space-between;">'+
-      '<span style="font-size:.82rem;font-weight:700;">'+p.home.flag+' '+p.home.name+'</span>'+
-      '<span style="text-align:center;">'+sc+'</span>'+
-      '<span style="font-size:.82rem;font-weight:700;text-align:right;">'+p.away.name+' '+p.away.flag+'</span>'+
-    '</div>';
+  var allP = [];
+  try{ allP = PARTIDOS_AP.slice(); }catch(e){}
+  if(!allP.length) allP = window.PARTIDOS_AP||[];
+  if(!allP.length){
+    el.innerHTML='<div class="nores">Cargando partidos...</div>';
+    setTimeout(function(){if(typeof renderResultsTab==='function')renderResultsTab();},1000);
+    return;
   }
 
-  var html='';
-  if(sections.live.length) html+='<div style="font-weight:800;color:#dc2626;margin:8px 0 4px;font-size:.8rem;">🔴 EN VIVO</div>'+sections.live.map(function(p){return card(p,'live');}).join('');
-  if(sections.today.length) html+='<div style="font-weight:800;color:#16a34a;margin:8px 0 4px;font-size:.8rem;">⏰ HOY</div>'+sections.today.map(function(p){return card(p,'today');}).join('');
-  if(sections.recent.length) html+='<div style="font-weight:800;color:#6b7280;margin:8px 0 4px;font-size:.8rem;">✅ RECIENTES</div>'+sections.recent.map(function(p){return card(p,'recent');}).join('');
-  if(sections.upcoming.length) html+='<div style="font-weight:800;color:#6b7280;margin:8px 0 4px;font-size:.8rem;">📅 PRÓXIMOS</div>'+sections.upcoming.map(function(p){return card(p,'upcoming');}).join('');
-  if(!html) html='<div style="font-weight:800;color:#6b7280;margin:8px 0 4px;font-size:.8rem;">⚽ PARTIDOS</div>'+allP.slice(0,15).map(function(p){return card(p,'upcoming');}).join('');
-  el.innerHTML=html;
+  // Agrupar por fecha, ordenado por kickoff
+  var byDate = {};
+  var dateOrder = [];
+  allP.forEach(function(p){
+    if(!p.kickoff) return;
+    var d = new Date(p.kickoff);
+    var dateKey = d.toISOString().slice(0,10);
+    var day = d.getDate();
+    var months = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+    var label = day + ' ' + months[d.getMonth()];
+    if(!byDate[dateKey]){
+      byDate[dateKey] = {label:label, partidos:[], ts: d.getTime()};
+      dateOrder.push(dateKey);
+    }
+    byDate[dateKey].partidos.push(p);
+  });
+
+  // Ordenar fechas
+  dateOrder.sort(function(a,b){ return byDate[a].ts - byDate[b].ts; });
+
+  // Ordenar partidos dentro de cada fecha por hora
+  dateOrder.forEach(function(dk){
+    byDate[dk].partidos.sort(function(a,b){ return a.kickoff - b.kickoff; });
+  });
+
+  var now = Date.now();
+  var html = '';
+
+  dateOrder.forEach(function(dk){
+    var grupo = byDate[dk];
+    var isPast = grupo.ts < now - 24*3600*1000;
+    var isToday = Math.abs(grupo.ts - now) < 24*3600*1000;
+
+    var headerBg = isPast ? '#16a34a' : isToday ? '#dc2626' : '#1e40af';
+    var headerIcon = isPast ? '✅' : isToday ? '🔴' : '📅';
+
+    html += '<div style="background:'+headerBg+';color:#fff;font-family:Bebas Neue,sans-serif;'+
+            'font-size:.9rem;letter-spacing:2px;padding:7px 12px;border-radius:8px;margin:12px 0 6px;">'+
+            headerIcon+' '+grupo.label+'</div>';
+
+    grupo.partidos.forEach(function(p){
+      var res = (window.apSt&&window.apSt.group&&window.apSt.group.results&&window.apSt.group.results[p.id]);
+      var live = window._espnLive && window._espnLive[p.id];
+      var scoreHtml = '';
+      var bg = '#fff';
+      var border = '#e2e8f0';
+
+      if(live){
+        scoreHtml = '<span style="font-family:Bebas Neue,sans-serif;font-size:1.3rem;color:#16a34a;">'+
+                    live.homeScore+' - '+live.awayScore+'</span>';
+        bg = '#f0fdf4'; border = '#86efac';
+      } else if(res){
+        scoreHtml = '<span style="font-family:Bebas Neue,sans-serif;font-size:1.3rem;color:#16a34a;">'+
+                    res.homeGoals+' - '+res.awayGoals+'</span>';
+        bg = '#f0fdf4'; border = '#86efac';
+      } else {
+        var d = new Date(p.kickoff);
+        var h = String(d.getUTCHours()+2).padStart(2,'0');
+        var m = String(d.getUTCMinutes()).padStart(2,'0');
+        scoreHtml = '<span style="font-size:.72rem;color:#6b7280;font-weight:600;">'+h+':'+m+' ESP</span>';
+      }
+
+      html += '<div style="background:'+bg+';border:1px solid '+border+';border-radius:8px;'+
+              'padding:9px 10px;margin-bottom:5px;display:flex;align-items:center;justify-content:space-between;">'+
+              '<span style="font-size:.8rem;font-weight:700;flex:1;">'+p.home.flag+' '+p.home.name+'</span>'+
+              '<span style="text-align:center;padding:0 8px;">'+scoreHtml+'</span>'+
+              '<span style="font-size:.8rem;font-weight:700;flex:1;text-align:right;">'+p.away.name+' '+p.away.flag+'</span>'+
+              '</div>';
+    });
+  });
+
+  if(!html) html = '<div class="nores">Sin partidos disponibles</div>';
+  el.innerHTML = html;
 };
 
 // ===============================================================
